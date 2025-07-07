@@ -46,19 +46,6 @@ void iDraw()
     check_collision();
     
 }
-
-/*
-function iMouseMove() is called when the user moves the mouse.
-(mx, my) is the position where the mouse pointer is.
-*/
-void iMouseMove(int mx, int my)
-{
-    // place your codes here
-    if(page_no==10){
-        volumeSliderMouseMove(mx, my);
-    }
-}
-
 /*
 function iMouseDrag() is called when the user presses and drags the mouse.
 (mx, my) is the position where the mouse pointer is.
@@ -68,6 +55,21 @@ void iMouseDrag(int mx, int my)
     if(page_no==10)isDragging = true;
     else isDragging = false;
 }
+
+/*
+function iMouseMove() is called when the user moves the mouse.
+(mx, my) is the position where the mouse pointer is.
+*/
+
+void iMouseMove(int mx, int my)
+{
+    // place your codes here
+    if(page_no==10){
+        volumeSliderMouseMove(mx, my);
+    }
+}
+
+
 
 /*
 function iMouse() is called when the user presses/releases the mouse.
