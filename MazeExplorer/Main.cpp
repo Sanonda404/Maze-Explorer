@@ -3,7 +3,7 @@
 #include "MazeExplorer/firstSceen.h"
 #include "MazeExplorer/menu.h"
 #include "level1.h"
-
+#include "VolumeSlider.h"
 
 
 int page_no = 0;
