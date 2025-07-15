@@ -14,8 +14,8 @@ typedef struct
 
 Bat bats[bat_no];
 
-int bat_x[] = {700,500};
-int bat_y[] = {600,400};
+int bat_x[] = {700,2245};
+int bat_y[] = {600,1105};
 
 
 

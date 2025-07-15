@@ -1,5 +1,6 @@
 #include "iGraphics.h"
 #include"MazeExplorer/bullet.h"
+#include "ScoreTimeManager.h"
 
 int speed = 15;
 
@@ -109,9 +110,16 @@ void move_player()
     }
 }
 
+void lost_game()
+{
+    if(!is_alive)return;
+    is_alive = false;
+    play_sound("lost");
+}
+
 void update_health()
 {
-    if(health<=0)is_alive = false;
+    if(health<=0)lost_game();
     health_bar_width = 200*health/100;
     health_bar_width = max(0.0,health_bar_width);
 }

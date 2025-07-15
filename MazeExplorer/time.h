@@ -19,5 +19,5 @@ void display_time()
     sprintf(timeText, "%02d:%02d:%03d", m, s, time_passed % 1000); // format mm:ss:ms
 
     iSetColor(255,255,255);
-    iText(50, 700, timeText);
+    iText(50, 700, timeText, GLUT_BITMAP_TIMES_ROMAN_24);
 }

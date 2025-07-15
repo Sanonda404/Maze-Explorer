@@ -1,5 +1,6 @@
 #include "iGraphics.h"
 #include "MazeExplorer/level_dependencies.h"
+#include "MazeExplorer/SoundManager.h"
 #include<bits/stdc++.h>
 
 #define MAX_BULLETS 4
@@ -45,7 +46,7 @@ void shoot_bullet(string dir_name)
 {
     if (attacking)
     {
-        iPlaySound("MazeExplorer/assests/music/shoot.wav", false, 50);
+        play_sound("shoot");
         attacking = false;
         for(int i=0; i<4; i++){
             if(released[i]==0){

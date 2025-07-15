@@ -17,7 +17,7 @@ int start_x = 500, start_y = 140, end_x = 2600, end_y = 2300;
 void lvl_load_resources()
 {
     //background
-    iLoadImage(&bg, "MazeExplorer/assests/levels/bg.png");
+    iLoadImage(&bg, "MazeExplorer/assests/levels/bg1.png");
     iScaleImage(&bg, 3.0);
 
 
@@ -29,15 +29,15 @@ void lvl_load_resources()
 
 
     //maze
-    iLoadFramesFromSheet(mazeframes, "MazeExplorer/assests/levels/level1f.png",1,1);
+    iLoadFramesFromSheet(mazeframes, "MazeExplorer/assests/levels/lvl1f.png",1,1);
     iInitSprite(&maze, -1);
     iChangeSpriteFrames(&maze, mazeframes, 1);
     iSetSpritePosition(&maze, start_x, start_y);
     iScaleSprite(&maze, 2.0);
-    iLoadFramesFromSheet(lvl1blur, "MazeExplorer/assests/levels/lvl1blur.png",1,1);
+    iLoadFramesFromSheet(lvl1blur, "MazeExplorer/assests/levels/lvl1blurf.png",1,1);
     iInitSprite(&mazeblur, -1);
     iChangeSpriteFrames(&mazeblur, lvl1blur, 1);
-    iSetSpritePosition(&mazeblur, start_x-60, start_y-60);
+    iSetSpritePosition(&mazeblur, start_x-70, start_y-70);
     iScaleSprite(&mazeblur, 2.0);
 
     loadPlayer();
@@ -58,13 +58,13 @@ void lvl_load_resources()
 
 void draw_lvl1()
 {
-    //iShowImage(start_x,start_y, "MazeExplorer/assests/levels/bg.png");
+    //iShowImage(start_x,start_y, "MazeExplorer/assests/levels/bg1.png");
 
     
     maze.x = start_x + (player_x-player_relative_x);
     maze.y = start_y + player_y -player_relative_y;
-    mazeblur.x = start_x + (player_x-player_relative_x)-60;
-    mazeblur.y = start_y + player_y -player_relative_y-60;
+    mazeblur.x = start_x + (player_x-player_relative_x)-70;
+    mazeblur.y = start_y + player_y -player_relative_y-70;
 
     exit_portal.x = end_x + (player_x-player_relative_x);
     exit_portal.y = end_y + player_y -player_relative_y;
@@ -84,6 +84,7 @@ void draw_lvl1()
 
     if(lvl_completed){
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lvl_completed.png");
+        display_highscore(700,500);
     }
 
     if(!is_alive){
@@ -100,13 +101,20 @@ void reload()
     paused = false;
     health = 100;
     health_bar_width = 200;
+    is_alive = true;
+    time_passed = 0;
 
     reset_monsters();
 }
 
 void level_completed()
 {
+    if(lvl_completed)return;
     lvl_completed = true;
+    calc_score(time_passed, health);
+    play_sound("won");
+    loadHighScore();
+    
 }
 
 bool check_paused_pressed(int mx, int my)
@@ -138,6 +146,7 @@ void check_lost_buttons(int mx, int my, int &page_no)
     if(is_alive)return;
     if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
         printf("next lvl");
+        reload();
     }
     //exit
     else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
@@ -202,6 +211,7 @@ void check_collision()
         for(int j=0; j<bat_no; j++){
             if(released[i] && iCheckCollision(&bullets[i], &bats[j].sprite)){
                 bats[j].is_alive = 0;
+                update_score("kill_monster");
                 //cout<<"shooted bat"<<endl;
             }
         }
@@ -212,13 +222,23 @@ void check_collision()
         for(int j=0; j<SLIME_NO; j++){
             if(released[j] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
                 slimes[j].isAlive = 0;
+                update_score("kill_monster");
                 //cout<<"shooted bat"<<endl;
             }
         }
     }
+
+    //checking if collects diamond
+    for(int j=0; j<diamond_no; j++){
+        if(diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)){
+            diamonds[j].is_visible = 0;
+            cout<<"Diamond collected"<<endl;
+        }
+    }
+
 }
 
-void animate()
+void lvl1_animate()
 {
     t++;
 
@@ -235,8 +255,10 @@ void animate()
         is_hurting = false;
     }
 
-    if(!lvl_completed && is_alive && !paused)
+    if(!lvl_completed && is_alive && !paused){
         update_time();
+        move_monsters(player_relative_x, player_relative_y);
+    }
 }
 
 

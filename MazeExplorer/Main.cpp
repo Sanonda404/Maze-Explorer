@@ -1,5 +1,4 @@
 #include "iGraphics.h"
-#include "iSound.h"
 #include "MazeExplorer/firstSceen.h"
 #include "MazeExplorer/menu.h"
 #include "level1.h"
@@ -7,7 +6,6 @@
 
 
 int page_no = 0;
-float music_volume = 1;
 
 void load_resources()
 {
@@ -29,10 +27,10 @@ void iDraw()
 
     //drawVolumeSlider();
 
-    if(page_no == 0){
+    if(page_no == 0 || trnstn){
         draw_firstPage();
     }
-    else if(page_no == 1){
+    else if(page_no == 1 || menu_trnstn){
         draw_menu();
     }
     else if(page_no==2){
@@ -45,6 +43,15 @@ void iDraw()
 
     check_collision();
     
+}
+
+void animate()
+{
+    if(trnstn)play_transition();
+
+    if(menu_trnstn)menu_play_transition();
+
+    lvl1_animate();
 }
 
 /*
@@ -115,12 +122,12 @@ key- holds the ASCII value of the key pressed.
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
-    iInitializeSound();
-    iPlaySound("MazeExplorer/assests/music/bgm.wav", true, music_volume*100);
+    init_sound();
+    play_sound("bgm");
     
     load_resources();
 
-    iSetTimer(50, animate);    
+    iSetTimer(20, animate);    
     // place your own initialization codes here.
     
     iInitialize(SCREEN_WIDTH, SCREEN_HEIGHT, "Maze Explorer");

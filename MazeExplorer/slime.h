@@ -15,8 +15,8 @@ typedef struct {
 } Slime;
 
 Slime slimes[SLIME_NO];
-int slime_x[SLIME_NO] = {2035, 500};
-int slime_y[SLIME_NO] = {400, 400};
+int slime_x[SLIME_NO] = {2035, 1600};
+int slime_y[SLIME_NO] = {400, 1135};
 
 // Loaded animations
 Image slime_walk_up[FRAME_COUNT];

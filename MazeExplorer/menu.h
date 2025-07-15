@@ -1,41 +1,89 @@
 #include "iGraphics.h"
 
-Image b1,b2,b3,b4,b5,b6;
+Image lvl_map;
 
+int c_x[] = {125,370,605,860,1113,1151};
+int c_y[] = {218,440,200,330,500,130};
+
+int radius = 125;
+
+int menu_trnstn_timer = 25;
+int r = 0;
+int index;
+
+bool menu_trnstn = false;
 
 void menu_load_resources()
 {
-    iLoadImage(&b1, "MazeExplorer/assests/button1.png");
-    iLoadImage(&b2, "MazeExplorer/assests/button1.png");
-    iLoadImage(&b3, "MazeExplorer/assests/button1.png");
-    iLoadImage(&b4, "MazeExplorer/assests/button1.png");
-    iLoadImage(&b5, "MazeExplorer/assests/button1.png");
-    iLoadImage(&b6, "MazeExplorer/assests/button1.png");
+    iLoadImage(&lvl_map, "MazeExplorer/assests/levels/levelmap.png");
 }
 
 void draw_menu()
 {
-    iShowImage(700, 700,"MazeExplorer/assests/button1.png");//lvl 1
-    iShowImage(700, 600,"MazeExplorer/assests/button1.png");//lvl 2
-    iShowImage(700, 500,"MazeExplorer/assests/button1.png");//lvl 3
-    iShowImage(700, 400,"MazeExplorer/assests/button1.png");//lvl 4
-    iShowImage(700, 300,"MazeExplorer/assests/button1.png");//lvl 5
-    iShowImage(700, 200,"MazeExplorer/assests/button1.png");//lvl 6
+    iShowImage(0,0,"MazeExplorer/assests/levels/levelmap.png");
 
-    iText(760,720,"Level 1",GLUT_BITMAP_TIMES_ROMAN_24 );
-    iText(760,620,"Level 2",GLUT_BITMAP_TIMES_ROMAN_24);
-    iText(760,520,"Level 3",GLUT_BITMAP_TIMES_ROMAN_24 );
-    iText(760,420,"Level 4",GLUT_BITMAP_TIMES_ROMAN_24);
-    iText(760,320,"Level 5",GLUT_BITMAP_TIMES_ROMAN_24 );
-    iText(760,220,"Level 6",GLUT_BITMAP_TIMES_ROMAN_24);
+    if(menu_trnstn){
+        iSetColor(0,0,0);
+        iFilledCircle(c_x[index],c_y[index],r,100);
+    }
 }
 
+int menu_clac_dis(int x1, int x2, int y1, int y2)
+{
+    return sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+}
+
+void menu_play_transition()
+{
+    menu_trnstn_timer--;
+    if(menu_trnstn_timer<=0)menu_trnstn = false;
+
+    r+=60;
+}
 
 void menu_check_button_pressed(int mx, int my, int &page_no)
 {
+    printf("mm %d %d\n",mx,my);
     //for level 1
-    if(mx>=710 && mx<=865 && my>=710 && my<=760){
+    if(menu_clac_dis(c_x[0],mx,c_y[0],my)<=radius){
             printf("Level 1\n");
+            menu_trnstn = true;
+            index = 0;
             page_no = 2;
+    }
+    //for level 2
+    else if(menu_clac_dis(c_x[1],mx,c_y[1],my)<=radius){
+            printf("Level 2\n");
+            menu_trnstn = true;
+            index = 1;
+            page_no = 3;
+    }
+    //for level 3
+    else if(menu_clac_dis(c_x[2],mx,c_y[2],my)<=radius){
+            printf("Level 3\n");
+            menu_trnstn = true;
+            index = 2;
+            page_no = 4;
+    }
+    //for level 4
+    else if(menu_clac_dis(c_x[3],mx,c_y[3],my)<=radius){
+            printf("Level 4\n");
+            menu_trnstn = true;
+            index = 3;
+            page_no = 5;
+    }
+    //for level 5
+    else if(menu_clac_dis(c_x[4],mx,c_y[4],my)<=radius){
+            printf("Level 5\n");
+            menu_trnstn = true;
+            index = 4;
+            page_no = 6;
+    }
+    //for level 6
+    else if(menu_clac_dis(c_x[5],mx,c_y[5],my)<=radius){
+            printf("Level 6\n");
+            menu_trnstn = true;
+            index = 5;
+            page_no = 7;
     }
 }
