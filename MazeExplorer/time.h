@@ -1,3 +1,5 @@
+#ifndef TIME_H
+#define TIME_H
 #include "iGraphics.h"
 
 int time_passed = 0;
@@ -21,3 +23,5 @@ void display_time()
     iSetColor(255,255,255);
     iText(50, 700, timeText, GLUT_BITMAP_TIMES_ROMAN_24);
 }
+
+#endif

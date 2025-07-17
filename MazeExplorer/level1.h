@@ -1,58 +1,33 @@
 #include "iGraphics.h"
+#include "MazeExplorer/level_dependencies.h"
 #include "MazeExplorer/player.h"
 #include "MazeExplorer/monster.h"
 #include "MazeExplorer/time.h"
 
-Image  ghostframes1[8], mazeframes[1], exitframes[1], bg, lvl_comp, paused_img, pause_option, lvl1blur[1], lost;
-Sprite ghost1;
-Sprite maze, mazeblur;
-Sprite exit_portal;
+Image  mazeframes1[1], lvl1blur1[1], exitframes1[1];
+Sprite maze1, mazeblur1, exit_portal1;
 
-int  b_x=0, b_y=0;
+int start_x1 = 500, start_y1 = 140, end_x1 = 2600, end_y1 = 2300;
 
-int t=0;
-
-int start_x = 500, start_y = 140, end_x = 2600, end_y = 2300;
-
-void lvl_load_resources()
+void lvl1_load_resources()
 {
-    //background
-    iLoadImage(&bg, "MazeExplorer/assests/levels/bg1.png");
-    iScaleImage(&bg, 3.0);
-
+    //maze
+    iLoadFramesFromSheet(mazeframes1, "MazeExplorer/assests/levels/lvl1f.png",1,1);
+    iInitSprite(&maze1, -1);
+    iChangeSpriteFrames(&maze1, mazeframes1, 1);
+    iSetSpritePosition(&maze1, start_x1, start_y1);
+    iScaleSprite(&maze1, 2.0);
+    iLoadFramesFromSheet(lvl1blur1, "MazeExplorer/assests/levels/lvl1blurf.png",1,1);
+    iInitSprite(&mazeblur1, -1);
+    iChangeSpriteFrames(&mazeblur1, lvl1blur1, 1);
+    iSetSpritePosition(&mazeblur1, start_x1-70, start_y1-70);
+    iScaleSprite(&mazeblur1, 2.0);
 
     //exit portal
-    iLoadFramesFromSheet(exitframes, "MazeExplorer/assests/levels/exit_portal.png",1,1);
-    iInitSprite(&exit_portal, -1);
-    iChangeSpriteFrames(&exit_portal, exitframes, 1);
-    iSetSpritePosition(&exit_portal, end_x, end_y);
-
-
-    //maze
-    iLoadFramesFromSheet(mazeframes, "MazeExplorer/assests/levels/lvl1f.png",1,1);
-    iInitSprite(&maze, -1);
-    iChangeSpriteFrames(&maze, mazeframes, 1);
-    iSetSpritePosition(&maze, start_x, start_y);
-    iScaleSprite(&maze, 2.0);
-    iLoadFramesFromSheet(lvl1blur, "MazeExplorer/assests/levels/lvl1blurf.png",1,1);
-    iInitSprite(&mazeblur, -1);
-    iChangeSpriteFrames(&mazeblur, lvl1blur, 1);
-    iSetSpritePosition(&mazeblur, start_x-70, start_y-70);
-    iScaleSprite(&mazeblur, 2.0);
-
-    loadPlayer();
-
-    load_monsters();
-
-    //paused
-    iLoadImage(&paused_img, "MazeExplorer/assests/levels/pause_button.png");
-    iLoadImage(&pause_option, "MazeExplorer/assests/levels/paused.png");
-
-    //lvl_completed
-    iLoadImage(&lvl_comp, "MazeExplorer/assests/levels/lvl_completed.png");
-
-    //lost
-    iLoadImage(&lost, "MazeExplorer/assests/levels/lost.png");
+    iLoadFramesFromSheet(exitframes1, "MazeExplorer/assests/levels/exit_portal.png",1,1);
+    iInitSprite(&exit_portal1, -1);
+    iChangeSpriteFrames(&exit_portal1, exitframes1, 1);
+    iSetSpritePosition(&exit_portal1, end_x1, end_y1);
     
 }
 
@@ -61,148 +36,42 @@ void draw_lvl1()
     //iShowImage(start_x,start_y, "MazeExplorer/assests/levels/bg1.png");
 
     
-    maze.x = start_x + (player_x-player_relative_x);
-    maze.y = start_y + player_y -player_relative_y;
-    mazeblur.x = start_x + (player_x-player_relative_x)-70;
-    mazeblur.y = start_y + player_y -player_relative_y-70;
+    maze1.x = start_x1 + (player_x-player_relative_x);
+    maze1.y = start_y1 + player_y -player_relative_y;
+    mazeblur1.x = start_x1 + (player_x-player_relative_x)-70;
+    mazeblur1.y = start_y1 + player_y -player_relative_y-70;
 
-    exit_portal.x = end_x + (player_x-player_relative_x);
-    exit_portal.y = end_y + player_y -player_relative_y;
+    exit_portal1.x = end_x1 + (player_x-player_relative_x);
+    exit_portal1.y = end_y1 + player_y -player_relative_y;
 
-    iShowSprite(&exit_portal);
+    iShowSprite(&exit_portal1);
 
 
-    iShowSprite(&maze);
-    iShowSprite(&mazeblur);
-
-    draw_player();
-    draw_monsters((player_x-player_relative_x), (player_y-player_relative_y));
-
-    //pause button
-    iShowImage(SCREEN_WIDTH-100,SCREEN_HEIGHT-100, "MazeExplorer/assests/levels/pause_button.png");
-    if(paused && !lvl_completed)iShowImage(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-200, "MazeExplorer/assests/levels/paused.png");
-
-    if(lvl_completed){
-        iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lvl_completed.png");
-        display_highscore(700,500);
-    }
-
-    if(!is_alive){
-        iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lost.png");
-    }
-
-    display_time();
-}
-
-void reload()
-{
-    player_relative_x = player_x;
-    player_relative_y = player_y;
-    paused = false;
-    health = 100;
-    health_bar_width = 200;
-    is_alive = true;
-    time_passed = 0;
-
-    reset_monsters();
-}
-
-void level_completed()
-{
-    if(lvl_completed)return;
-    lvl_completed = true;
-    calc_score(time_passed, health);
-    play_sound("won");
-    loadHighScore();
+    iShowSprite(&maze1);
+    iShowSprite(&mazeblur1);
     
 }
 
-bool check_paused_pressed(int mx, int my)
-{
-    printf("Mouse pos %d %d\n",mx,my);
-    printf("Player pos %d %d\n",player_relative_x, player_relative_y);
-    if(mx>=SCREEN_WIDTH-100 && mx<=SCREEN_WIDTH-30 && my>=SCREEN_HEIGHT-100 && my<=SCREEN_HEIGHT-30){
-        paused=!paused;
-        return true;
-    }
-    return false;
-}
 
-void check_lvl_completed_buttons(int mx, int my, int &page_no)
+void check_collision1()
 {
-    if(!lvl_completed)return;
-    if(lvl_completed)printf("lvls");
-    if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
-        printf("next lvl");
-    }
-    //exit
-    else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
-        exit(0);
-    }
-}
-
-void check_lost_buttons(int mx, int my, int &page_no)
-{
-    if(is_alive)return;
-    if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
-        printf("next lvl");
-        reload();
-    }
-    //exit
-    else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
-        exit(0);
-    }
-}
-
-void check_pause_buttons(int mx, int my, int &page_no)
-{
-    if(!paused)return;
-    if(lvl_completed)printf("lvls");
-    //play
-    if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2+120 && my<=SCREEN_HEIGHT/2+170){
-        paused = false;
-        printf("play");
-    }
-    //retry
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2+50 && my<=SCREEN_HEIGHT/2+100){
-        reload();
-        printf("retry");
-    }
-    //help
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-20 && my<=SCREEN_HEIGHT/2+30){
-        printf("help");
-    }
-    //Settings
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-100 && my<=SCREEN_HEIGHT/2-50){
-        printf("Settings");
-        pre_page = page_no;
-        page_no=10;
-    }
-    //exit
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-170 && my<=SCREEN_HEIGHT/2-120){
-        exit(0);
-    }
-}
-
-void check_collision()
-{
+    if(current_lvl!=1)return;
     //checking if collides with fire
     //if(iCheckCollision(&fire , &player.sprite)){
     //    printf("Fire\n");
     //}
 
     //checking if collids with maze
-    if(iCheckCollision(&maze, &player.sprite)){
+    if(iCheckCollision(&maze1, &player.sprite)){
         if(!is_hurting){
             is_hurting = true;
-            health -= 10;
-            update_health();
+            update_health(20);
            // printf("B %d\n",health);
         }      
     }
 
     //checking if enters exit portal
-    if(iCheckCollision(&exit_portal, &player.sprite)){
+    if(iCheckCollision(&exit_portal1, &player.sprite)){
         level_completed();
     }
 
@@ -220,7 +89,7 @@ void check_collision()
     //checking if bullet shoots slime
     for(int i=0; i<MAX_BULLETS; i++){
         for(int j=0; j<SLIME_NO; j++){
-            if(released[j] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
+            if(released[i] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
                 slimes[j].isAlive = 0;
                 update_score("kill_monster");
                 //cout<<"shooted bat"<<endl;
@@ -237,28 +106,3 @@ void check_collision()
     }
 
 }
-
-void lvl1_animate()
-{
-    t++;
-
-    animate_monsters();
-
-    if(t%1==0){
-        player_animate();
-        iAnimateSprite(&ghost1);
-    }
-
-    if (is_hurting)hurt_timer--;
-    if(hurt_timer==0){
-        hurt_timer = max_hurt_time;
-        is_hurting = false;
-    }
-
-    if(!lvl_completed && is_alive && !paused){
-        update_time();
-        move_monsters(player_relative_x, player_relative_y);
-    }
-}
-
-

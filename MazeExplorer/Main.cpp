@@ -1,8 +1,13 @@
 #include "iGraphics.h"
+#include "MazeExplorer/level_dependencies.h"
 #include "MazeExplorer/firstSceen.h"
 #include "MazeExplorer/menu.h"
-#include "level1.h"
-
+#include "MazeExplorer/level1.h"
+#include "MazeExplorer/level2.h"
+#include "MazeExplorer/level3.h"
+#include "MazeExplorer/level4.h"
+#include "MazeExplorer/level5.h"
+#include "MazeExplorer/level6.h"
 
 
 int page_no = 0;
@@ -12,7 +17,13 @@ void load_resources()
     load_settings();
     fs_load_resources();
     menu_load_resources();
-    lvl_load_resources();
+    load_level_resources();
+    lvl1_load_resources();
+    lvl2_load_resources();
+    lvl3_load_resources();
+    lvl4_load_resources();
+    lvl5_load_resources();
+    lvl6_load_resources();
 }
 
 
@@ -36,13 +47,36 @@ void iDraw()
     else if(page_no==2){
         draw_lvl1();
     }
+    else if(page_no==3){
+        draw_lvl2();
+    }
+    else if(page_no==4){
+        draw_lvl3();
+    }
+    else if(page_no==5){
+        draw_lvl4();
+    }
+    else if(page_no==6){
+        draw_lvl5();
+    }
+     else if(page_no==7){
+        draw_lvl6();
+    }
     //settings page
     else if (page_no==10){
         drawVolumeSlider();
     }
 
-    check_collision();
-    
+    if(!trnstn && !menu_trnstn && page_no>=2 && page_no<=7){
+        draw_levels();
+    }
+
+    check_collision1();
+    check_collision2();
+    check_collision3();
+    check_collision4();
+    check_collision5();
+    check_collision6();
 }
 
 
@@ -52,7 +86,7 @@ void animate()
 
     if(menu_trnstn)menu_play_transition();
 
-    lvl1_animate();
+    animate_levels();
 }
 
 /*
@@ -88,7 +122,7 @@ void iMouse(int button, int state, int mx, int my)
     {
        if(page_no==0)fs_check_button_pressed(mx, my, page_no);
        else if(page_no==1)menu_check_button_pressed(mx, my, page_no);
-       else if(page_no==2){
+       else if(page_no>=2 && page_no<=7){
         check_paused_pressed(mx,my);
         check_lvl_completed_buttons(mx,my, page_no);
         check_pause_buttons(mx,my, page_no);

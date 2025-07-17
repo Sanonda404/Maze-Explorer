@@ -5,7 +5,7 @@
 
 #define MAX_BULLETS 4
 
-int bx=SCREEN_WIDTH/2+50, by=SCREEN_HEIGHT/2+50;
+int bx = 1400 / 2 + 50,by = 800 / 2 + 50;
 int bullet_x[]={bx,bx,bx,bx}, bullet_y[]={by,by,by,by};
 
 int released []={0,0,0,0};
@@ -20,6 +20,8 @@ bool attacking = false;
 Image bullet_frames[1];
 Sprite bullets[4];
 
+
+
 void load_bullet() {
     iLoadFramesFromSheet(bullet_frames, "MazeExplorer/assests/player/bullet.png", 1, 1);
 
@@ -29,6 +31,7 @@ void load_bullet() {
         iSetSpritePosition(&bullets[i], bullet_x[i], bullet_y[i]);
         iScaleSprite(&bullets[i], 0.5);
     }
+
 }
 
 void draw_bullet()

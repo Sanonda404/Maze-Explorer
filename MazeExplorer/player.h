@@ -1,13 +1,17 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "iGraphics.h"
 #include"MazeExplorer/bullet.h"
 #include "ScoreTimeManager.h"
+#include "MazeExplorer/level_dependencies.h"
 
 int speed = 15;
 
 int const walk_frame_no = 7;
 int const idle_frame_no = 1;
 
-int player_x = SCREEN_WIDTH/2, player_y = SCREEN_HEIGHT/2;
+int player_x = 1400/2, player_y = 800/2;
 int player_relative_x = player_x, player_relative_y = player_y;
 
 int health = 100;
@@ -26,6 +30,7 @@ bool lvl_completed = false;
 bool paused = false;
 
 bool is_alive = true;
+bool started = false;
 
 typedef enum
 {
@@ -91,7 +96,7 @@ void draw_player()
 
 void move_player()
 {
-    if(lvl_completed || paused || !is_alive)return;
+    if(lvl_completed || paused || !is_alive || !started)return;
     if(dir_name=="left"){
         player_relative_x-=speed;
         iChangeSpriteFrames(&player.sprite, player.idle_left, idle_frame_no);
@@ -117,8 +122,9 @@ void lost_game()
     play_sound("lost");
 }
 
-void update_health()
+void update_health(int amount)
 {
+    health -= amount;
     if(health<=0)lost_game();
     health_bar_width = 200*health/100;
     health_bar_width = max(0.0,health_bar_width);
@@ -262,3 +268,5 @@ void iKeyboard(unsigned char key)
         break;
     }
 }
+
+#endif

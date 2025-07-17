@@ -1,3 +1,5 @@
+#ifndef FIRE_H
+#define FIRE_H
 #include "iGraphics.h"
 
 
@@ -54,3 +56,5 @@ void fires_animate()
     }
     
 }
+
+#endif

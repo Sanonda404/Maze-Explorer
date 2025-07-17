@@ -1,3 +1,6 @@
+#ifndef MONSTERS_H
+#define MONSTERS_H
+
 #include "MazeExplorer/bat.h"
 #include "MazeExplorer/fire.h"
 #include "MazeExplorer/slime.h"
@@ -37,3 +40,5 @@ void reset_monsters()
     reset_slimes();
     reset_diamonds();
 }
+
+#endif

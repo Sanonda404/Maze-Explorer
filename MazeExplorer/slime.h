@@ -1,3 +1,6 @@
+#ifndef SLIME_H
+#define SLIME_H
+
 #include "iGraphics.h"
 #include <string.h>
 
@@ -127,3 +130,5 @@ void reset_slimes()
         slimes[i].isAlive = 1;
     }
 }
+
+#endif

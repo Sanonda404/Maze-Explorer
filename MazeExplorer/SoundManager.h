@@ -9,7 +9,7 @@ int shoot_music;
 int hurt_music;
 int lost_music;
 
-float music_volume=50;
+float music_volume=0;
 
 void init_sound()
 {

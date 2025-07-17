@@ -1,3 +1,5 @@
+#ifndef DIAMONDS_H
+#define DIAMONDS_H
 #include "iGraphics.h"
 
 #define diamond_no 1
@@ -56,3 +58,5 @@ void reset_diamonds()
         //diamond
     }
 }
+
+#endif
