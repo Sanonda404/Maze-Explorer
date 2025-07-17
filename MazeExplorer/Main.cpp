@@ -10,8 +10,6 @@
 #include "MazeExplorer/level6.h"
 
 
-int page_no = 0;
-
 void load_resources()
 {
     load_settings();

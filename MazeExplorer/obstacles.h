@@ -12,7 +12,7 @@ void draw_obstacles(int x, int y)
     draw_fires(x,y);
 }
 
-void animate_monsters()
+void animate_obstacles()
 {
     fires_animate();
 }

@@ -5,10 +5,12 @@
 #include "MazeExplorer/player.h"
 #include "MazeExplorer/monster.h"
 #include "time.h"
+#include "MazeExplorer/obstacles.h"
 
 int SCREEN_WIDTH = 1400, SCREEN_HEIGHT = 800;
 
 int pre_page = 0;
+int page_no = 0;
 int t = 0;
 
 Image bg, exitframes[1], paused_img, pause_option, lvl_comp, lost, help;
@@ -38,6 +40,7 @@ void load_level_resources()
 
     loadPlayer();
     load_monsters();
+    load_obstacles();
 
 }
 
@@ -45,6 +48,7 @@ void draw_levels()
 {
     draw_player();
     draw_monsters((player_x-player_relative_x), (player_y-player_relative_y));
+    draw_obstacles((player_x-player_relative_x), (player_y-player_relative_y));
 
     display_time();
     //pause button
@@ -75,9 +79,17 @@ void reload()
     is_alive = true;
     time_passed = 0;
     help_showed = true;
+    lvl_completed = false;
     started = false;
 
     reset_monsters();
+}
+
+void next_level()
+{
+    current_lvl+=1;
+    page_no+=1;
+    reload();
 }
 
 void level_completed()
@@ -117,6 +129,7 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
     if(lvl_completed)printf("lvls");
     if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
         printf("next lvl");
+        next_level();
     }
     //exit
     else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
@@ -172,6 +185,7 @@ void animate_levels()
     t++;
 
     animate_monsters();
+    animate_obstacles();
 
     if(t%1==0){
         player_animate();

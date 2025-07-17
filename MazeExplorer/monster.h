@@ -2,14 +2,12 @@
 #define MONSTERS_H
 
 #include "MazeExplorer/bat.h"
-#include "MazeExplorer/fire.h"
 #include "MazeExplorer/slime.h"
 #include "MazeExplorer/diamonds.h"
 
 void load_monsters()
 {
     loadBats();
-    loadfires();
     loadSlimes();
     loadDiamonds();
 }
@@ -17,7 +15,6 @@ void load_monsters()
 void draw_monsters(int x, int y)
 {
     draw_bats(x,y);
-    draw_fires(x,y);
     drawSlimes(x,y);
     draw_diamonds(x,y);
 }
@@ -25,7 +22,6 @@ void draw_monsters(int x, int y)
 void animate_monsters()
 {
     bats_animate();
-    fires_animate();
     animateSlimes();
 }
 

@@ -7,7 +7,7 @@
 Image  mazeframes1[1], lvl1blur1[1], exitframes1[1];
 Sprite maze1, mazeblur1, exit_portal1;
 
-int start_x1 = 500, start_y1 = 140, end_x1 = 2600, end_y1 = 2300;
+int start_x1 = 500, start_y1 = 140, end_x1 = 2440, end_y1 = 2000;
 
 void lvl1_load_resources()
 {
