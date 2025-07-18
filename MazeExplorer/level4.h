@@ -90,6 +90,8 @@ void check_collision4()
         if(diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)){
             diamonds[j].is_visible = 0;
             cout << "Diamond collected" << endl;
+            diamond_collected++;
+            update_diamonds();
         }
     }
 }

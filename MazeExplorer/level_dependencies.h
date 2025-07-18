@@ -15,8 +15,6 @@ int t = 0;
 
 Image bg, exitframes[1], paused_img, pause_option, lvl_comp, lost, help;
 
-int current_lvl = 1;
-
 bool help_showed = true;
 
 void load_level_resources()
@@ -81,6 +79,8 @@ void reload()
     help_showed = true;
     lvl_completed = false;
     started = false;
+    diamond_collected = 0;
+    diamond_bar_width = 0;
 
     reset_monsters();
 }

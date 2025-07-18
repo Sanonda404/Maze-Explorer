@@ -32,6 +32,12 @@ bool paused = false;
 bool is_alive = true;
 bool started = false;
 
+int diamond_collected = 0;
+float diamond_bar_width = 0;
+int max_diamonds[] = {2,3,5,4,6,6};
+int current_lvl = 1;
+Image diamond_icon, diamond_bar_under, diamond_bar_hover;
+
 typedef enum
 {
     IDLE,
@@ -67,8 +73,14 @@ void loadPlayer()
     iLoadFramesFromSheet(player.walk_left, "MazeExplorer/assests/player/left_rotation.png", 1, walk_frame_no);
     iLoadFramesFromSheet(player.death, "MazeExplorer/assests/player/exp/dead.png", 1, 3);
 
+    //health bar
     iLoadImage(&heart, "MazeExplorer/assests/levels/heart.png");
     iLoadImage(&health_bar_under, "MazeExplorer/assests/levels/healthbar_under.png");
+
+    //diamond bar
+    iLoadImage(&diamond_icon, "MazeExplorer/assests/levels/diamond_icon.png");
+    iScaleImage(&diamond_icon, 0.3);
+    iLoadImage(&diamond_bar_under, "MazeExplorer/assests/levels/healthbar_under.png");
 
     iInitSprite(&player.sprite, -1);
     iChangeSpriteFrames(&player.sprite, player.idle_right, idle_frame_no);
@@ -87,10 +99,17 @@ void draw_player()
 
     iShowSprite(&player.sprite);
     
+    //health bar
     iShowImage(70, 750, "MazeExplorer/assests/levels/healthbar_under.png");
     iSetColor(214, 23, 31);
     iFilledRectangle(73, 753, health_bar_width, 25);
     iShowImage(35, 740, "MazeExplorer/assests/levels/heart.png");
+
+    //diamond bar
+    iShowImage(70, 650, "MazeExplorer/assests/levels/healthbar_under.png");
+    iSetColor(21, 231, 31);
+    iFilledRectangle(73, 653, diamond_bar_width, 25);
+    iShowImage(40, 640, "MazeExplorer/assests/levels/diamond_icon.png");
     
 }
 
@@ -128,6 +147,11 @@ void update_health(int amount)
     if(health<=0)lost_game();
     health_bar_width = 200*health/100;
     health_bar_width = max(0.0,health_bar_width);
+}
+
+void update_diamonds()
+{
+    diamond_bar_width = 200*diamond_collected/max_diamonds[current_lvl-1];
 }
 
 void player_animate()
