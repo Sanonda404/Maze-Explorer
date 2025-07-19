@@ -38,6 +38,8 @@ int max_diamonds[] = {2,3,5,4,6,6};
 int current_lvl = 1;
 Image diamond_icon, diamond_bar_under, diamond_bar_hover;
 
+bool collision_left = false, collision_right = false, collision_up = false, collision_down = false, collision=false;
+
 typedef enum
 {
     IDLE,
@@ -116,19 +118,23 @@ void draw_player()
 void move_player()
 {
     if(lvl_completed || paused || !is_alive || !started)return;
-    if(dir_name=="left"){
+    if(dir_name=="left" && !collision_left){
+        if(collision_right)collision_right = false;
         player_relative_x-=speed;
         iChangeSpriteFrames(&player.sprite, player.idle_left, idle_frame_no);
     }
-    if(dir_name== "right"){
+    if(dir_name== "right" && !collision_right){
+        if(collision_left)collision_left=false;
         player_relative_x+=speed;
         iChangeSpriteFrames(&player.sprite, player.idle_right, idle_frame_no);
     }
-    if(dir_name == "up"){
+    if(dir_name == "up" && !collision_up){
+        if(collision_down)collision_down = false;
         player_relative_y+=speed;
         iChangeSpriteFrames(&player.sprite, player.idle_up, idle_frame_no);
     }
-    if(dir_name=="down"){
+    if(dir_name=="down" && !collision_down){
+        if(collision_up)collision_up=false;
         player_relative_y-=speed;
         iChangeSpriteFrames(&player.sprite, player.idle_down, idle_frame_no);
     }
@@ -153,6 +159,7 @@ void update_diamonds()
 {
     diamond_bar_width = 200*diamond_collected/max_diamonds[current_lvl-1];
 }
+
 
 void player_animate()
 {

@@ -75,6 +75,7 @@ void iDraw()
     check_collision4();
     check_collision5();
     check_collision6();
+    obstacle_collision();
 }
 
 

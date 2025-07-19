@@ -80,7 +80,7 @@ void check_collision2()
         for(int j=0; j<bat_no; j++){
             if(released[i] && iCheckCollision(&bullets[i], &bats[j].sprite)){
                 bats[j].is_alive = 0;
-                update_score("kill_monster");
+                update_score("kill_monster", current_lvl);
                 //cout<<"shooted bat"<<endl;
             }
         }
@@ -91,7 +91,7 @@ void check_collision2()
         for(int j=0; j<SLIME_NO; j++){
             if(released[i] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
                 slimes[j].isAlive = 0;
-                update_score("kill_monster");
+                update_score("kill_monster", current_lvl);
                 //cout<<"shooted bat"<<endl;
             }
         }

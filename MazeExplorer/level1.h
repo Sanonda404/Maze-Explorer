@@ -52,6 +52,13 @@ void draw_lvl1()
     
 }
 
+void reset_collisions()
+{
+    collision_down = false;
+    collision_left = false;
+    collision_right = false;
+    collision_up = false;
+}
 
 void check_collision1()
 {
@@ -63,11 +70,22 @@ void check_collision1()
 
     //checking if collids with maze
     if(iCheckCollision(&maze1, &player.sprite)){
+        collision = true;
+        reset_collisions();
+        if(dir_name=="left")collision_left = true;
+        if(dir_name=="right")collision_right = true;
+        if(dir_name == "up")collision_up = true;
+        if(dir_name=="down")collision_down = true;
         if(!is_hurting){
             is_hurting = true;
             update_health(20);
            // printf("B %d\n",health);
         }      
+    }
+
+    else {
+        collision = false;
+        reset_collisions();
     }
 
     //checking if enters exit portal
@@ -80,7 +98,7 @@ void check_collision1()
         for(int j=0; j<bat_no; j++){
             if(released[i] && iCheckCollision(&bullets[i], &bats[j].sprite)){
                 bats[j].is_alive = 0;
-                update_score("kill_monster");
+                update_score("kill_monster", current_lvl);
                 //cout<<"shooted bat"<<endl;
             }
         }
@@ -91,7 +109,7 @@ void check_collision1()
         for(int j=0; j<SLIME_NO; j++){
             if(released[i] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
                 slimes[j].isAlive = 0;
-                update_score("kill_monster");
+                update_score("kill_monster", current_lvl);
                 //cout<<"shooted bat"<<endl;
             }
         }

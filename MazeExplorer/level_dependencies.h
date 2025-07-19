@@ -37,7 +37,7 @@ void load_level_resources()
     iLoadImage(&lost, "MazeExplorer/assests/levels/lost.png");
 
     loadPlayer();
-    load_monsters();
+    load_monsters(current_lvl);
     load_obstacles();
 
 }
@@ -45,7 +45,7 @@ void load_level_resources()
 void draw_levels()
 {
     draw_player();
-    draw_monsters((player_x-player_relative_x), (player_y-player_relative_y));
+    draw_monsters((player_x-player_relative_x), (player_y-player_relative_y), current_lvl);
     draw_obstacles((player_x-player_relative_x), (player_y-player_relative_y));
 
     display_time();
@@ -59,7 +59,7 @@ void draw_levels()
 
     if(lvl_completed){
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lvl_completed.png");
-        display_highscore(700,500);
+        display_highscore(700,500, current_lvl);
     }
 
     if(!is_alive){
@@ -96,9 +96,9 @@ void level_completed()
 {
     if(lvl_completed)return;
     lvl_completed = true;
-    calc_score(time_passed, health);
+    calc_score(time_passed, health, current_lvl);
     play_sound("won");
-    loadHighScore();
+    loadHighScore(current_lvl);
     
 }
 
@@ -184,7 +184,7 @@ void animate_levels()
 {
     t++;
 
-    animate_monsters();
+    animate_monsters(current_lvl);
     animate_obstacles();
 
     if(t%1==0){
@@ -203,6 +203,142 @@ void animate_levels()
     }
 }
 
+void obstacle_collision()
+{
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(&player.sprite, &obstacles[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+            }
+        }
+    }
+
+    // level 3 & 4
+    // checking if faces spike
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(&player.sprite, &obstacles[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(&player.sprite, &roller[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+
+    // level 5
+    // checking if faces spike
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(&player.sprite, &obstacles[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(&player.sprite, &roller[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // checking if faces explosion
+    for (int j = 0; j < Explosion_NO; j++)
+    {
+        if (iCheckCollision(&player.sprite, &explosion[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+
+    // level 6
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(&player.sprite, &obstacles[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(&player.sprite, &roller[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // checking if faces explosion
+    for (int j = 0; j < Explosion_NO; j++)
+    {
+        if (iCheckCollision(&player.sprite, &explosion[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+    // cheaking if faces blades
+    for (int j = 0; j < LEVEL6_OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(&player.sprite, &level6_obstacles[j].sprite))
+        {
+            if (!is_hurting)
+            {
+                is_hurting = true;
+                update_health(20);
+                // printf("B %d\n",health);
+            }
+        }
+    }
+}
 
 
 #endif
