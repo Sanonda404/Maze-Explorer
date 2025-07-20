@@ -52,14 +52,6 @@ void draw_lvl1()
     
 }
 
-void reset_collisions()
-{
-    collision_down = false;
-    collision_left = false;
-    collision_right = false;
-    collision_up = false;
-}
-
 void check_collision1()
 {
     if(current_lvl!=1)return;
@@ -116,13 +108,15 @@ void check_collision1()
     }
 
     //checking if collects diamond
-    for(int j=0; j<diamond_no; j++){
-        if(diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)){
-            diamonds[j].is_visible = 0;
-            cout<<"Diamond collected"<<endl;
-            diamond_collected+=1;
-            update_diamonds();
-        }
+    for (int j = 0; j < max_diamonds[current_lvl - 1]; j++) {
+    if (diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)) {
+        diamonds[j].is_visible = 0; // hide the diamond
+        diamond_collected++;        // increment count
+        update_diamonds();          // update file/data if needed
+
+        // Optional: play sound or show sparkle effect
+        printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
     }
+}
 
 }

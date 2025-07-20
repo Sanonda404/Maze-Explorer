@@ -13,6 +13,8 @@ int pre_page = 0;
 int page_no = 0;
 int t = 0;
 
+char player_name[100];
+
 Image bg, exitframes[1], paused_img, pause_option, lvl_comp, lost, help;
 
 bool help_showed = true;
@@ -61,7 +63,6 @@ void draw_levels()
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lvl_completed.png");
         display_highscore(700,500, current_lvl);
     }
-
     if(!is_alive){
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lost.png");
     }
@@ -96,9 +97,8 @@ void level_completed()
 {
     if(lvl_completed)return;
     lvl_completed = true;
-    calc_score(time_passed, health, current_lvl);
+    calc_score(time_passed, health, current_lvl, player_name);
     play_sound("won");
-    loadHighScore(current_lvl);
     
 }
 
@@ -340,5 +340,12 @@ void obstacle_collision()
     }
 }
 
+void reset_collisions()
+{
+    collision_down = false;
+    collision_left = false;
+    collision_right = false;
+    collision_up = false;
+}
 
 #endif

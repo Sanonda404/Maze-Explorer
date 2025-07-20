@@ -1,7 +1,8 @@
 #include "iGraphics.h"
 #include "MazeExplorer/VolumeSlider.h"
 //#include "iFont.h"
-//#include "MazeExplorer/level_dependencies.h"
+#include "MazeExplorer/level_dependencies.h"
+#include "MazeExplorer/leaderboard.h"
 
 Image fbg, fb1, fb2, fb3, fb4;
 
@@ -52,9 +53,14 @@ void draw_firstPage()
 void play_transition()
 {
     trnstn_timer --;
-    if(trnstn_timer<=0)trnstn = false;
-
-    
+    if(trnstn_timer<=0){
+        trnstn = false;
+        x1=0;
+        x2=0;
+        x3=0;
+        x4=0;
+        if(page_no==12)transitioning=true;
+    }
 }
 
 void fs_check_button_pressed(int mx, int my, int &page_no)
@@ -63,20 +69,29 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
     //for play button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y && my<=y+300){
             //printf("Play");
-            page_no = 1;
+            if(player_name[0]=='\0'){
+                page_no = 11;
+                pre_page = 1;
+            }
+            else page_no = 1;
             trnstn = true;
     }
-
+    //for leaderboard button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*1 && my<=y-(btn_size+offset)*1+btn_size){
             //printf("Play");
             trnstn = true;
-           page_no = 10;
+            printf("Highscores");
+            page_no = 12;
+            player_count = load_players();               
+            generate_leaderboard(current_level2);
+            pre_page = 0;
     }
-    //for highscore button
+    //for Settings button
      if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*+btn_size){
             trnstn = true;
-            printf("Highscores");
-           page_no = 11;
+            page_no=10;
+            pre_page = 1;
+            
     }
      //for exit button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*3 && my<=y-(btn_size+offset)*3+btn_size){

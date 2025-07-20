@@ -3,9 +3,8 @@
 #include "MazeExplorer/player.h"
 #include "MazeExplorer/monster.h"
 
-Image  mazeframes4[1], lvlblur4[1], exitframes4[1];
+Image mazeframes4[1], lvlblur4[1], exitframes4[1];
 Sprite maze4, mazeblur4, exit_portal4;
-
 
 int start_x4 = -1600, start_y4 = -100, end_x4 = -1535, end_y4 = 2050;
 
@@ -32,7 +31,7 @@ void lvl4_load_resources()
     iSetSpritePosition(&exit_portal4, end_x4, end_y4);
 }
 
-// 🎨 Draw level visuals
+//  Draw level visuals
 void draw_lvl4()
 {
     maze4.x = start_x4 + (player_x - player_relative_x);
@@ -51,24 +50,48 @@ void draw_lvl4()
 //  Check collision interactions
 void check_collision4()
 {
-    if(current_lvl!=4)return;
+    if (current_lvl != 4)
+        return;
     // Maze collision causes damage
-    if(iCheckCollision(&maze4, &player.sprite)){
-        if(!is_hurting){
+    if (iCheckCollision(&maze4, &player.sprite))
+    {
+        collision = true;
+        reset_collisions();
+        if (dir_name == "left")
+            collision_left = true;
+        if (dir_name == "right")
+            collision_right = true;
+        if (dir_name == "up")
+            collision_up = true;
+        if (dir_name == "down")
+            collision_down = true;
+        if (!is_hurting)
+        {
             is_hurting = true;
             update_health(20);
+            // printf("B %d\n",health);
         }
     }
 
+    else
+    {
+        collision = false;
+        reset_collisions();
+    }
+
     // Exit portal triggers level completion
-    if(iCheckCollision(&exit_portal4, &player.sprite)){
+    if (iCheckCollision(&exit_portal4, &player.sprite))
+    {
         level_completed();
     }
 
     // Bullet hits bat
-    for(int i = 0; i < MAX_BULLETS; i++){
-        for(int j = 0; j < bat_no; j++){
-            if(released[i] && iCheckCollision(&bullets[i], &bats[j].sprite)){
+    for (int i = 0; i < MAX_BULLETS; i++)
+    {
+        for (int j = 0; j < bat_no; j++)
+        {
+            if (released[i] && iCheckCollision(&bullets[i], &bats[j].sprite))
+            {
                 bats[j].is_alive = 0;
                 update_score("kill_monster", current_lvl);
             }
@@ -76,22 +99,29 @@ void check_collision4()
     }
 
     // Bullet hits slime
-    for(int i = 0; i < MAX_BULLETS; i++){
-        for(int j = 0; j < SLIME_NO; j++){
-            if(released[i] && iCheckCollision(&bullets[i], &slimes[j].sprite)){
+    for (int i = 0; i < MAX_BULLETS; i++)
+    {
+        for (int j = 0; j < SLIME_NO; j++)
+        {
+            if (released[i] && iCheckCollision(&bullets[i], &slimes[j].sprite))
+            {
                 slimes[j].isAlive = 0;
                 update_score("kill_monster", current_lvl);
             }
         }
     }
 
-    // Diamond collection
-    for(int j = 0; j < diamond_no; j++){
-        if(diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)){
-            diamonds[j].is_visible = 0;
-            cout << "Diamond collected" << endl;
-            diamond_collected++;
-            update_diamonds();
+    // checking if collects diamond
+    for (int j = 0; j < max_diamonds[current_lvl - 1]; j++)
+    {
+        if (diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite))
+        {
+            diamonds[j].is_visible = 0; // hide the diamond
+            diamond_collected++;        // increment count
+            update_diamonds();          // update file/data if needed
+
+            // Optional: play sound or show sparkle effect
+            printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
         }
     }
 }

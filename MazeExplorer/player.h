@@ -5,6 +5,7 @@
 #include"MazeExplorer/bullet.h"
 #include "ScoreTimeManager.h"
 #include "MazeExplorer/level_dependencies.h"
+#include "MazeExplorer/diamonds.h"
 
 int speed = 15;
 
@@ -34,7 +35,6 @@ bool started = false;
 
 int diamond_collected = 0;
 float diamond_bar_width = 0;
-int max_diamonds[] = {2,3,5,4,6,6};
 int current_lvl = 1;
 Image diamond_icon, diamond_bar_under, diamond_bar_hover;
 
@@ -196,108 +196,6 @@ void player_animate()
     
 }
 
-void iSpecialKeyboard(unsigned char key)
-{
 
-    //left arrow
-    if (key == GLUT_KEY_LEFT)
-    {
-        if(dir_name!="left")direction_changed = true;
-
-        dir_name = "left";
-
-        move_player();
-
-
-        if (player.state != WALK)
-        {
-            player.state = WALK;
-            
-        }
-
-        //if(direction_changed){
-           // iChangeSpriteFrames(&player.sprite, player.walk_left, 4);
-        //}
-    }
-    //right arrow
-    if (key == GLUT_KEY_RIGHT)
-    {
-        if(dir_name!="right")direction_changed = true;
-
-        dir_name = "right";
-
-        move_player();
-
-        
-        if (player.state != WALK)
-        {
-            player.state = WALK;
-            
-            
-        }
-
-        //if(direction_changed){
-        //    iChangeSpriteFrames(&player.sprite, player.walk_right, 4);
-        //}
-    }
-    //Up arrow
-    if (key == GLUT_KEY_UP)
-    {
-        if(dir_name!="up")direction_changed = true;
-
-        dir_name = "up";
-
-        move_player();
-
-        
-        if (player.state != WALK)
-        {
-            player.state = WALK;
-            
-            
-        }
-
-        //if(direction_changed){
-        //    iChangeSpriteFrames(&player.sprite, player.walk_up, 4);
-        //}
-    }
-    //down arrow
-    if (key == GLUT_KEY_DOWN)
-    {
-        if(dir_name!="down")direction_changed = true;
-
-        dir_name = "down";
-
-        move_player();
-
-        
-        if (player.state != WALK)
-        {
-            player.state = WALK;
-            
-            
-        }
-
-        //if(direction_changed){
-         //   iChangeSpriteFrames(&player.sprite, player.walk_down, 4);
-        //}
-    }
-    // place your codes for other keys here
-}
-
-void iKeyboard(unsigned char key)
-{
-    switch (key)
-    {
-    case ' '://detecting attack
-        player.state = ATTACK;
-        attacking = true;
-        shoot_bullet(dir_name);
-        break;
-    // place your codes for other keys here
-    default:
-        break;
-    }
-}
 
 #endif
