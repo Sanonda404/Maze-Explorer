@@ -11,19 +11,19 @@ int start_x5 = -1600, start_y5 = 0, end_x5 = -1535, end_y5 = 2600;
 void lvl5_load_resources()
 {
     iLoadFramesFromSheet(mazeframes5, "MazeExplorer/assests/levels/level5f.png", 1, 1);
-    iInitSprite(&maze5, -1);
+    iInitSprite(&maze5);
     iChangeSpriteFrames(&maze5, mazeframes5, 1);
     iSetSpritePosition(&maze5, start_x5, start_y5);
     iScaleSprite(&maze5, 2.0);
 
     iLoadFramesFromSheet(lvlblur5, "MazeExplorer/assests/levels/level5fblur.png", 1, 1);
-    iInitSprite(&mazeblur5, -1);
+    iInitSprite(&mazeblur5);
     iChangeSpriteFrames(&mazeblur5, lvlblur5, 1);
     iSetSpritePosition(&mazeblur5, start_x5 - 70, start_y5 - 70);
     iScaleSprite(&mazeblur5, 2.0);
 
     iLoadFramesFromSheet(exitframes5, "MazeExplorer/assests/levels/exit_portal.png", 1, 1);
-    iInitSprite(&exit_portal5, -1);
+    iInitSprite(&exit_portal5);
     iChangeSpriteFrames(&exit_portal5, exitframes5, 1);
     iSetSpritePosition(&exit_portal5, end_x5, end_y5);
 }

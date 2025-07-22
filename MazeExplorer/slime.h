@@ -65,7 +65,7 @@ void loadSlimes() {
     loadSlimeSheets();
 
     for (int i = 0; i < SLIME_NO; i++) {
-        iInitSprite(&slimes[i].sprite, -1);
+        iInitSprite(&slimes[i].sprite);
         strcpy(slimes[i].direction, "down");
         slimes[i].isAlive = 1;
         slimes[i].isDying = 0;

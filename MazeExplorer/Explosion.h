@@ -101,7 +101,7 @@ void loadExplosionObstacles(int level) {
         }
 
         // Initialize sprite
-        iInitSprite(&explosion[i].sprite, EXPLOSION_FRAME_COUNT);
+        iInitSprite(&explosion[i].sprite);
         iChangeSpriteFrames(&explosion[i].sprite, explosion[i].frames, EXPLOSION_FRAME_COUNT);
         iSetSpritePosition(&explosion[i].sprite, explosion_x[level - 5][i], explosion_y[level - 5][i]);
         iScaleSprite(&explosion[i].sprite, 1.5); // Optional scale
@@ -110,7 +110,7 @@ void loadExplosionObstacles(int level) {
     for (int i = 0; i < LEVEL6_OBSTACLE_COUNT; i++) {
         iLoadImage(&level6_obstacles[i].frames[0], level6_obstacle_paths[i]);
 
-        iInitSprite(&level6_obstacles[i].sprite, 5);
+        iInitSprite(&level6_obstacles[i].sprite);
         iChangeSpriteFrames(&level6_obstacles[i].sprite, level6_obstacles[i].frames, SPIKEFRAME_COUNT);
         iSetSpritePosition(&level6_obstacles[i].sprite, level6_obstacle_x[level-6][i], level6_obstacle_y[level-6][i]);
         iScaleSprite(&level6_obstacles[i].sprite, 1.5); // Adjust size if needed

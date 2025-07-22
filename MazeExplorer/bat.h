@@ -25,7 +25,7 @@ void loadBats()
 {
     for(int i=0; i<bat_no; i++){
         iLoadFramesFromSheet(bats[i].frames, "MazeExplorer/assests/monsters/bat.png", 1, 4);
-        iInitSprite(&bats[i].sprite, -1);
+        iInitSprite(&bats[i].sprite);
         iChangeSpriteFrames(&bats[i].sprite, bats[i].frames, 4);
 
         iSetSpritePosition(&bats[i].sprite, bat_x[i], bat_y[i]);

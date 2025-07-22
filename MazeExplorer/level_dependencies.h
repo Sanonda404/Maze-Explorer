@@ -6,6 +6,7 @@
 #include "MazeExplorer/monster.h"
 #include "time.h"
 #include "MazeExplorer/obstacles.h"
+#include "MazeExplorer/leaderboard.h"
 
 int SCREEN_WIDTH = 1400, SCREEN_HEIGHT = 800;
 
@@ -98,6 +99,7 @@ void level_completed()
     if(lvl_completed)return;
     lvl_completed = true;
     calc_score(time_passed, health, current_lvl, player_name);
+    printf("won %s\n",player_name);
     play_sound("won");
     
 }
@@ -127,12 +129,25 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
 {
     if(!lvl_completed)return;
     if(lvl_completed)printf("lvls");
-    if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
+    if(mx>=560 && mx<=800 && my>=450 && my<=500){
         printf("next lvl");
         next_level();
     }
+    //highscores
+    else if(mx>=560 && mx<=800 && my>=370 && my<=420){
+        pre_page = 1;
+        printf("Highscores");
+        page_no = 12;
+        player_count = load_players();   
+        transitioning = true;            
+        generate_leaderboard(current_level2);
+    }
+    //menu
+    else if(mx>=560 && mx<=800 && my>=350 && my<=300){
+        page_no = 1;
+    }
     //exit
-    else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
+    else if(mx>=560 && mx<=800 && my>=280 && my<=230){
         exit(0);
     }
 }

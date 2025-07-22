@@ -129,7 +129,7 @@ void iMouseWheel(int dir, int mx, int my)
 {
 }
 
-void iKeyboard(unsigned char key)
+void iKeyboard(unsigned char key, int state)
 {
 
     if (key == 'q')
@@ -137,13 +137,12 @@ void iKeyboard(unsigned char key)
     glutPostRedisplay();
 }
 
-void iSpecialKeyboard(unsigned char key)
+void iSpecialKeyboard(unsigned char key, int state)
 {
 }
 
 int main(int argc, char *argv[])
 {
-
     glutInit(&argc, argv);
     iInitialize(1920, 1080, "Graph");
     glutFullScreen();

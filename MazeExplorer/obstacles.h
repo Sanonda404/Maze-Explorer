@@ -4,17 +4,17 @@
 
 void load_obstacles()
 {
-    loadfires();
+    //loadfires();
 }
 
 void draw_obstacles(int x, int y)
 {
-    draw_fires(x,y);
+    //draw_fires(x,y);
 }
 
 void animate_obstacles()
 {
-    fires_animate();
+   // fires_animate();
 }
 
 #endif

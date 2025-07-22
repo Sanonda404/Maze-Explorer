@@ -12,21 +12,21 @@ void lvl4_load_resources()
 {
     // Maze
     iLoadFramesFromSheet(mazeframes4, "MazeExplorer/assests/levels/level4f.png", 1, 1);
-    iInitSprite(&maze4, -1);
+    iInitSprite(&maze4);
     iChangeSpriteFrames(&maze4, mazeframes4, 1);
     iSetSpritePosition(&maze4, start_x4, start_y4);
     iScaleSprite(&maze4, 2.0);
 
     // Blurred Maze
     iLoadFramesFromSheet(lvlblur4, "MazeExplorer/assests/levels/level4fblur.png", 1, 1);
-    iInitSprite(&mazeblur4, -1);
+    iInitSprite(&mazeblur4);
     iChangeSpriteFrames(&mazeblur4, lvlblur4, 1);
     iSetSpritePosition(&mazeblur4, start_x4 - 70, start_y4 - 70);
     iScaleSprite(&mazeblur4, 2.0);
 
     // Exit Portal
     iLoadFramesFromSheet(exitframes4, "MazeExplorer/assests/levels/exit_portal.png", 1, 1);
-    iInitSprite(&exit_portal4, -1);
+    iInitSprite(&exit_portal4);
     iChangeSpriteFrames(&exit_portal4, exitframes4, 1);
     iSetSpritePosition(&exit_portal4, end_x4, end_y4);
 }

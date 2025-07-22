@@ -26,7 +26,7 @@ void load_bullet() {
     iLoadFramesFromSheet(bullet_frames, "MazeExplorer/assests/player/bullet.png", 1, 1);
 
     for (int i = 0; i < MAX_BULLETS; i++) {
-        iInitSprite(&bullets[i], -1);
+        iInitSprite(&bullets[i]);
         iChangeSpriteFrames(&bullets[i], bullet_frames, 1);
         iSetSpritePosition(&bullets[i], bullet_x[i], bullet_y[i]);
         iScaleSprite(&bullets[i], 0.5);

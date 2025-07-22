@@ -90,6 +90,7 @@ void draw_back_button() {
 }
 
 void draw_leaderboard() {
+   // printf("%f",alpha2);
     int box_width = 600;
     int box_height = 400;
     int box_x = (1400 - box_width) / 2;
@@ -120,7 +121,7 @@ void draw_leaderboard() {
     draw_back_button();
 }
 
-void leaderboard_transition()
+void leaderboard_transition(int page_no)
 {
     if (transitioning) {
         if(page_no!=12){//back transiton/ fade out

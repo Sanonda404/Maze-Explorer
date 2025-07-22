@@ -42,7 +42,7 @@ void loadSpikeObstacles(int level) {
     for (int i = 0; i < OBSTACLE_COUNT; i++) {
         iLoadImage(&obstacles[i].frames[0], obstacle_paths[i]);
 
-        iInitSprite(&obstacles[i].sprite, 5);
+        iInitSprite(&obstacles[i].sprite);
         iChangeSpriteFrames(&obstacles[i].sprite, obstacles[i].frames, SPIKEFRAME_COUNT);
         iSetSpritePosition(&obstacles[i].sprite, obstacle_x[level-1][i], obstacle_y[level-1][i]);
         iScaleSprite(&obstacles[i].sprite, 1.5); // Adjust size if needed

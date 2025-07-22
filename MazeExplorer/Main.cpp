@@ -113,7 +113,7 @@ void animate()
         menu_play_transition();
 
     if (transitioning)
-        leaderboard_transition();
+        leaderboard_transition(page_no);
 
     animate_levels();
 }
@@ -216,7 +216,7 @@ function iKeyboard() is called whenever the user hits a key in keyboard.
 key- holds the ASCII value of the key pressed.
 */
 
-void iKeyboard(unsigned char key)
+void iKeyboard(unsigned char key, int state)
 {
     switch (key)
     {
@@ -254,7 +254,7 @@ void iKeyboard(unsigned char key)
     }
 }
 
-void iSpecialKeyboard(unsigned char key)
+void iSpecialKeyboard(unsigned char key, int state)
 {
     // for leader board
     if (page_no == 12)

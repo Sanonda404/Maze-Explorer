@@ -13,11 +13,114 @@ void update_score(string type, int current_lvl)
     }
 }
 
-void calc_score(int time, int health, int current_lvl, char * player_name)
+void update_highscore(char player_name[], int level, int new_score) {
+    if (level < 1 || level > 6) {
+        printf("Invalid level number. Must be 1–6.\n");
+        return;
+    }
+
+    FILE *fptr = fopen("MazeExplorer/saves/info.txt", "r");
+    if (!fptr) {
+        printf("Failed to open file for reading.\n");
+        return;
+    }
+
+    Player_Info players[100]; // Max 100 players
+    int count = 0;
+    while (fscanf(fptr, "%s %d %d %d %d %d %d %d",
+                  players[count].name,
+                  &players[count].max_lvl,
+                  &players[count].highscores[0],
+                  &players[count].highscores[1],
+                  &players[count].highscores[2],
+                  &players[count].highscores[3],
+                  &players[count].highscores[4],
+                  &players[count].highscores[5]) == 8) {
+        count++;
+    }
+    fclose(fptr);
+
+    bool found = false;
+    for (int i = 0; i < count; i++) {
+        if (strcmp(players[i].name, player_name) == 0) {
+            found = true;
+            if (new_score > players[i].highscores[level - 1]) {
+                players[i].highscores[level - 1] = new_score;
+            }
+            if (level > players[i].max_lvl) {
+                players[i].max_lvl = level;
+            }
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Player not found.\n");
+        return;
+    }
+
+    fptr = fopen("MazeExplorer/saves/info.txt", "w");
+    if (!fptr) {
+        printf("Failed to open file for writing.\n");
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        fprintf(fptr, "%s %d %d %d %d %d %d %d\n",
+                players[i].name,
+                players[i].max_lvl,
+                players[i].highscores[0],
+                players[i].highscores[1],
+                players[i].highscores[2],
+                players[i].highscores[3],
+                players[i].highscores[4],
+                players[i].highscores[5]);
+    }
+
+    fclose(fptr);
+    printf("Highscore updated.\n");
+}
+
+int get_highscore(char player_name[], int level) {
+    if (level < 1 || level > 6) {
+        printf("Invalid level. Must be between 1 and 6.\n");
+        return -1;
+    }
+
+    FILE *fptr = fopen("MazeExplorer/saves/info.txt", "r");
+    if (!fptr) {
+        printf("Failed to open file.\n");
+        return -1;
+    }
+
+    char name[100];
+    int max_lvl, scores[6];
+
+    printf("%s",player_name);
+
+    while (fscanf(fptr, "%s %d %d %d %d %d %d %d",
+                  name,
+                  &max_lvl,
+                  &scores[0], &scores[1], &scores[2],
+                  &scores[3], &scores[4], &scores[5]) == 8) {
+        if (strcmp(name, player_name) == 0) {
+            fclose(fptr);
+            return scores[level - 1];  // level is 1-based
+        }
+    }
+
+    fclose(fptr);
+    printf("Player not found.\n");
+    return -1;
+}
+
+void calc_score(int time, int health, int current_lvl, char player_name[])
 {
+    printf("Player is %s",player_name);
     score[current_lvl-1] -= time/90;
     score[current_lvl-1]  -= (100-health)*5;
     score[current_lvl-1]  = max(10,score[current_lvl-1]);
+    printf("%s",player_name);
     highscore = get_highscore(player_name,current_lvl);
     if(score[current_lvl-1]>highscore){
         update_highscore(player_name,current_lvl,score[current_lvl-1]);

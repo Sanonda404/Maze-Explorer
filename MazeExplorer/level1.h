@@ -13,19 +13,19 @@ void lvl1_load_resources()
 {
     //maze
     iLoadFramesFromSheet(mazeframes1, "MazeExplorer/assests/levels/lvl1f.png",1,1);
-    iInitSprite(&maze1, -1);
+    iInitSprite(&maze1);
     iChangeSpriteFrames(&maze1, mazeframes1, 1);
     iSetSpritePosition(&maze1, start_x1, start_y1);
     iScaleSprite(&maze1, 2.0);
     iLoadFramesFromSheet(lvl1blur1, "MazeExplorer/assests/levels/lvl1blurf.png",1,1);
-    iInitSprite(&mazeblur1, -1);
+    iInitSprite(&mazeblur1);
     iChangeSpriteFrames(&mazeblur1, lvl1blur1, 1);
     iSetSpritePosition(&mazeblur1, start_x1-70, start_y1-70);
     iScaleSprite(&mazeblur1, 2.0);
 
     //exit portal
     iLoadFramesFromSheet(exitframes1, "MazeExplorer/assests/levels/exit_portal.png",1,1);
-    iInitSprite(&exit_portal1, -1);
+    iInitSprite(&exit_portal1);
     iChangeSpriteFrames(&exit_portal1, exitframes1, 1);
     iSetSpritePosition(&exit_portal1, end_x1, end_y1);
     

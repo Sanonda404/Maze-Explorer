@@ -85,7 +85,7 @@ void loadDiamonds() {
 
     for (int i = 0; i < count; i++) {
         iLoadFramesFromSheet(diamonds[i].frames, "MazeExplorer/assests/levels/diamond.png", 1, 1);
-        iInitSprite(&diamonds[i].sprite, -1);
+        iInitSprite(&diamonds[i].sprite);
         iChangeSpriteFrames(&diamonds[i].sprite, diamonds[i].frames, 1);
 
         iSetSpritePosition(&diamonds[i].sprite, diamond_x[level][i], diamond_y[level][i]);

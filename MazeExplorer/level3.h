@@ -12,19 +12,19 @@ void lvl3_load_resources()
 {
     // maze
     iLoadFramesFromSheet(mazeframes3, "MazeExplorer/assests/levels/level3f.png", 1, 1);
-    iInitSprite(&maze3, -1);
+    iInitSprite(&maze3);
     iChangeSpriteFrames(&maze3, mazeframes3, 1);
     iSetSpritePosition(&maze3, start_x3, start_y3);
     iScaleSprite(&maze3, 2.0);
     iLoadFramesFromSheet(lvlblur3, "MazeExplorer/assests/levels/level3fblur.png", 1, 1);
-    iInitSprite(&mazeblur3, -1);
+    iInitSprite(&mazeblur3);
     iChangeSpriteFrames(&mazeblur3, lvlblur3, 1);
     iSetSpritePosition(&mazeblur3, start_x3 - 70, start_y3 - 70);
     iScaleSprite(&mazeblur3, 2.0);
 
     // exit portal
     iLoadFramesFromSheet(exitframes3, "MazeExplorer/assests/levels/exit_portal.png", 1, 1);
-    iInitSprite(&exit_portal3, -1);
+    iInitSprite(&exit_portal3);
     iChangeSpriteFrames(&exit_portal3, exitframes3, 1);
     iSetSpritePosition(&exit_portal3, end_x3, end_y3);
 }

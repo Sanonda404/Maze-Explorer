@@ -37,8 +37,10 @@ int menu_clac_dis(int x1, int x2, int y1, int y2)
 void menu_play_transition()
 {
     menu_trnstn_timer--;
-    if(menu_trnstn_timer<=0)menu_trnstn = false;
-
+    if(menu_trnstn_timer<=0){
+        menu_trnstn = false;
+        r=0;
+    }
     r+=60;
 }
 

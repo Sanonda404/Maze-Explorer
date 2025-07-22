@@ -84,7 +84,7 @@ void loadPlayer()
     iScaleImage(&diamond_icon, 0.3);
     iLoadImage(&diamond_bar_under, "MazeExplorer/assests/levels/healthbar_under.png");
 
-    iInitSprite(&player.sprite, -1);
+    iInitSprite(&player.sprite);
     iChangeSpriteFrames(&player.sprite, player.idle_right, idle_frame_no);
 
     iSetSpritePosition(&player.sprite, player_x, player_y);

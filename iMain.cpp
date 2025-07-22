@@ -1,9 +1,5 @@
 #include "iGraphics.h"
 
-int radius = 30, t=0;
-int pos_x = 300, pos_y = 75;
-int dx = 2, dy=1;
-
 /*
 function iDraw() is called again and again by the system.
 */
@@ -11,13 +7,7 @@ void iDraw()
 {
     // place your drawing codes here
     iClear();
-    iText(540, 180, "Bye World!");
-
-    iSetColor(200,100,255);
-    iFilledCircle(pos_x,pos_y,radius);
-
-    iSetColor(100,250,200);
-    iFilledRectangle(200,100,20,100);
+    iText(140, 180, "Hello World");
 }
 
 /*
@@ -67,12 +57,15 @@ void iMouseWheel(int dir, int mx, int my)
 function iKeyboard() is called whenever the user hits a key in keyboard.
 key- holds the ASCII value of the key pressed.
 */
-void iKeyboard(unsigned char key)
+void iKeyboard(unsigned char key, int state)
 {
     switch (key)
     {
-    case 'q':
-        // do something with 'q'
+    case 'h':
+        iHideCursor(); // Show the cursor
+        break;
+    case 's':
+        iShowCursor(); // Hide the cursor
         break;
     // place your codes for other keys here
     default:
@@ -89,7 +82,7 @@ GLUT_KEY_F7, GLUT_KEY_F8, GLUT_KEY_F9, GLUT_KEY_F10, GLUT_KEY_F11,
 GLUT_KEY_F12, GLUT_KEY_LEFT, GLUT_KEY_UP, GLUT_KEY_RIGHT, GLUT_KEY_DOWN,
 GLUT_KEY_PAGE_UP, GLUT_KEY_PAGE_DOWN, GLUT_KEY_HOME, GLUT_KEY_END,
 GLUT_KEY_INSERT */
-void iSpecialKeyboard(unsigned char key)
+void iSpecialKeyboard(unsigned char key, int state)
 {
     switch (key)
     {
@@ -102,22 +95,10 @@ void iSpecialKeyboard(unsigned char key)
     }
 }
 
-void animate_ball()
-{
-    t+=0.2;
-    radius += 2;
-    pos_x += dx;
-    pos_y += dy;
-}
-
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
-    // place your own initialization codes here.
 
-    iSetTimer(20,animate_ball);
-    
-    iInitialize(900, 400, "demooo");
-
+    iInitialize(400, 400, "demooo");
     return 0;
 }

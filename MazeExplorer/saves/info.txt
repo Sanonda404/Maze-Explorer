@@ -3,3 +3,8 @@ Alice 1 0 0 0 0 0 0
 Ishra 1 0 0 0 0 0 0
 Bob 1 0 0 0 0 0 0
 San 1 0 0 0 0 0 0
+SSaannoonnddaa 1 0 0 0 0 0 0
+ssaanonnddaa 1 0 0 0 0 0 0
+ssaanononndada 1 0 0 0 0 0 0
+ssaanonnonddaa 1 0 0 0 0 0 0
+SSaanonnondada 1 0 0 0 0 0 0

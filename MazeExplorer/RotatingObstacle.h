@@ -82,7 +82,7 @@ void loadRollerObstacles(int level) {
         }
 
         // Initialize sprite
-        iInitSprite(&roller[i].sprite, ROLLER_FRAME_COUNT);
+        iInitSprite(&roller[i].sprite);
         iChangeSpriteFrames(&roller[i].sprite, roller[i].frames, ROLLER_FRAME_COUNT);
         iSetSpritePosition(&roller[i].sprite, roller_x[level - 3][i], roller_y[level - 3][i]);
         iScaleSprite(&roller[i].sprite, 1.5); // Optional scale

@@ -24,7 +24,7 @@ void loadfires()
 {
     for(int i=0; i<fire_no; i++){
         iLoadFramesFromSheet(fires[i].frames, "MazeExplorer/assests/obstacles/fire4_blue_glowing.png", 1, 8);
-        iInitSprite(&fires[i].sprite, -1);
+        iInitSprite(&fires[i].sprite);
         iChangeSpriteFrames(&fires[i].sprite, fires[i].frames, 8);
 
         iSetSpritePosition(&fires[i].sprite, fire_x[i], fire_y[i]);
