@@ -1,8 +1,9 @@
 #ifndef DIAMONDS_H
 #define DIAMONDS_H
 #include "iGraphics.h"
-#include <cstdlib> // for rand
+#include <stdlib.h> // for rand
 #include <ctime>   // for time
+#include <bits/stdc++.h>
 
 #define MAX_LEVELS 6
 #define MAX_DIAMONDS 10 // max per level
@@ -25,55 +26,47 @@ Diamond diamonds[MAX_DIAMONDS];
 int diamond_x[MAX_LEVELS][MAX_DIAMONDS];
 int diamond_y[MAX_LEVELS][MAX_DIAMONDS];
 
-int x_range_start[6][10] = {{1975,570,550}};//add the start of range x
-int x_range_end[6][10] = {{2175,1780,715}};//add the end of range x
-int y_range_start[6][10] = {{600,200,1570}};//add the start of range y
-int y_range_end[6][10] = {{970,1800,1675}};//add the end of range y
+int x_range_start[6][10] = {{1975,570,550},{640,1315,1915}};//add the start of range x
+int x_range_end[6][10] = {{2175,1780,715},{670,1400,1950}};//add the end of range x
+int y_range_start[6][10] = {{600,200,1570},{1585,1500,2400}};//add the start of range y
+int y_range_end[6][10] = {{970,1800,1675},{1620,1550,2490}};//add the end of range y
+
+vector<int> random_nums;
+
+//
+bool check_exists(int n){
+    for(int i=0; i<random_nums.size(); i++){
+        if(random_nums[i]==n)return true;
+    }
+    return false;
+}
+
+int generate_random_number(int n){
+    int x = rand()%n;
+    while(check_exists(x)){
+        x=rand()%n;
+    }
+    random_nums.push_back(x);
+    return x;
+}
 
 void generate_random_diamond_positions(int level) {
     int count = max_diamonds[level];
-    int zones = 0;
+    int range = 0;
     for (int i = 0; i < 10; i++) {
-        if (x_range_end[level][i] > x_range_start[level][i]) zones++;
+    if (x_range_end[level][i] > x_range_start[level][i])
+        range++;
     }
-
-    int min_gap = 100; // Minimum distance between diamonds (adjust if needed)
-
-    for (int i = 0; i < count; i++) {
-        int try_count = 0;
-        int valid = 0;
-
-        while (!valid && try_count < 100) {
-            try_count++;
-            int zone = rand() % zones;
-
-            int new_x = x_range_start[level][zone] + rand() % 
-                        (x_range_end[level][zone] - x_range_start[level][zone]);
-            int new_y = y_range_start[level][zone] + rand() % 
-                        (y_range_end[level][zone] - y_range_start[level][zone]);
-
-            valid = 1;
-            for (int j = 0; j < i; j++) {
-                int dx = new_x - diamond_x[level][j];
-                int dy = new_y - diamond_y[level][j];
-                if (dx * dx + dy * dy < min_gap * min_gap) {
-                    valid = 0; // too close to another diamond
-                    break;
-                }
-            }
-
-            if (valid) {
-                diamond_x[level][i] = new_x;
-                diamond_y[level][i] = new_y;
-            }
-        }
-
-        if (!valid) {
-            // fallback if too many attempts: just place at origin (or skip)
-            diamond_x[level][i] = x_range_start[level][0];
-            diamond_y[level][i] = y_range_start[level][0];
-        }
+    for(int i=0; i<count; i++){
+       int x = generate_random_number(range);
+        int d_x = (x_range_end[level][x]-x_range_start[level][x]);
+        int pos_x = x_range_start[level][x] + (rand()% d_x);
+        int d_y = (y_range_end[level][x]-y_range_start[level][x]);
+        int pos_y = y_range_start[level][x] + (rand()% d_y);
+        diamond_x[level][i] = pos_x;
+        diamond_y[level][i] = pos_y;
     }
+    random_nums.clear();
 }
 
 
@@ -113,6 +106,7 @@ void reset_diamonds() {
     for (int i = 0; i < count; i++) {
         diamonds[i].is_visible = 1;
     }
+    loadDiamonds();
 }
 
 #endif

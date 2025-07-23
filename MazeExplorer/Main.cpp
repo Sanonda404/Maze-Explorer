@@ -178,7 +178,8 @@ void iMouse(int button, int state, int mx, int my)
             if (name_len > 0)
             {
                 strcpy(new_player.name, input_name);
-                append_data(player_name);
+                append_data();
+                strcpy(player_name,input_name);
                 input_done = true;
                 page_no = pre_page;
             }
@@ -218,6 +219,7 @@ key- holds the ASCII value of the key pressed.
 
 void iKeyboard(unsigned char key, int state)
 {
+    if(state==1)return;
     switch (key)
     {
     case ' ': // detecting attack
@@ -229,29 +231,33 @@ void iKeyboard(unsigned char key, int state)
     default:
         break;
     }
-    if (key == '\r' || key == '\n')
-    {
-        if (!input_done && name_len > 0)
+    if(page_no==11 && !trnstn && !menu_trnstn){
+        if (key == '\r' || key == '\n')
         {
-            strcpy(new_player.name, input_name);
-            append_data(player_name);
-            input_done = true;
-            page_no = pre_page;
+            if (!input_done && name_len > 0)
+            {
+                strcpy(new_player.name, input_name);
+                append_data();
+                strcpy(player_name,input_name);
+                input_done = true;
+                page_no = pre_page;
+            }
         }
-    }
-    else if (key == '\b')
-    {
-        if (name_len > 0)
+        else if (key == '\b')
         {
-            name_len--;
+            if (name_len > 0)
+            {
+                name_len--;
+                input_name[name_len] = '\0';
+            }
+        }
+        else if (name_len < 99 && !input_done)
+        {
+            input_name[name_len++] = key;
             input_name[name_len] = '\0';
         }
     }
-    else if (name_len < 99 && !input_done)
-    {
-        input_name[name_len++] = key;
-        input_name[name_len] = '\0';
-    }
+    
 }
 
 void iSpecialKeyboard(unsigned char key, int state)
@@ -360,6 +366,7 @@ void iSpecialKeyboard(unsigned char key, int state)
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
+    srand(time(0));
     init_sound();
     play_sound("bgm");
 

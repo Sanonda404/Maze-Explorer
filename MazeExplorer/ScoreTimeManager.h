@@ -15,7 +15,7 @@ void update_score(string type, int current_lvl)
 
 void update_highscore(char player_name[], int level, int new_score) {
     if (level < 1 || level > 6) {
-        printf("Invalid level number. Must be 1–6.\n");
+        printf("Invalid level number. Must be 1-6.\n");
         return;
     }
 
@@ -116,14 +116,13 @@ int get_highscore(char player_name[], int level) {
 
 void calc_score(int time, int health, int current_lvl, char player_name[])
 {
-    printf("Player is %s",player_name);
     score[current_lvl-1] -= time/90;
     score[current_lvl-1]  -= (100-health)*5;
     score[current_lvl-1]  = max(10,score[current_lvl-1]);
-    printf("%s",player_name);
     highscore = get_highscore(player_name,current_lvl);
     if(score[current_lvl-1]>highscore){
         update_highscore(player_name,current_lvl,score[current_lvl-1]);
+        highscore = score[current_lvl-1];
     }
 }
 

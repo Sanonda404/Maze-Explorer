@@ -4,6 +4,7 @@
 #include "iGraphics.h"
 #include <cstring>
 #include <cstdio>
+#include <bits/stdc++.h>
 
 struct Player_Info {
     char name[100];
@@ -15,20 +16,20 @@ Player_Info new_player = {"", 1, {0, 0, 0, 0, 0, 0}};
 bool input_done = false;
 bool name_taken = false;
 
-char input_name[100] = "";
+char input_name[100];
 int name_len = 0;
 
 int button_x = 600, button_y = 500, button_w = 100, button_h = 40;
 
-bool name_exists(const char *name) {
+bool name_exists(string name) {
     FILE *fptr = fopen("MazeExplorer/saves/info.txt", "r");
     if (!fptr) return false;
 
     char line[256];
     while (fgets(line, sizeof(line), fptr)) {
-        char existing_name[100];
+        string existing_name;
         sscanf(line, "%s", existing_name);
-        if (strcmp(existing_name, name) == 0) {
+        if (name==existing_name) {
             fclose(fptr);
             return true;
         }
@@ -38,8 +39,7 @@ bool name_exists(const char *name) {
 }
 
 
-void append_data(char * player_name) {
-    player_name = input_name;
+void append_data() {
     if (name_exists(input_name)) {
         name_taken = true;
         return;
