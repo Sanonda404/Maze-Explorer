@@ -227,7 +227,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(10);
             }
         }
     }
@@ -241,7 +241,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(10);
                 // printf("B %d\n",health);
             }
         }
@@ -254,7 +254,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(15);
                 // printf("B %d\n",health);
             }
         }
@@ -269,7 +269,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(10);
                 // printf("B %d\n",health);
             }
         }
@@ -282,7 +282,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(15);
                 // printf("B %d\n",health);
             }
         }
@@ -309,7 +309,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(10);
                 // printf("B %d\n",health);
             }
         }
@@ -322,7 +322,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(15);
                 // printf("B %d\n",health);
             }
         }
@@ -348,7 +348,7 @@ void obstacle_collision()
             if (!is_hurting)
             {
                 is_hurting = true;
-                update_health(20);
+                update_health(10);
                 // printf("B %d\n",health);
             }
         }

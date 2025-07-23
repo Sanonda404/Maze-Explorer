@@ -1,4 +1,4 @@
-Sanonda 2 1640 1210 0 0 0 0
+Sanonda 2 1640 3722 0 0 0 0
 Alice 1 0 0 0 0 0 0
 Ishra 1 0 0 0 0 0 0
 Bob 1 0 0 0 0 0 0
@@ -10,6 +10,7 @@ ssaanonnonddaa 1 0 0 0 0 0 0
 SSaanonnondada 1 0 0 0 0 0 0
 ssaannoonnddaa 1 0 0 0 0 0 0
 sanonda 1 0 0 0 0 0 0
+Sanonda 1 0 0 0 0 0 0
 Sanonda 1 0 0 0 0 0 0
 Sanonda 1 0 0 0 0 0 0
 Sanonda 1 0 0 0 0 0 0

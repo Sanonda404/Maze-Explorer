@@ -262,6 +262,7 @@ void iKeyboard(unsigned char key, int state)
 
 void iSpecialKeyboard(unsigned char key, int state)
 {
+    if(state==1)return;
     // for leader board
     if (page_no == 12)
     {

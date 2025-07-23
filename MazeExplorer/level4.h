@@ -68,7 +68,7 @@ void check_collision4()
         if (!is_hurting)
         {
             is_hurting = true;
-            update_health(20);
+            update_health(15);
             // printf("B %d\n",health);
         }
     }
@@ -119,7 +119,7 @@ void check_collision4()
             diamonds[j].is_visible = 0; // hide the diamond
             diamond_collected++;        // increment count
             update_diamonds();          // update file/data if needed
-
+            update_health(-10);
             // Optional: play sound or show sparkle effect
             printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
         }

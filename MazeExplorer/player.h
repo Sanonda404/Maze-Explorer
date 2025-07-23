@@ -150,6 +150,7 @@ void lost_game()
 void update_health(int amount)
 {
     health -= amount;
+    health = min(100,health);
     if(health<=0)lost_game();
     health_bar_width = 200*health/100;
     health_bar_width = max(0.0,health_bar_width);
