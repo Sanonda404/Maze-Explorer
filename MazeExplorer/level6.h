@@ -30,6 +30,17 @@ void lvl6_load_resources()
 
 void draw_lvl6()
 {
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+
     maze6.x = start_x6 + (player_x - player_relative_x);
     maze6.y = start_y6 + player_y - player_relative_y;
     mazeblur6.x = start_x6 + (player_x - player_relative_x) - 70;

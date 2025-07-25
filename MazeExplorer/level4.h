@@ -34,6 +34,17 @@ void lvl4_load_resources()
 //  Draw level visuals
 void draw_lvl4()
 {
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+
     maze4.x = start_x4 + (player_x - player_relative_x);
     maze4.y = start_y4 + player_y - player_relative_y;
     mazeblur4.x = start_x4 + (player_x - player_relative_x) - 70;

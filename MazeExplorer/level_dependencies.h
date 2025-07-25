@@ -47,11 +47,17 @@ void load_level_resources()
 
 void draw_levels()
 {
-    draw_player();
     draw_monsters((player_x-player_relative_x), (player_y-player_relative_y), current_lvl);
     draw_obstacles((player_x-player_relative_x), (player_y-player_relative_y));
 
     display_time();
+
+    draw_player();
+
+    iSetColor(255,255,255);
+    char lvl_txt[20];
+    sprintf(lvl_txt,"Level %d",current_lvl);
+    iShowText(610, 730, lvl_txt, "MazeExplorer/assests/fonts/DynaPuff-Medium.ttf", 50);
     //pause button
     iShowImage(SCREEN_WIDTH-100,SCREEN_HEIGHT-100, "MazeExplorer/assests/levels/pause_button.png");
     if(paused && !lvl_completed)iShowImage(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-200, "MazeExplorer/assests/levels/paused.png");
@@ -89,6 +95,7 @@ void reload()
 
 void next_level()
 {
+    generate_random_diamond_positions(current_lvl);
     current_lvl+=1;
     page_no+=1;
     reload();
@@ -187,7 +194,7 @@ void check_pause_buttons(int mx, int my, int &page_no)
     else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-100 && my<=SCREEN_HEIGHT/2-50){
         printf("Settings");
         pre_page = page_no;
-        page_no=10;
+        page_no=11;
     }
     //exit
     else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-170 && my<=SCREEN_HEIGHT/2-120){

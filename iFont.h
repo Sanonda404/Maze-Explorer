@@ -4,6 +4,8 @@
 //
 //  Version: 1.0.0
 //
+#ifndef IFONT_H
+#define IFONT_H
 
 #include "glut.h"
 #include <ft2build.h>
@@ -115,6 +117,8 @@ void iFreeFont()
         g_ftInitialized = false;
     }
 }
+
+#endif
 
 // #include <stdio.h>
 // #include <stdlib.h>

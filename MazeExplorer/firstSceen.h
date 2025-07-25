@@ -30,6 +30,17 @@ void fs_load_resources()
 
 void draw_firstPage()
 {
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+
     iShowImage(0,0,"MazeExplorer/assests/bg2.png");
     iShowImage(x+x1, y,"MazeExplorer/assests/levels/playbtn.png");//play button
     iShowImage(x+x2, y-(btn_size+offset)*1,"MazeExplorer/assests/levels/highbtn.png");//settings button
@@ -89,7 +100,7 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
     //for Settings button
      if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*+btn_size){
             trnstn = true;
-            page_no=10;
+            page_no=11;
             pre_page = 1;
             
     }

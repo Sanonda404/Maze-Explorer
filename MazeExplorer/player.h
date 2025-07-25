@@ -51,7 +51,7 @@ typedef enum
 
 typedef struct
 {
-    Image idle_down[1], idle_up[1], idle_left[1], idle_right[1], walk_down[7], walk_up[7], walk_left[7], walk_right[7], death[5];
+    Image idle_down[1], idle_up[1], idle_left[1], idle_right[1], death[5];
     Sprite sprite;
     State state;
     int direction_x; // 1 for left, -1 for right
@@ -69,10 +69,6 @@ void loadPlayer()
     iLoadFramesFromSheet(player.idle_up, "MazeExplorer/assests/player/character_up.png", 1, idle_frame_no);
     iLoadFramesFromSheet(player.idle_right, "MazeExplorer/assests/player/character_right.png", 1, idle_frame_no);
     iLoadFramesFromSheet(player.idle_left, "MazeExplorer/assests/player/character_left.png", 1, idle_frame_no);
-    iLoadFramesFromSheet(player.walk_down, "MazeExplorer/assests/player/down_rotation.png", 1, walk_frame_no);
-    iLoadFramesFromSheet(player.walk_up, "MazeExplorer/assests/player/up_rotation.png", 1, walk_frame_no);
-    iLoadFramesFromSheet(player.walk_right, "MazeExplorer/assests/player/right_rotation.png", 1, walk_frame_no);
-    iLoadFramesFromSheet(player.walk_left, "MazeExplorer/assests/player/left_rotation.png", 1, walk_frame_no);
     iLoadFramesFromSheet(player.death, "MazeExplorer/assests/player/exp/dead.png", 1, 3);
 
     //health bar
@@ -108,10 +104,10 @@ void draw_player()
     iShowImage(35, 740, "MazeExplorer/assests/levels/heart.png");
 
     //diamond bar
-    iShowImage(70, 650, "MazeExplorer/assests/levels/healthbar_under.png");
+    iShowImage(70, 700, "MazeExplorer/assests/levels/healthbar_under.png");
     iSetColor(21, 231, 31);
-    iFilledRectangle(73, 653, diamond_bar_width, 25);
-    iShowImage(40, 640, "MazeExplorer/assests/levels/diamond_icon.png");
+    iFilledRectangle(73, 703, diamond_bar_width, 25);
+    iShowImage(40, 690, "MazeExplorer/assests/levels/diamond_icon.png");
     
 }
 

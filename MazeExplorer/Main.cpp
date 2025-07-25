@@ -37,6 +37,7 @@ void iDraw()
 
     if ((page_no == 0 || trnstn) && !transitioning)
     {
+        iSetTransparentColor(0,0,0,1);
         draw_firstPage();
     }
     else if ((page_no == 1 || menu_trnstn) && !transitioning)
@@ -68,21 +69,9 @@ void iDraw()
         draw_lvl6();
     }
     // settings page
-    else if (page_no == 10)
-    {
-        drawVolumeSlider();
-    }
-
     else if (page_no == 11)
     {
-        if (!input_done)
-        {
-            draw_signup();
-        }
-        else
-        {
-            iText(400, 400, "Player Registered!", GLUT_BITMAP_HELVETICA_18);
-        }
+       draw_signup();
     }
 
     else if ((page_no == 12 || transitioning) && !trnstn && !menu_trnstn)
@@ -125,10 +114,8 @@ function iMouseMove() is called when the user moves the mouse.
 void iMouseMove(int mx, int my)
 {
     // place your codes here
-    if (page_no == 10)
-    {
-        volumeSliderMouseMove(mx, my);
-    }
+    
+    
 }
 
 /*
@@ -137,10 +124,21 @@ function iMouseDrag() is called when the user presses and drags the mouse.
 */
 void iMouseDrag(int mx, int my)
 {
-    if (page_no == 10)
-        isDragging = true;
-    else
-        isDragging = false;
+    if (page_no == 11)
+    {
+        if (dragging_music) {
+        mx = std::max(music_slider_x, std::min(mx, music_slider_x + slider_w));
+        music_volume = (float)(mx - music_slider_x) / slider_w;
+        setMusicVolume(music_volume);
+    }
+        if (dragging_sfx) {
+            mx = std::max(sfx_slider_x, std::min(mx, sfx_slider_x + slider_w));
+            sfx_volume = (float)(mx - sfx_slider_x) / slider_w;
+            setSFXVolume(sfx_volume);
+        }
+        printf("Dragging Music: %d | Dragging SFX: %d | Music Vol: %.2f | SFX Vol: %.2f\n", 
+        dragging_music, dragging_sfx, music_volume, sfx_volume);
+    }
 }
 
 /*
@@ -178,12 +176,66 @@ void iMouse(int button, int state, int mx, int my)
             if (name_len > 0)
             {
                 strcpy(new_player.name, input_name);
-                append_data();
+                //append_data();
                 strcpy(player_name,input_name);
                 input_done = true;
+                if(name_exists(player_name))name_taken=true;
+                //page_no = pre_page;
+            }
+        }
+        else {
+            int char_x = 950, char_y = 300, char_w = 200;
+
+            // Left arrow
+            if (mx >= char_x - 40 && mx <= char_x - 10 && my >= char_y + 90 && my <= char_y + 120) {
+                selected_character = (selected_character - 1 + TOTAL_CHARACTERS) % TOTAL_CHARACTERS;
+                printf("%d",selected_character);
+            }
+
+            // Right arrow
+            if (mx >= char_x + char_w + 10 && mx <= char_x + char_w + 40 && my >= char_y + 90 && my <= char_y + 120) {
+                selected_character = (selected_character + 1) % TOTAL_CHARACTERS;
+                printf("%d",selected_character);
+            }
+
+            // Select Button
+            if (mx >= char_x + 40 && mx <= char_x + 160 && my >= char_y - 50 && my <= char_y - 15) {
+                new_player.selected_character = selected_character;
+            }
+
+            // Done Button
+            if (mx >= button_x && mx <= button_x + button_w + 20 && my >= button_y - 400 && my <= button_y - 400 + button_h + 20) {
+                printf("Done\n");
+                append_data();
                 page_no = pre_page;
             }
         }
+
+    }
+
+    if (page_no==11 && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        // --- Music knob detection ---
+        int cx = music_slider_x + (int)(music_volume * slider_w);
+        int cy = music_slider_y + slider_h / 2;
+        int dx = mx - cx;
+        int dy = my - cy;
+        if (dx * dx + dy * dy <= knob_r * knob_r) {
+            dragging_music = true;
+        }
+
+        // --- SFX knob detection ---
+        cx = sfx_slider_x + (int)(sfx_volume * slider_w);
+        cy = sfx_slider_y + slider_h / 2;
+        dx = mx - cx;
+        dy = my - cy;
+        if (dx * dx + dy * dy <= knob_r * knob_r) {
+            dragging_sfx = true;
+        }
+    }
+
+    if (page_no==11 && button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+        dragging_music = false;
+        dragging_sfx = false;
     }
 
     // back button of leader board
@@ -237,10 +289,11 @@ void iKeyboard(unsigned char key, int state)
             if (!input_done && name_len > 0)
             {
                 strcpy(new_player.name, input_name);
-                append_data();
+                //append_data();
                 strcpy(player_name,input_name);
                 input_done = true;
-                page_no = pre_page;
+                if(name_exists(player_name))name_taken=true;
+                //page_no = pre_page;
             }
         }
         else if (key == '\b')
@@ -367,6 +420,7 @@ void iSpecialKeyboard(unsigned char key, int state)
 int main(int argc, char *argv[])
 {
     glutInit(&argc, argv);
+    iInitializeFont();
     srand(time(0));
     init_sound();
     play_sound("bgm");

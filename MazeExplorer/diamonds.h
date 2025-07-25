@@ -23,13 +23,45 @@ typedef struct {
 Diamond diamonds[MAX_DIAMONDS];
 
 // Position arrays
-int diamond_x[MAX_LEVELS][MAX_DIAMONDS];
-int diamond_y[MAX_LEVELS][MAX_DIAMONDS];
+int diamond_x[MAX_LEVELS][MAX_DIAMONDS] = {0};
+int diamond_y[MAX_LEVELS][MAX_DIAMONDS] = {0};
 
-int x_range_start[6][10] = {{1975,570,550},{640,1315,1915}};//add the start of range x
-int x_range_end[6][10] = {{2175,1780,715},{670,1400,1950}};//add the end of range x
-int y_range_start[6][10] = {{600,200,1570},{1585,1500,2400}};//add the start of range y
-int y_range_end[6][10] = {{970,1800,1675},{1620,1550,2490}};//add the end of range y
+int x_range_start[6][10] = {
+    {1975, 570, 550}, 
+    {640, 2750, 1915}, 
+    {1100, 1650, 2800, 2010, 650}, 
+    {370, 650, -1250, -1350}, 
+    {-640, 25, -995, -700, -1200,-85 }, 
+    {700, -700, -400, 700, 50, 850}
+};
+
+int x_range_end[6][10] = {
+    {2175, 1780, 715}, 
+    {670, 2850, 1950}, 
+    {1150, 1700, 3000, 2200, 700}, 
+    {500, 750, -1100, -1200}, 
+    {-500, 50, -850, 800,160, -100}, 
+    {710, -600, -500, 600, 100, 900}
+};
+
+int y_range_start[6][10] = {
+    {600, 2000, 1570}, 
+    {1585, 250, 2400}, 
+    {400, 1200, 2000, 2390, 1000}, 
+    {20, 910, 100, 990}, 
+    {1125, 290, 2500, 2200, 1200, 1530}, 
+    {400, 3000, 1900, 1000, 2100, 1000}
+};
+
+int y_range_end[6][10] = {
+    {970, 1800, 1675}, 
+    {1620, 1000, 2490}, 
+    {800, 1400, 2100, 2520, 1200}, 
+    {60, 930, 200, 1100}, 
+    {1150, 300, 2600, 2300, 1600, 1660}, 
+    {500, 3200, 2100, 1300, 2500, 1200}
+};
+
 
 vector<int> random_nums;
 
@@ -65,6 +97,7 @@ void generate_random_diamond_positions(int level) {
         int pos_y = y_range_start[level][x] + (rand()% d_y);
         diamond_x[level][i] = pos_x;
         diamond_y[level][i] = pos_y;
+        printf("Diamond pos %d %d %d\n",diamond_x[level][i],diamond_y[level][i],x);
     }
     random_nums.clear();
 }
@@ -74,7 +107,6 @@ void loadDiamonds() {
     int level = current_lvl - 1;
     int count = max_diamonds[level];
 
-    generate_random_diamond_positions(level);
 
     for (int i = 0; i < count; i++) {
         iLoadFramesFromSheet(diamonds[i].frames, "MazeExplorer/assests/levels/diamond.png", 1, 1);

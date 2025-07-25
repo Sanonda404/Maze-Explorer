@@ -27,7 +27,7 @@ void update_highscore(char player_name[], int level, int new_score) {
 
     Player_Info players[100]; // Max 100 players
     int count = 0;
-    while (fscanf(fptr, "%s %d %d %d %d %d %d %d",
+    while (fscanf(fptr, "%s %d %d %d %d %d %d %d %f %f %d",
                   players[count].name,
                   &players[count].max_lvl,
                   &players[count].highscores[0],
@@ -35,7 +35,10 @@ void update_highscore(char player_name[], int level, int new_score) {
                   &players[count].highscores[2],
                   &players[count].highscores[3],
                   &players[count].highscores[4],
-                  &players[count].highscores[5]) == 8) {
+                  &players[count].highscores[5],
+                  &players[count].music_volume,
+                  &players[count].sfx_volume,
+                  &players[count].selected_character) == 11) {
         count++;
     }
     fclose(fptr);
@@ -66,7 +69,7 @@ void update_highscore(char player_name[], int level, int new_score) {
     }
 
     for (int i = 0; i < count; i++) {
-        fprintf(fptr, "%s %d %d %d %d %d %d %d\n",
+        fprintf(fptr, "%s %d %d %d %d %d %d %d %.2f %.2f %d\n",
                 players[i].name,
                 players[i].max_lvl,
                 players[i].highscores[0],
@@ -74,7 +77,10 @@ void update_highscore(char player_name[], int level, int new_score) {
                 players[i].highscores[2],
                 players[i].highscores[3],
                 players[i].highscores[4],
-                players[i].highscores[5]);
+                players[i].highscores[5],
+                players[i].music_volume,
+                players[i].sfx_volume,
+                players[i].selected_character);
     }
 
     fclose(fptr);
@@ -94,15 +100,15 @@ int get_highscore(char player_name[], int level) {
     }
 
     char name[100];
-    int max_lvl, scores[6];
+    int max_lvl, scores[6], selected;
+    float m,s;
 
-    printf("%s",player_name);
 
-    while (fscanf(fptr, "%s %d %d %d %d %d %d %d",
+    while (fscanf(fptr, "%s %d %d %d %d %d %d %d %.2f %.2f %d",
                   name,
                   &max_lvl,
                   &scores[0], &scores[1], &scores[2],
-                  &scores[3], &scores[4], &scores[5]) == 8) {
+                  &scores[3], &scores[4], &scores[5], &m, &s, &selected) == 11) {
         if (strcmp(name, player_name) == 0) {
             fclose(fptr);
             return scores[level - 1];  // level is 1-based

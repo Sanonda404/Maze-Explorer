@@ -33,8 +33,19 @@ void lvl1_load_resources()
 
 void draw_lvl1()
 {
-    //iShowImage(start_x,start_y, "MazeExplorer/assests/levels/bg1.png");
+    glBindTexture(GL_TEXTURE_2D, 0);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
+    glColor4f(1.0, 1.0, 1.0, 1.0);
+    //iShowImage(start_x,start_y, "MazeExplorer/assests/levels/bg1.png");
+    //iSetColor(40,45,25);
+    //iFilledRectangle(0,0,1400,800);
     
     maze1.x = start_x1 + (player_x-player_relative_x);
     maze1.y = start_y1 + player_y -player_relative_y;
@@ -82,6 +93,7 @@ void check_collision1()
 
     //checking if enters exit portal
     if(iCheckCollision(&exit_portal1, &player.sprite)){
+        if(diamond_collected!=max_diamonds[current_lvl-1])return;
         level_completed();
     }
 
