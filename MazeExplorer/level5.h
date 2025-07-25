@@ -87,6 +87,7 @@ void check_collision5()
 
     if (iCheckCollision(&exit_portal5, &player.sprite))
     {
+        if(diamond_collected!=max_diamonds[current_lvl-1])return;
         level_completed();
     }
 

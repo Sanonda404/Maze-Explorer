@@ -19,18 +19,23 @@ void init_sound()
 void play_sound(string sound_name)
 {
     if(sound_name == "bgm"){
-        bg_music = iPlaySound("MazeExplorer/assests/music/bgm.wav", true, music_volume*0.8);
+        bg_music = iPlaySound("MazeExplorer/assests/music/bgm.wav", true, music_volume*70);
     }
     else if(sound_name == "lost"){
-        iPlaySound("MazeExplorer/assests/music/lost.wav", false, music_volume);
+        iPlaySound("MazeExplorer/assests/music/lost.wav", false, sfx_volume);
     }
     else if(sound_name == "won"){
-        iPlaySound("MazeExplorer/assests/music/victory.wav", false, music_volume);
+        iPlaySound("MazeExplorer/assests/music/victory.wav", false, sfx_volume);
     }
     else if(sound_name == "shoot"){
-        iPlaySound("MazeExplorer/assests/music/shoot.wav", false, music_volume);
+        iPlaySound("MazeExplorer/assests/music/shoot.wav", false, sfx_volume);
     }
     else if(sound_name == "hurt"){
-        iPlaySound("MazeExplorer/assests/music/hurt.wav", false, music_volume);
+        iPlaySound("MazeExplorer/assests/music/hurt.wav", false, sfx_volume);
     }
+}
+
+void update_volume()
+{
+    iSetVolume(bg_music,music_volume*70);
 }

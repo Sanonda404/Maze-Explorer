@@ -126,6 +126,7 @@ void iMouseDrag(int mx, int my)
 {
     if (page_no == 11)
     {
+        update_volume();
         if (dragging_music) {
         mx = std::max(music_slider_x, std::min(mx, music_slider_x + slider_w));
         music_volume = (float)(mx - music_slider_x) / slider_w;
@@ -136,8 +137,8 @@ void iMouseDrag(int mx, int my)
             sfx_volume = (float)(mx - sfx_slider_x) / slider_w;
             setSFXVolume(sfx_volume);
         }
-        printf("Dragging Music: %d | Dragging SFX: %d | Music Vol: %.2f | SFX Vol: %.2f\n", 
-        dragging_music, dragging_sfx, music_volume, sfx_volume);
+        //printf("Dragging Music: %d | Dragging SFX: %d | Music Vol: %.2f | SFX Vol: %.2f\n", 
+        //dragging_music, dragging_sfx, music_volume, sfx_volume);
     }
 }
 

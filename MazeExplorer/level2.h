@@ -95,6 +95,7 @@ void check_collision2()
     // checking if enters exit portal
     if (iCheckCollision(&exit_portal2, &player.sprite))
     {
+        if(diamond_collected!=max_diamonds[current_lvl-1])return;
         level_completed();
     }
 
