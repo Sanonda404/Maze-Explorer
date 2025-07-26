@@ -33,8 +33,8 @@ void lvl1_load_resources()
     iSetSpritePosition(&exit_portal1, end_x1, end_y1);
 
     //teleportation_portal
-    //load_portal();
-    //generate_portal_position(start_x1,end_x1,start_y1,end_y1);
+    load_portal();
+    generate_portal_position(start_x1,end_x1,start_y1,end_y1,&maze1);
     
 }
 
@@ -68,7 +68,7 @@ void draw_lvl1()
     iShowSprite(&maze1);
     iShowSprite(&mazeblur1);
 
-    //draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
+    draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
     
 }
 

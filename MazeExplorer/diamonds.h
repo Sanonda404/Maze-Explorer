@@ -1,9 +1,11 @@
 #ifndef DIAMONDS_H
 #define DIAMONDS_H
+
 #include "iGraphics.h"
-#include <stdlib.h> // for rand
-#include <ctime>   // for time
-#include <bits/stdc++.h>
+#include <cstdlib>
+#include <ctime>
+#include <cstring>
+#include <unordered_set>
 
 #define MAX_LEVELS 6
 #define MAX_DIAMONDS 10 // max per level
@@ -22,10 +24,11 @@ typedef struct {
 
 Diamond diamonds[MAX_DIAMONDS];
 
-// Position arrays
+// Store diamond positions
 int diamond_x[MAX_LEVELS][MAX_DIAMONDS] = {0};
 int diamond_y[MAX_LEVELS][MAX_DIAMONDS] = {0};
 
+// Ranges (hardcoded per level)
 int x_range_start[6][10] = {
     {1975, 570, 550}, 
     {640, 2750, 1915}, 
@@ -62,57 +65,54 @@ int y_range_end[6][10] = {
     {500, 3200, 2100, 1300, 2500, 1200}
 };
 
+std::unordered_set<int> used_indices;
 
-vector<int> random_nums;
-
-//
-bool check_exists(int n){
-    for(int i=0; i<random_nums.size(); i++){
-        if(random_nums[i]==n)return true;
-    }
-    return false;
-}
-
-int generate_random_number(int n){
-    int x = rand()%n;
-    while(check_exists(x)){
-        x=rand()%n;
-    }
-    random_nums.push_back(x);
+int generate_unique_random_index(int max) {
+    int tries = 0;
+    int x;
+    do {
+        x = rand() % max;
+        tries++;
+    } while (used_indices.count(x) && tries < 100);
+    used_indices.insert(x);
     return x;
 }
 
 void generate_random_diamond_positions(int level) {
+    used_indices.clear();
+
     int count = max_diamonds[level];
-    int range = 0;
+    int valid_ranges = 0;
     for (int i = 0; i < 10; i++) {
-    if (x_range_end[level][i] > x_range_start[level][i])
-        range++;
+        if (x_range_end[level][i] > x_range_start[level][i]) {
+            valid_ranges++;
+        }
     }
-    for(int i=0; i<count; i++){
-       int x = generate_random_number(range);
-        int d_x = (x_range_end[level][x]-x_range_start[level][x]);
-        int pos_x = x_range_start[level][x] + (rand()% d_x);
-        int d_y = (y_range_end[level][x]-y_range_start[level][x]);
-        int pos_y = y_range_start[level][x] + (rand()% d_y);
+
+    for (int i = 0; i < count; i++) {
+        int rand_index = generate_unique_random_index(valid_ranges);
+
+        int dx = x_range_end[level][rand_index] - x_range_start[level][rand_index];
+        int dy = y_range_end[level][rand_index] - y_range_start[level][rand_index];
+
+        int pos_x = x_range_start[level][rand_index] + rand() % dx;
+        int pos_y = y_range_start[level][rand_index] + rand() % dy;
+
         diamond_x[level][i] = pos_x;
         diamond_y[level][i] = pos_y;
-        printf("Diamond pos %d %d %d\n",diamond_x[level][i],diamond_y[level][i],x);
-    }
-    random_nums.clear();
-}
 
+        printf("Diamond %d at: x=%d y=%d (index %d)\n", i, pos_x, pos_y, rand_index);
+    }
+}
 
 void loadDiamonds() {
     int level = current_lvl - 1;
     int count = max_diamonds[level];
 
-
     for (int i = 0; i < count; i++) {
         iLoadFramesFromSheet(diamonds[i].frames, "MazeExplorer/assests/levels/diamond.png", 1, 1);
         iInitSprite(&diamonds[i].sprite);
         iChangeSpriteFrames(&diamonds[i].sprite, diamonds[i].frames, 1);
-
         iSetSpritePosition(&diamonds[i].sprite, diamond_x[level][i], diamond_y[level][i]);
         iScaleSprite(&diamonds[i].sprite, 0.5);
         diamonds[i].is_visible = 1;

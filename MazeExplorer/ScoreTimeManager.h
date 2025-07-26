@@ -50,8 +50,8 @@ void update_highscore(char player_name[], int level, int new_score) {
             if (new_score > players[i].highscores[level - 1]) {
                 players[i].highscores[level - 1] = new_score;
             }
-            if (level > players[i].max_lvl) {
-                players[i].max_lvl = level;
+            if ((level+1) > players[i].max_lvl) {
+                players[i].max_lvl = min(level+1,6);
             }
             break;
         }

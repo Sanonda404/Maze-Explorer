@@ -6,7 +6,7 @@ int time_passed = 0;
 
 void update_time()
 {
-    time_passed += 50;
+    time_passed += 10;
     
 }
 

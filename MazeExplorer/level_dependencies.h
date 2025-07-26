@@ -376,4 +376,91 @@ void reset_collisions()
     collision_up = false;
 }
 
+bool portal_collision(Sprite *portal)
+{
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(portal, &obstacles[j].sprite))
+        {
+            return true;
+        }
+    }
+
+    // level 3 & 4
+    // checking if faces spike
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(portal, &obstacles[j].sprite))
+        {
+            return true;
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(portal, &roller[j].sprite))
+        {
+            return true;
+        }
+    }
+
+    // level 5
+    // checking if faces spike
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(portal, &obstacles[j].sprite))
+        {
+            return true;
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(portal, &roller[j].sprite))
+        {
+            return true;
+        }
+    }
+    // checking if faces explosion
+    for (int j = 0; j < Explosion_NO; j++)
+    {
+        if (iCheckCollision(portal, &explosion[j].sprite))
+        {
+            return true;
+        }
+    }
+
+    // level 6
+    for (int j = 0; j < OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(portal, &obstacles[j].sprite))
+        {
+            return true;
+        }
+    }
+    // checking if faces roller
+    for (int j = 0; j < ROLLER_NO; j++)
+    {
+        if (iCheckCollision(portal, &roller[j].sprite))
+        {
+            return true;
+        }
+    }
+    // checking if faces explosion
+    for (int j = 0; j < Explosion_NO; j++)
+    {
+        if (iCheckCollision(portal, &explosion[j].sprite))
+        {
+            return true;
+        }
+    }
+    // cheaking if faces blades
+    for (int j = 0; j < LEVEL6_OBSTACLE_COUNT; j++)
+    {
+        if (iCheckCollision(portal, &level6_obstacles[j].sprite))
+        {
+            return true;
+        }
+    }
+}
 #endif
