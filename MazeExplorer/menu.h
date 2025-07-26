@@ -39,6 +39,7 @@ void menu_play_transition()
     menu_trnstn_timer--;
     if(menu_trnstn_timer<=0){
         menu_trnstn = false;
+        menu_trnstn_timer = 25;
         r=0;
     }
     r+=60;
@@ -56,6 +57,8 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 2;
             current_lvl = 1;
             generate_random_diamond_positions(0);
+            loadPlayer();
+            reload();
     }
     //for level 2
     else if(menu_clac_dis(c_x[1],mx,c_y[1],my)<=radius){
@@ -65,6 +68,8 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 3;
             current_lvl = 2;
             generate_random_diamond_positions(1);
+            loadPlayer();
+            reload();
     }
     //for level 3
     else if(menu_clac_dis(c_x[2],mx,c_y[2],my)<=radius){
@@ -74,6 +79,8 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 4;
             current_lvl = 3;
             generate_random_diamond_positions(2);
+            loadPlayer();
+            reload();
     }
     //for level 4
     else if(menu_clac_dis(c_x[3],mx,c_y[3],my)<=radius){
@@ -83,6 +90,8 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 5;
             current_lvl = 4;
             generate_random_diamond_positions(3);
+            loadPlayer();
+            reload();
     }
     //for level 5
     else if(menu_clac_dis(c_x[4],mx,c_y[4],my)<=radius){
@@ -92,6 +101,8 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 6;
             current_lvl = 5;
             generate_random_diamond_positions(4);
+            loadPlayer();
+            reload();
     }
     //for level 6
     else if(menu_clac_dis(c_x[5],mx,c_y[5],my)<=radius){
@@ -101,5 +112,12 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 7;
             current_lvl = 6;
             generate_random_diamond_positions(5);
+            loadPlayer();
+            reload();
+    }
+    else if(menu_clac_dis(78,mx,75,my)<=40){
+        menu_trnstn = true;
+        index = 0;
+        page_no = 0;
     }
 }

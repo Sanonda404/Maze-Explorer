@@ -58,8 +58,8 @@ const char* explosion_frame_paths[Explosion_NO][EXPLOSION_FRAME_COUNT] = {
     
     
 };
-int level6_obstacle_x[Level_COUNT-5][LEVEL6_OBSTACLE_COUNT] = {{-700,-460,750,260,320,500}};
-int level6_obstacle_y[Level_COUNT-5][LEVEL6_OBSTACLE_COUNT]= {{1200,1460,1620,2500,2755,3935}};
+int level6_obstacle_x[Level_COUNT-5][LEVEL6_OBSTACLE_COUNT] = {{1660,-640,1950,280,320,2275}};
+int level6_obstacle_y[Level_COUNT-5][LEVEL6_OBSTACLE_COUNT]= {{1150,1460,3370,2500,2700,1885}};
     
 
 const char* level6_obstacle_paths[LEVEL6_OBSTACLE_COUNT] = {
@@ -79,15 +79,15 @@ const char* level6_obstacle_paths[LEVEL6_OBSTACLE_COUNT] = {
 // X and Y positions of rollers per level
 int explosion_x[Level_COUNT-4][Explosion_NO] = {
  
-    {-1400, -800},
-    {420, -120}
+    {-1400, -820},
+    {1420, -120}
     
 };
 
 int explosion_y[Level_COUNT-4][Explosion_NO] = {
     
-    {460, 2300},
-    {3480, 950}
+    {350, 2410},
+    {400, 950}
     
 };
 

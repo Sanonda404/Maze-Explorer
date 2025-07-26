@@ -6,6 +6,7 @@
 #include "ScoreTimeManager.h"
 #include "MazeExplorer/level_dependencies.h"
 #include "MazeExplorer/diamonds.h"
+#include "MazeExplorer/Signup.h"
 
 int speed = 15;
 
@@ -60,16 +61,23 @@ typedef struct
 
 Player player;
 
+char sprites[4][50];
+
 void loadPlayer()
 {
+    printf("%d",new_player.selected_character);
+    sprintf(sprites[0],"MazeExplorer/assests/player/character%d_down.png",new_player.selected_character);//down
+    sprintf(sprites[1],"MazeExplorer/assests/player/character%d_up.png",new_player.selected_character);//up
+    sprintf(sprites[2],"MazeExplorer/assests/player/character%d_right.png",new_player.selected_character);//right
+    sprintf(sprites[3],"MazeExplorer/assests/player/character%d_left.png",new_player.selected_character);//left
 
     load_bullet();
 
-    iLoadFramesFromSheet(player.idle_down, "MazeExplorer/assests/player/character_down.png", 1, idle_frame_no);
-    iLoadFramesFromSheet(player.idle_up, "MazeExplorer/assests/player/character_up.png", 1, idle_frame_no);
-    iLoadFramesFromSheet(player.idle_right, "MazeExplorer/assests/player/character_right.png", 1, idle_frame_no);
-    iLoadFramesFromSheet(player.idle_left, "MazeExplorer/assests/player/character_left.png", 1, idle_frame_no);
-    iLoadFramesFromSheet(player.death, "MazeExplorer/assests/player/exp/dead.png", 1, 3);
+    iLoadFramesFromSheet(player.idle_down, sprites[0], 1, idle_frame_no);
+    iLoadFramesFromSheet(player.idle_up, sprites[1], 1, idle_frame_no);
+    iLoadFramesFromSheet(player.idle_right, sprites[2], 1, idle_frame_no);
+    iLoadFramesFromSheet(player.idle_left, sprites[3], 1, idle_frame_no);
+    iLoadFramesFromSheet(player.death, sprites[3], 1, 3);
 
     //health bar
     iLoadImage(&heart, "MazeExplorer/assests/levels/heart.png");

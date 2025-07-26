@@ -3,6 +3,7 @@
 #include "MazeExplorer/player.h"
 #include "MazeExplorer/monster.h"
 #include "MazeExplorer/time.h"
+#include "MazeExplorer/teleportation_portal.h"
 
 Image  mazeframes1[1], lvl1blur1[1], exitframes1[1];
 Sprite maze1, mazeblur1, exit_portal1;
@@ -11,6 +12,8 @@ int start_x1 = 500, start_y1 = 140, end_x1 = 2440, end_y1 = 2000;
 
 void lvl1_load_resources()
 {
+    iSetColor(0,0,0);
+    iFilledRectangle(0,0,3000,3000);
     //maze
     iLoadFramesFromSheet(mazeframes1, "MazeExplorer/assests/levels/lvl1f.png",1,1);
     iInitSprite(&maze1);
@@ -28,6 +31,10 @@ void lvl1_load_resources()
     iInitSprite(&exit_portal1);
     iChangeSpriteFrames(&exit_portal1, exitframes1, 1);
     iSetSpritePosition(&exit_portal1, end_x1, end_y1);
+
+    //teleportation_portal
+    //load_portal();
+    //generate_portal_position(start_x1,end_x1,start_y1,end_y1);
     
 }
 
@@ -60,6 +67,8 @@ void draw_lvl1()
 
     iShowSprite(&maze1);
     iShowSprite(&mazeblur1);
+
+    //draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
     
 }
 

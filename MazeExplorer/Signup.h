@@ -52,11 +52,11 @@ int selected_character = 0;
 int character_img_ids[TOTAL_CHARACTERS];
 Image chars[5];
 const char *char_paths[5] = {
-    "MazeExplorer/assests/player/character_down.png",
+    "MazeExplorer/assests/player/character0_down.png",
     "MazeExplorer/assests/player/character1_down.png",
     "MazeExplorer/assests/player/character2_down.png",
     "MazeExplorer/assests/player/character3_down.png",
-    "MazeExplorer/assests/player/character_down.png"};
+    "MazeExplorer/assests/player/character4_up.png"};
 
 void load_characters()
 {
@@ -71,17 +71,8 @@ const char *font_title = "MazeExplorer/assests/fonts/Pacifico-Regular.ttf";
 const char *font_label = "MazeExplorer/assests/fonts/Poppins-Regular.ttf";
 const char *font_button = "MazeExplorer/assests/fonts/Roboto-Bold.ttf";
 
-//==================== Sound Hooks ======================
-void setMusicVolume(float v)
-{
-    // implement your audio engine hook here
-}
-void setSFXVolume(float v)
-{
-    // implement your audio engine hook here
-}
 
-//==================== Name Existence Check ======================
+//checking if name exists
 bool name_exists(char name[])
 {
     FILE *fptr = fopen("MazeExplorer/saves/info.txt", "r");

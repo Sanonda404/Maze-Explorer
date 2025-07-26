@@ -105,6 +105,11 @@ void animate()
         leaderboard_transition(page_no);
 
     animate_levels();
+
+    if(lvl_completed){
+        update_typing_animation();
+        reveal_buttons_step();
+    }
 }
 
 /*
@@ -114,7 +119,7 @@ function iMouseMove() is called when the user moves the mouse.
 void iMouseMove(int mx, int my)
 {
     // place your codes here
-    
+    if(lvl_completed)level_complete_mouse_move(mx,my);
     
 }
 
@@ -130,12 +135,10 @@ void iMouseDrag(int mx, int my)
         if (dragging_music) {
         mx = std::max(music_slider_x, std::min(mx, music_slider_x + slider_w));
         music_volume = (float)(mx - music_slider_x) / slider_w;
-        setMusicVolume(music_volume);
     }
         if (dragging_sfx) {
             mx = std::max(sfx_slider_x, std::min(mx, sfx_slider_x + slider_w));
             sfx_volume = (float)(mx - sfx_slider_x) / slider_w;
-            setSFXVolume(sfx_volume);
         }
         //printf("Dragging Music: %d | Dragging SFX: %d | Music Vol: %.2f | SFX Vol: %.2f\n", 
         //dragging_music, dragging_sfx, music_volume, sfx_volume);
@@ -166,6 +169,7 @@ void iMouse(int button, int state, int mx, int my)
         {
             music_volume = check_ok_pressed(volume, mx, my, page_no, pre_page);
         }
+        if(lvl_completed)level_complete_mouse_click(mx,my);
     }
     // ok button of settings
     if (page_no == 11 && button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
@@ -209,6 +213,7 @@ void iMouse(int button, int state, int mx, int my)
                 printf("Done\n");
                 append_data();
                 page_no = pre_page;
+                printf("%d\n",new_player.selected_character);
             }
         }
 

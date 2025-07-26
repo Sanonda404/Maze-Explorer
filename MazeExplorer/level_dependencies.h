@@ -7,6 +7,7 @@
 #include "time.h"
 #include "MazeExplorer/obstacles.h"
 #include "MazeExplorer/leaderboard.h"
+#include "MazeExplorer/level_completed.h"
 
 int SCREEN_WIDTH = 1400, SCREEN_HEIGHT = 800;
 
@@ -67,8 +68,7 @@ void draw_levels()
     iShowImage(SCREEN_WIDTH-900,SCREEN_HEIGHT-700, "MazeExplorer/assests/levels/help.png");
 
     if(lvl_completed){
-        iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lvl_completed.png");
-        display_highscore(700,500, current_lvl);
+        draw_level_complete_screen();
     }
     if(!is_alive){
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lost.png");
@@ -90,6 +90,9 @@ void reload()
     diamond_collected = 0;
     diamond_bar_width = 0;
 
+    loadPlayer();
+    loadDiamonds();
+
     reset_monsters();
 }
 
@@ -106,9 +109,9 @@ void level_completed()
     if(lvl_completed)return;
     lvl_completed = true;
     calc_score(time_passed, health, current_lvl, player_name);
-    printf("won %s\n",player_name);
+    printf("won %s %d %d\n",player_name,score[current_lvl-1],highscore);
     play_sound("won");
-    
+    start_level_complete_screen(score[current_lvl-1],highscore,current_lvl);
 }
 
 void check_help_buttons(int mx, int my)
@@ -135,14 +138,15 @@ bool check_paused_pressed(int mx, int my)
 void check_lvl_completed_buttons(int mx, int my, int &page_no)
 {
     if(!lvl_completed)return;
-    if(lvl_completed)printf("lvls");
-    if(mx>=560 && mx<=800 && my>=450 && my<=500){
+    int idx = level_complete_mouse_click(mx,my);
+    if(idx==-1)return;
+    if(idx==0){
         printf("next lvl");
         next_level();
     }
     //highscores
-    else if(mx>=560 && mx<=800 && my>=370 && my<=420){
-        pre_page = 1;
+    else if(idx==2){
+        pre_page = page_no;
         printf("Highscores");
         page_no = 12;
         player_count = load_players();   
@@ -150,11 +154,12 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
         generate_leaderboard(current_level2);
     }
     //menu
-    else if(mx>=560 && mx<=800 && my>=350 && my<=300){
+    else if(idx==1){
+        printf("Menu\n");
         page_no = 1;
     }
     //exit
-    else if(mx>=560 && mx<=800 && my>=280 && my<=230){
+    else if(idx==3){
         exit(0);
     }
 }
@@ -188,6 +193,7 @@ void check_pause_buttons(int mx, int my, int &page_no)
     }
     //help
     else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-20 && my<=SCREEN_HEIGHT/2+30){
+        help_showed = true;
         printf("help");
     }
     //Settings
@@ -198,7 +204,7 @@ void check_pause_buttons(int mx, int my, int &page_no)
     }
     //exit
     else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-170 && my<=SCREEN_HEIGHT/2-120){
-        exit(0);
+        page_no=1;
     }
 }
 

@@ -98,10 +98,11 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
             pre_page = 0;
     }
     //for Settings button
-     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*+btn_size){
+     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*2+btn_size){
+            printf("Settings!");
             trnstn = true;
             page_no=11;
-            pre_page = 1;
+            pre_page = 0;
             
     }
      //for exit button

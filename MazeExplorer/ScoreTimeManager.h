@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 int highscore = 0;
 
-int score[] = {1000, 1200, 1500, 2000, 2500, 3500};
+int score[] = {2000, 3200, 3500, 4000, 4500, 5500};
 
 void update_score(string type, int current_lvl)
 {
@@ -58,7 +58,7 @@ void update_highscore(char player_name[], int level, int new_score) {
     }
 
     if (!found) {
-        printf("Player not found.\n");
+        printf("XXPlayer not found.\n");
         return;
     }
 
@@ -100,25 +100,30 @@ int get_highscore(char player_name[], int level) {
     }
 
     char name[100];
-    int max_lvl, scores[6], selected;
-    float m,s;
+    int max_lvl, scores[6], selected_char;
+    float music, sfx;
 
-
-    while (fscanf(fptr, "%s %d %d %d %d %d %d %d %.2f %.2f %d",
+    while (fscanf(fptr, "%s %d %d %d %d %d %d %d %f %f %d",
                   name,
                   &max_lvl,
                   &scores[0], &scores[1], &scores[2],
-                  &scores[3], &scores[4], &scores[5], &m, &s, &selected) == 11) {
+                  &scores[3], &scores[4], &scores[5],
+                  &music, &sfx, &selected_char) == 11) {
+
+        // Debug print
+        // printf("Looking for [%s], Found [%s]\n", player_name, name);
+
         if (strcmp(name, player_name) == 0) {
             fclose(fptr);
-            return scores[level - 1];  // level is 1-based
+            return scores[level - 1]; // 1-based level
         }
     }
 
     fclose(fptr);
-    printf("Player not found.\n");
+    printf("Player '%s' not found in file.\n", player_name);
     return -1;
 }
+
 
 void calc_score(int time, int health, int current_lvl, char player_name[])
 {
@@ -126,6 +131,7 @@ void calc_score(int time, int health, int current_lvl, char player_name[])
     score[current_lvl-1]  -= (100-health)*5;
     score[current_lvl-1]  = max(10,score[current_lvl-1]);
     highscore = get_highscore(player_name,current_lvl);
+    printf("iS %d",get_highscore("Sanonda",1));
     if(score[current_lvl-1]>highscore){
         update_highscore(player_name,current_lvl,score[current_lvl-1]);
         highscore = score[current_lvl-1];

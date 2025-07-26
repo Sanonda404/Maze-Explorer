@@ -59,16 +59,16 @@ const char* roller_frame_paths[ROLLER_NO][ROLLER_FRAME_COUNT] = {
 // X and Y positions of rollers per level
 int roller_x[LEVEL_COUNT-2][ROLLER_NO] = {
  
-    {1220, 1850, 2640},
-    {-1150, -250,  -30},
-    {-1150,-1440, 940},
-    {40, 960, 230}
+    {1280, 1800, 2640},
+    {-1150, -270,  -30},
+    {-1150,-1440, 970},
+    {50, 980, 230}
 };
 
 int roller_y[LEVEL_COUNT][ROLLER_NO] = {
     
-    {680, 1855, 3550},
-    {570, 1700, 820},
+    {660, 1855, 3550},
+    {570, 1720, 820},
     {815, 2300, 1280},
     {1920, 740, 3800}
 };

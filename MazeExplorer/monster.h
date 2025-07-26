@@ -11,8 +11,8 @@
 
 void load_monsters(int level)
 {
-    loadBats();
-    loadSlimes();
+    //loadBats();
+    //loadSlimes();
     loadDiamonds();
     loadSpikeObstacles(level) ;
     loadRollerObstacles( level);
@@ -21,8 +21,8 @@ void load_monsters(int level)
 
 void draw_monsters(int x, int y,int level)
 {
-    draw_bats(x,y);
-    drawSlimes(x,y);
+    //draw_bats(x,y);
+    //drawSlimes(x,y);
     draw_diamonds(x,y);
     draw_SpikeObstacles(x,y,level) ;
     drawRollerObstacles(x, y,  level);
@@ -31,8 +31,8 @@ void draw_monsters(int x, int y,int level)
 
 void animate_monsters(int level)
 {
-    bats_animate();
-    animateSlimes();
+    //bats_animate();
+    //animateSlimes();
     animateRollerObstacles() ;
     animateExplosionObstacles() ;
     
@@ -40,13 +40,13 @@ void animate_monsters(int level)
 
 void move_monsters(int player_x, int player_y)
 {
-    moveSlimesToward(player_x, player_y);
+   // moveSlimesToward(player_x, player_y);
 }
 
 void reset_monsters()
 {
-    reset_bats();
-    reset_slimes();
+    //reset_bats();
+   // reset_slimes();
     reset_diamonds();
 }
 
