@@ -76,10 +76,8 @@ void play_transition()
 
 void fs_check_button_pressed(int mx, int my, int &page_no)
 {
-    printf("%d %d\n",mx,my);
     //for play button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y && my<=y+300){
-            //printf("Play");
             if(player_name[0]=='\0'){
                 page_no = 11;
                 pre_page = 1;
@@ -89,9 +87,7 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
     }
     //for leaderboard button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*1 && my<=y-(btn_size+offset)*1+btn_size){
-            //printf("Play");
             trnstn = true;
-            printf("Highscores");
             page_no = 12;
             player_count = load_players();               
             generate_leaderboard(current_level2);
@@ -99,7 +95,6 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
     }
     //for Settings button
      if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*2+btn_size){
-            printf("Settings!");
             trnstn = true;
             page_no=11;
             pre_page = 0;
@@ -108,7 +103,6 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
      //for exit button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*3 && my<=y-(btn_size+offset)*3+btn_size){
             trnstn = true;
-            printf("Exit");
             exit(0);
     }
 }

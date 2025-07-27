@@ -1,7 +1,7 @@
 #include "iGraphics.h"
 #include "MazeExplorer/level_dependencies.h"
 
-Image lvl_map;
+Image lvl_map[6];
 
 int c_x[] = {125,370,605,860,1113,1151};
 int c_y[] = {218,440,200,330,500,130};
@@ -16,12 +16,19 @@ bool menu_trnstn = false;
 
 void menu_load_resources()
 {
-    iLoadImage(&lvl_map, "MazeExplorer/assests/levels/levelmap.png");
+    for(int i=0; i<6; i++){
+        char src[100] ;
+        sprintf(src,"MazeExplorer/assests/levels/levelmap%d.png",i+1);
+        iLoadImage(&lvl_map[i], src);
+    }
+    
 }
 
 void draw_menu()
 {
-    iShowImage(0,0,"MazeExplorer/assests/levels/levelmap.png");
+    char src[100];
+    sprintf(src,"MazeExplorer/assests/levels/levelmap%d.png",max_lvl);
+    iShowImage(0,0,src);
 
     if(menu_trnstn){
         iSetColor(0,0,0);
@@ -62,6 +69,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     }
     //for level 2
     else if(menu_clac_dis(c_x[1],mx,c_y[1],my)<=radius){
+        if(max_lvl<2)return;
             printf("Level 2\n");
             menu_trnstn = true;
             index = 1;
@@ -73,6 +81,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     }
     //for level 3
     else if(menu_clac_dis(c_x[2],mx,c_y[2],my)<=radius){
+        if(max_lvl<3)return;
             printf("Level 3\n");
             menu_trnstn = true;
             index = 2;
@@ -84,6 +93,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     }
     //for level 4
     else if(menu_clac_dis(c_x[3],mx,c_y[3],my)<=radius){
+        if(max_lvl<4)return;
             printf("Level 4\n");
             menu_trnstn = true;
             index = 3;
@@ -95,6 +105,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     }
     //for level 5
     else if(menu_clac_dis(c_x[4],mx,c_y[4],my)<=radius){
+        if(max_lvl<5)return;
             printf("Level 5\n");
             menu_trnstn = true;
             index = 4;
@@ -106,6 +117,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     }
     //for level 6
     else if(menu_clac_dis(c_x[5],mx,c_y[5],my)<=radius){
+        if(max_lvl<6)return;
             printf("Level 6\n");
             menu_trnstn = true;
             index = 5;

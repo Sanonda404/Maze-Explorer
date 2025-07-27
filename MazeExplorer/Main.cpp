@@ -184,7 +184,10 @@ void iMouse(int button, int state, int mx, int my)
                 //append_data();
                 strcpy(player_name,input_name);
                 input_done = true;
-                if(name_exists(player_name))name_taken=true;
+                if(name_exists(player_name)){
+                    name_taken=true;
+                    update_volume();
+                }
                 //page_no = pre_page;
             }
         }
@@ -212,6 +215,7 @@ void iMouse(int button, int state, int mx, int my)
             if (mx >= button_x && mx <= button_x + button_w + 20 && my >= button_y - 400 && my <= button_y - 400 + button_h + 20) {
                 printf("Done\n");
                 append_data();
+                max_lvl = max_lvl2;
                 page_no = pre_page;
                 printf("%d\n",new_player.selected_character);
             }
@@ -298,7 +302,10 @@ void iKeyboard(unsigned char key, int state)
                 //append_data();
                 strcpy(player_name,input_name);
                 input_done = true;
-                if(name_exists(player_name))name_taken=true;
+                if(name_exists(player_name)){
+                    name_taken=true;
+                    update_volume();
+                }
                 //page_no = pre_page;
             }
         }

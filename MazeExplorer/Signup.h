@@ -28,6 +28,8 @@ bool returning_player = false;
 char input_name[100];
 int name_len = 0;
 
+int max_lvl2=1;
+
 int button_x = 600, button_y = 500, button_w = 100, button_h = 40;
 
 //==================== Volume Settings ======================
@@ -50,7 +52,7 @@ bool appended_data = false;
 const int TOTAL_CHARACTERS = 5;
 int selected_character = 0;
 int character_img_ids[TOTAL_CHARACTERS];
-Image chars[5];
+Image chars[5], sign_bg;
 const char *char_paths[5] = {
     "MazeExplorer/assests/player/character0_down.png",
     "MazeExplorer/assests/player/character1_down.png",
@@ -60,6 +62,7 @@ const char *char_paths[5] = {
 
 void load_characters()
 {
+    iLoadImage(&sign_bg, "MazeExplorer/assests/bg_purple.png");
     for (int i = 0; i < TOTAL_CHARACTERS; i++)
     {
         character_img_ids[i] = iLoadImage(&chars[i], char_paths[i]);
@@ -92,6 +95,7 @@ bool name_exists(char name[])
         {
             strcpy(new_player.name, existing_name);
             new_player.max_lvl = level;
+            max_lvl2 = new_player.max_lvl;
             memcpy(new_player.highscores, hs, sizeof(hs));
             new_player.music_volume = mv;
             new_player.sfx_volume = sv;
@@ -207,8 +211,9 @@ void append_data()
 void draw_signup()
 {
     // Background
-    iSetColor(50, 10, 10);
-    iFilledRectangle(0, 0, 1400, 800);
+   // iSetColor(50, 10, 10);
+   // iFilledRectangle(0, 0, 1400, 800);
+   iShowImage(0,0,"MazeExplorer/assests/bg_purple.png");
 
     // === Volume Animation Logic ===
     if (dragging_music)
@@ -256,10 +261,10 @@ void draw_signup()
 
     // OK Button
     if(!input_done){
-        iSetColor(80, 255, 100);
+        iSetColor(255, 182, 193);
         for (int r = 0; r < 3; r++)
             iRectangle(button_x - r, button_y - r, button_w + r * 2, button_h + r * 2);
-        iSetColor(50, 205, 50);
+        iSetColor(255, 174, 66);
         iFilledRectangle(button_x, button_y, button_w, button_h);
         iSetColor(0, 0, 0);
         iShowText(button_x + 28, button_y + 10, "OK", font_button, 22);
@@ -292,14 +297,14 @@ void draw_signup()
         // Select Button
         // Select / Selected Button
         bool is_current = (selected_character == new_player.selected_character);
-        iSetColor(is_current ? 100 : 80, is_current ? 255 : 200, is_current ? 100 : 255);
+        iSetColor(is_current ? 255 : 221, is_current ? 174 : 160, is_current ? 66: 221);
         iFilledRectangle(char_x + 40, char_y - 50, 120, 35);
         iSetColor(0, 0, 0);
         iShowText(char_x + 50, char_y - 42, is_current ? "Selected" : "Select", font_button, 20);
 
         // Done Button
         iSetColor(80, 255, 100);
-        iSetColor(50, 205, 50);
+        iSetColor(255, 174, 66);
         iFilledRectangle(button_x, button_y-400, button_w+20, button_h+20);
         iSetColor(0, 0, 0);
         iShowText(button_x + 28, button_y -400 + 20, "Done", font_button, 30); 

@@ -4,86 +4,126 @@
 #include "iGraphics.h"
 #include "MazeExplorer/player.h"
 #include <cstdlib>
-#include <stdlib.h> // for rand
-#include <ctime>   // for time
+#include <ctime>
 #include "MazeExplorer/level_dependencies.h"
 
-Image teleportation_portal[1];
-Sprite teleportation_portal_collision,portal;
+Image teleportation_portal_frames[1];
+Sprite portal, teleportation_portal_collision, *maze_sprite;
 
-const int teleportation_portal_size = 150; // width/height in pixels
+const int teleportation_portal_size = 150;
 
 int teleportation_portal_x, teleportation_portal_y;
-int pdx,pdy;
+int pdx, pdy;
 
-int portal_pos_x[6][10] = {{1315,1415,2455,2485,1690,595}};
-int portal_pos_y[6][10] = {{910,1615,280,1210,1595,1975}};
+int x_s,x_e,y_s,y_e;
 
-// Load the portal sprite and image
+int portal_pos_x[6][10] = {
+    {1315,1315,2455,2400,1690,595},
+    {1500,1800,1950,2100,2300,2400},
+    {800,900,1000,1100,1200,1300},
+    {400,500,600,700,800,900},
+    {300,1400,2000,2300,2600,2800},
+    {600,650,1200,1600,1900,2100}
+};
+
+int portal_pos_y[6][10] = {
+    {910,1615,280,1210,1595,1975},
+    {1800,1750,1700,1650,1600,1550},
+    {1000,1100,1200,1300,1400,1500},
+    {100,300,500,700,900,1100},
+    {2000,1800,1600,1400,1200,1000},
+    {400,600,800,1000,1200,1400}
+};
+
+int player_teleportation_pos[6][10] = {};
+
 void load_portal() {
-    iLoadFramesFromSheet(teleportation_portal, "MazeExplorer/assests/levels/teleportation portal.png",1,1);
+    iLoadFramesFromSheet(teleportation_portal_frames, "MazeExplorer/assests/levels/teleportation portal.png", 1, 1);
+
     iInitSprite(&portal);
-    iChangeSpriteFrames(&portal, teleportation_portal, 1);
-    iSetSpritePosition(&portal, 0,01);
-    iScaleSprite(&portal,3.0);
-    //iInitSprite(&teleportation_portal_collision);
+    iChangeSpriteFrames(&portal, teleportation_portal_frames, 1);
+    iSetSpritePosition(&portal, 0, 0);
+
+    iInitSprite(&teleportation_portal_collision);  // This is the real collision sprite
+    iChangeSpriteFrames(&teleportation_portal_collision, teleportation_portal_frames, 1);
+    iSetSpritePosition(&teleportation_portal_collision, 0, 0);
 }
 
-// Check if the region is entirely black
-bool is_black_region(int x, int y) {
-    int rgb[3];
-    for (int dx = 0; dx < teleportation_portal_size; dx += 10) {         // Step by 10 to speed up
-        for (int dy = 0; dy < teleportation_portal_size; dy += 10) {
-            iGetPixelColor(x + dx, y + dy, rgb);
-            if (!(rgb[0] == 234 && rgb[1] == 24 && rgb[2] == 119)) {
-                return false; // not black
-            }
-        }
-    }
-    return true;
-}
-
-// Generate a random valid position for the portal
-void generate_portal_position(int x_start, int x_end, int y_start, int y_end,Sprite *maze) {
-    //printf("bool %d",is_black_region(x_start,y_start));
-
+void generate_portal_position(int x_start, int x_end, int y_start, int y_end, Sprite *maze) {
+    maze_sprite = maze;
+    x_s=x_start;
+    x_e = x_end;
+    y_s = y_start;
+    y_e = y_end;
     for (int attempt = 0; attempt < 1000; ++attempt) {
         int x = x_start + rand() % (x_end - x_start - teleportation_portal_size);
         int y = y_start + rand() % (y_end - y_start - teleportation_portal_size);
 
-        if (!iCheckCollision(&portal, maze)) {
+        iSetSpritePosition(&teleportation_portal_collision, x, y);
+
+        if (!iCheckCollision(&teleportation_portal_collision, maze) && !portal_collision(&portal)) {
             teleportation_portal_x = x;
             teleportation_portal_y = y;
             pdx = x;
             pdy = y;
-            printf("Portal Pos %d %d\n",x,y);
+            printf("Portal placed at: %d %d\n", x, y);
             return;
         }
     }
 
-    // nothing found sad
-    int x = rand()%6;
-    teleportation_portal_x = portal_pos_x[0][x];
-    teleportation_portal_y = portal_pos_y[0][x];
+    // Fallback if no good position found
+    int lvl = current_lvl - 1;
+    int idx = rand() % 6;
+    teleportation_portal_x = portal_pos_x[lvl][idx];
+    teleportation_portal_y = portal_pos_y[lvl][idx];
     pdx = teleportation_portal_x;
     pdy = teleportation_portal_y;
-    printf("Failed");
-    printf("Portal Pos %d %d %d\n",x,portal_pos_x,portal_pos_y);
+
+    printf("Failed to find empty space. Using fallback portal position at %d %d\n",
+           teleportation_portal_x, teleportation_portal_y);
 }
 
-// Draw the portal
-void draw_teleportation_portal(int x_offset, int y_offset) {
-    portal.x = teleportation_portal_x + x_offset;
-    portal.y = teleportation_portal_y + y_offset;
-}
+void teleport_player()
+{
+    for (int attempt = 0; attempt < 1000; ++attempt) {
+        int x = x_s + rand() % (x_e - x_s - 120);
+        int y = y_s + rand() % (y_e - y_s- 120);
 
-// Check if player touched the portal, and teleport if so
-bool check_collision_and_teleport(int x_start, int x_end, int y_start, int y_end) {
-    if (iCheckCollision(&teleportation_portal_collision, &player.sprite)) {
-        //generate_portal_position(x_start, x_end, y_start, y_end); // move portal to a new position
-        return true;
+        iSetSpritePosition(&teleportation_portal_collision, x, y);
+
+        if (!iCheckCollision(&player.sprite, maze_sprite) && !portal_collision(&player.sprite)) {
+            player_relative_x = x;
+            player_relative_y = y;
+            printf("Portal placed at: %d %d\n", x, y);
+            return;
+        }
     }
-    return false;
+
+    // Fallback if no good position found
+    int lvl = current_lvl - 1;
+    int idx = rand() % 6;
+    player_relative_x = portal_pos_x[lvl][idx];
+    player_relative_y = portal_pos_y[lvl][idx];
+
+    printf("Failed to find empty space. Using fallback player position at %d %d\n",
+           player_relative_x, player_relative_y);
 }
 
+void check_collision_and_teleport() {
+    if(iCheckCollision(&player.sprite, &portal)){
+        printf("Teleporting!!!");
+        teleport_player();
+    }
+}
+
+void draw_teleportation_portal(int x_offset, int y_offset) {
+    int draw_x = teleportation_portal_x + x_offset;
+    int draw_y = teleportation_portal_y + y_offset;
+
+    iSetSpritePosition(&portal, draw_x, draw_y);
+    iSetSpritePosition(&teleportation_portal_collision, draw_x, draw_y);
+    iShowSprite(&portal);
+
+    check_collision_and_teleport();
+}
 #endif

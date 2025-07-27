@@ -15,6 +15,8 @@ int pre_page = 0;
 int page_no = 0;
 int t = 0;
 
+int max_lvl = 1;
+
 char player_name[100];
 
 Image bg, exitframes[1], paused_img, pause_option, lvl_comp, lost, help;
@@ -102,12 +104,14 @@ void next_level()
     current_lvl+=1;
     page_no+=1;
     reload();
+    max_lvl = max(max_lvl,current_lvl);
 }
 
 void level_completed()
 {
     if(lvl_completed)return;
     lvl_completed = true;
+    max_lvl = max(max_lvl,current_lvl+1);
     calc_score(time_passed, health, current_lvl, player_name);
     printf("won %s %d %d\n",player_name,score[current_lvl-1],highscore);
     play_sound("won");
@@ -167,43 +171,47 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
 void check_lost_buttons(int mx, int my, int &page_no)
 {
     if(is_alive)return;
-    if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-50 && my<=SCREEN_HEIGHT/2){
-        printf("next lvl");
+    //retry
+    if(mx>=630 && mx<=810 && my>=390 && my<=440){
         reload();
     }
-    //exit
-    else if(mx>=SCREEN_WIDTH/2-120 && mx<=SCREEN_WIDTH/2+120 && my>=SCREEN_HEIGHT/2-140 && my<=SCREEN_HEIGHT/2-90){
-        exit(0);
+    //leaderboard
+    if(mx>=630 && mx<=810 && my>=310 && my<=370)
+    {
+        pre_page = page_no;
+        page_no = 12;
+        player_count = load_players();   
+        transitioning = true;            
+        generate_leaderboard(current_level2);
+    }
+    //menu
+    else if(mx>=630 && mx<=810 && my>=230 && my<=290){
+        page_no=1;
     }
 }
 
 void check_pause_buttons(int mx, int my, int &page_no)
 {
     if(!paused)return;
-    if(lvl_completed)printf("lvls");
     //play
-    if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2+120 && my<=SCREEN_HEIGHT/2+170){
+    if(mx>=SCREEN_WIDTH/2-20 && mx<=SCREEN_WIDTH/2+150 && my>=550 && my<=600){
         paused = false;
-        printf("play");
     }
     //retry
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2+50 && my<=SCREEN_HEIGHT/2+100){
+    else if(mx>=SCREEN_WIDTH/2-20 && mx<=SCREEN_WIDTH/2+150 && my>=470&& my<=530){
         reload();
-        printf("retry");
     }
     //help
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-20 && my<=SCREEN_HEIGHT/2+30){
+    else if(mx>=SCREEN_WIDTH/2-20 && mx<=SCREEN_WIDTH/2+150 && my>=320 && my<=370){
         help_showed = true;
-        printf("help");
     }
     //Settings
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-100 && my<=SCREEN_HEIGHT/2-50){
-        printf("Settings");
+    else if(mx>=SCREEN_WIDTH/2-20 && mx<=SCREEN_WIDTH/2+150 && my>=390 && my<=450){
         pre_page = page_no;
         page_no=11;
     }
-    //exit
-    else if(mx>=SCREEN_WIDTH/2-10 && mx<=SCREEN_WIDTH/2+130 && my>=SCREEN_HEIGHT/2-170 && my<=SCREEN_HEIGHT/2-120){
+    //Menu
+    else if(mx>=SCREEN_WIDTH/2-20 && mx<=SCREEN_WIDTH/2+150 && my>=230 && my<=290){
         page_no=1;
     }
 }
