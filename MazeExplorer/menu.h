@@ -64,6 +64,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             page_no = 2;
             current_lvl = 1;
             generate_random_diamond_positions(0);
+            loadrocks(0);
             loadPlayer();
             reload();
     }
@@ -77,6 +78,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             current_lvl = 2;
             generate_random_diamond_positions(1);
             loadPlayer();
+            loadrocks(1);
             reload();
     }
     //for level 3
@@ -89,6 +91,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             current_lvl = 3;
             generate_random_diamond_positions(2);
             loadPlayer();
+            loadrocks(2);
             reload();
     }
     //for level 4
@@ -101,6 +104,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             current_lvl = 4;
             generate_random_diamond_positions(3);
             loadPlayer();
+            loadrocks(3);
             reload();
     }
     //for level 5
@@ -113,6 +117,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             current_lvl = 5;
             generate_random_diamond_positions(4);
             loadPlayer();
+            loadrocks(4);
             reload();
     }
     //for level 6
@@ -125,6 +130,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
             current_lvl = 6;
             generate_random_diamond_positions(5);
             loadPlayer();
+            loadrocks(5);
             reload();
     }
     else if(menu_clac_dis(78,mx,75,my)<=40){

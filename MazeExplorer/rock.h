@@ -10,7 +10,7 @@
 
 #define MAX_LEVELS 6
 #define MAX_ROCKS 20
-#define MAX_BLASTS 12
+#define MAX_BLASTS 20
 #define BLAST_FRAME_COUNT 8
 
 int max_rocks[MAX_LEVELS] = {8, 16, 9, 11, 12, 12};
@@ -98,13 +98,13 @@ void generate_random_rocks_positions(int level) {
         int pos_x = rand() % dx+x_strts[level];
         int pos_y = rand() % dy+y_strts[level];
 
-        while(dx>=700 && dx<=800)pos_x = rand()%dx+x_strts[level];
-        while(dy>=500 && dy<=600)pos_y = rand()%dy+y_strts[level];
+        while(pos_x>=600 && pos_x<=800)pos_x = rand()%dx+x_strts[level];
+        while(pos_y>=400 && pos_y<=600)pos_y = rand()%dy+y_strts[level];
 
         rocks_x[level][i] = pos_x;
         rocks_y[level][i] = pos_y;
 
-        printf("rocks %d at: x=%d y=%d (index %d)\n", i, pos_x, pos_y);
+        printf("rocks %d at: x=%d y=%d\n", i, pos_x, pos_y);
     }
 }
 
@@ -127,6 +127,11 @@ void loadrocks(int level) {
     int count = max_rocks[level];
 
     generate_random_rocks_positions(level);
+
+    for(int i=0; i<MAX_ROCKS; i++){
+        rocks[i].is_visible = 0;
+        blasts[i].is_playing = 0;
+    }
 
     for (int i = 0; i < count; i++) {
         iLoadFramesFromSheet(rocks[i].frames, "MazeExplorer/assests/obstacles/rock.png", 1, 1);

@@ -146,6 +146,12 @@ void draw_player()
     iShowSprite(&player.sprite);
     if(is_hurting)iShowSprite(&player_hurt.sprite);
     
+    
+    
+}
+
+void draw_bars()
+{
     //health bar
     iShowImage(70, 750, "MazeExplorer/assests/levels/healthbar_under.png");
     iSetColor(214, 23, 31);
@@ -157,7 +163,6 @@ void draw_player()
     iSetColor(135, 206, 235);
     iFilledRectangle(73, 703, diamond_bar_width, 25);
     iShowImage(40, 690, "MazeExplorer/assests/levels/diamond_icon.png");
-    
 }
 
 void move_player()

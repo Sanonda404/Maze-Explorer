@@ -66,7 +66,7 @@ void draw_levels()
 
     display_time();
 
-    
+    draw_bars();
 
     iSetColor(255,255,255);
     char lvl_txt[20];
@@ -108,12 +108,14 @@ void reload()
     loadPlayer();
     loadDiamonds();
 
+
     reset_monsters(current_lvl);
 }
 
 void next_level()
 {
     generate_random_diamond_positions(current_lvl);
+    loadrocks(current_lvl);
     current_lvl+=1;
     page_no+=1;
     reload();
