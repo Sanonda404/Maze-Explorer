@@ -35,8 +35,8 @@ int portal_pos_y[6][10] = {
     {400,600,800,1000,1200,1400}
 };
 
-int player_teleportation_pos_x[6][10] = {{670,640,1030,640,925}};
-int player_teleportation_pos_y[6][10] = {{985,610,640,955,1300,1600}};
+int player_teleportation_pos_x[6][10] = {{670,640,1030,640,925,2025,1139}};
+int player_teleportation_pos_y[6][10] = {{985,610,640,955,1300,1600,1280,2000}};
 
 void load_portal() {
     iLoadFramesFromSheet(teleportation_portal_frames, "MazeExplorer/assests/levels/teleportation portal.png", 1, 1);
@@ -44,6 +44,7 @@ void load_portal() {
     iInitSprite(&portal);
     iChangeSpriteFrames(&portal, teleportation_portal_frames, 1);
     iSetSpritePosition(&portal, 0, 0);
+    iScaleSprite(&portal, 0.7);
 
     iInitSprite(&teleportation_portal_collision);  // This is the real collision sprite
     iChangeSpriteFrames(&teleportation_portal_collision, teleportation_portal_frames, 1);
