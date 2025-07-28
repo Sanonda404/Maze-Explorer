@@ -9,11 +9,11 @@
 #include "MazeExplorer/level_dependencies.h"
 
 #define MAX_LEVELS 6
-#define MAX_ROCKS 12
+#define MAX_ROCKS 20
 #define MAX_BLASTS 12
 #define BLAST_FRAME_COUNT 8
 
-int max_rocks[MAX_LEVELS] = {4, 6, 5, 7, 9, 12};
+int max_rocks[MAX_LEVELS] = {8, 16, 9, 11, 12, 12};
 int x_strts[6] = {450,450,530,-1550,-1600,-1150};
 int x_ends[6] = {2200,2800,2800,800,900,2300};
 int y_strts[6] = {160,160,350,0,50,300};

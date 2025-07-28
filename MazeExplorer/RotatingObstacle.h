@@ -61,7 +61,7 @@ int roller_x[LEVEL_COUNT-2][ROLLER_NO] = {
  
     {1280, 1800, 2640},
     {-1150, -270,  -30},
-    {-850,-1440, 970},
+    {-1150,-1440, 970},
     {50, 980, 230}
 };
 
@@ -69,7 +69,7 @@ int roller_y[LEVEL_COUNT][ROLLER_NO] = {
     
     {660, 1855, 3550},
     {570, 1720, 820},
-    {1200, 2300, 1280},
+    {815, 2300, 1280},
     {1920, 740, 3800}
 };
 
@@ -101,9 +101,13 @@ void drawRollerObstacles(int cam_x, int cam_y, int level) {
 }
 
 // Function to animate all rollers 
-void animateRollerObstacles() {
-    for (int i = 0; i < ROLLER_NO; i++) {
-        iAnimateSprite(&roller[i].sprite);
-    }
+int roller_anim_counter = 0;
 
-}
+void animateRollerObstacles() {
+    roller_anim_counter++;
+    if (roller_anim_counter % 3 == 0) { // every 5 frames → slower animation
+        for (int i = 0; i < ROLLER_NO; i++) {
+            iAnimateSprite(&roller[i].sprite);
+        }
+        roller_anim_counter = 0;
+}}

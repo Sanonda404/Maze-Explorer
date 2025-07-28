@@ -2,9 +2,10 @@
 #include "MazeExplorer/level_dependencies.h"
 #include "MazeExplorer/player.h"
 #include "MazeExplorer/monster.h"
+#include "MazeExplorer/teleportation_portal.h"
 
 Image mazeframes2[1], lvlblur2[1], exitframes2[1];
-Sprite maze2, mazeblur2, exit_portal2;
+Sprite mazeblur2, exit_portal2;
 
 int start_x2 = 500, start_y2 = 140, end_x2 = 2830, end_y2 = 2560;
 
@@ -27,6 +28,10 @@ void lvl2_load_resources()
     iInitSprite(&exit_portal2);
     iChangeSpriteFrames(&exit_portal2, exitframes2, 1);
     iSetSpritePosition(&exit_portal2, end_x2, end_y2);
+
+    //teleportation_portal
+    //load_portal();
+  //  generate_portal_position(2,&maze2);
 }
 
 void draw_lvl2()
@@ -54,6 +59,8 @@ void draw_lvl2()
 
     iShowSprite(&maze2);
     iShowSprite(&mazeblur2);
+
+    //draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
 }
 
 void check_collision2()
@@ -95,7 +102,10 @@ void check_collision2()
     // checking if enters exit portal
     if (iCheckCollision(&exit_portal2, &player.sprite))
     {
-        if(diamond_collected!=max_diamonds[current_lvl-1])return;
+        if(diamond_collected!=max_diamonds[current_lvl-1]){
+            error_showing = true;
+            return;
+        }
         level_completed();
     }
 

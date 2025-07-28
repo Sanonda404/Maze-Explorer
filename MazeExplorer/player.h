@@ -40,6 +40,9 @@ float diamond_bar_width = 0;
 int current_lvl = 1;
 Image diamond_icon, diamond_bar_under, diamond_bar_hover;
 
+int error_timer = 20;
+bool error_showing = false;
+
 bool collision_left = false, collision_right = false, collision_up = false, collision_down = false, collision=false;
 
 typedef enum
@@ -151,7 +154,7 @@ void draw_player()
 
     //diamond bar
     iShowImage(70, 700, "MazeExplorer/assests/levels/healthbar_under.png");
-    iSetColor(21, 231, 31);
+    iSetColor(135, 206, 235);
     iFilledRectangle(73, 703, diamond_bar_width, 25);
     iShowImage(40, 690, "MazeExplorer/assests/levels/diamond_icon.png");
     
@@ -251,7 +254,5 @@ void player_animate()
 
     
 }
-
-
 
 #endif

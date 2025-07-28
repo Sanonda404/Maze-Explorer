@@ -6,9 +6,10 @@
 #include <cstdlib>
 #include <ctime>
 #include "MazeExplorer/level_dependencies.h"
+#include "MazeExplorer/rock.h"
 
 Image teleportation_portal_frames[1];
-Sprite portal, teleportation_portal_collision, *maze_sprite;
+Sprite portal, teleportation_portal_collision, maze1, maze2, *maze_sprite;
 
 const int teleportation_portal_size = 150;
 
@@ -35,8 +36,10 @@ int portal_pos_y[6][10] = {
     {400,600,800,1000,1200,1400}
 };
 
-int player_teleportation_pos_x[6][10] = {{670,640,1030,640,925,2025,1139}};
-int player_teleportation_pos_y[6][10] = {{985,610,640,955,1300,1600,1280,2000}};
+int player_teleportation_pos_x[6][30] = {{670,640,1030,640,925,2025,1139,100},
+{940,1300,1930,1690,2245,2535,2845,2290,1900,2835,2005,2890,820,1300}};
+int player_teleportation_pos_y[6][30] = {{985,610,640,955,1300,1600,1280,2000},
+{505,235,250,625,640,925,280,865,1285,1615,1885,2275,2530,1870}};
 
 void load_portal() {
     iLoadFramesFromSheet(teleportation_portal_frames, "MazeExplorer/assests/levels/teleportation portal.png", 1, 1);
@@ -51,12 +54,12 @@ void load_portal() {
     iSetSpritePosition(&teleportation_portal_collision, 0, 0);
 }
 
-void generate_portal_position(int x_start, int x_end, int y_start, int y_end, Sprite *maze) {
+void generate_portal_position(int level, Sprite *maze) {
     maze_sprite = maze;
-    x_s=x_start;
-    x_e = x_end;
-    y_s = y_start;
-    y_e = y_end;
+    int x_start = x_strts[level-1];
+    int x_end = x_ends[level-1];
+    int y_start = y_strts[level-1];
+    int y_end = y_ends[level-1];
     for (int attempt = 0; attempt < 1000; ++attempt) {
         int x = x_start + rand() % (x_end - x_start - teleportation_portal_size);
         int y = y_start + rand() % (y_end - y_start - teleportation_portal_size);
@@ -87,27 +90,12 @@ void generate_portal_position(int x_start, int x_end, int y_start, int y_end, Sp
 
 void teleport_player(Sprite *maze)
 {
-    int pre_x=player_relative_x, pre_y=player_relative_y;
-    for (int attempt = 0; attempt < 1000; ++attempt) {
-        int x = x_s + rand() % (x_e - x_s - 120);
-        int y = y_s + rand() % (y_e - y_s- 120);
-
-        player_relative_x = x;
-        player_relative_y = y;
-
-        if (!iCheckCollision(&player.sprite, maze) && !portal_collision(&player.sprite)) {
-            player_relative_x = x;
-            player_relative_y = y;
-            printf("Player placed at: %d %d\n %d", x, y, iCheckCollision(&player.sprite,maze));
-            return;
-        }
-    }
 
     // Fallback if no good position found
     int lvl = current_lvl - 1;
-    int idx = rand() % 6;
-    player_relative_x = portal_pos_x[lvl][idx];
-    player_relative_y = portal_pos_y[lvl][idx];
+    int idx = rand() % 8;
+    player_relative_x = player_teleportation_pos_x[lvl][idx];
+    player_relative_y = player_teleportation_pos_y[lvl][idx];
 
     printf("Failed to find empty space. Using fallback player position at %d %d\n",
            player_relative_x, player_relative_y);

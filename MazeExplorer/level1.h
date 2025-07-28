@@ -6,7 +6,7 @@
 #include "MazeExplorer/teleportation_portal.h"
 
 Image  mazeframes1[1], lvl1blur1[1], exitframes1[1];
-Sprite maze1, mazeblur1, exit_portal1;
+Sprite  mazeblur1, exit_portal1;
 
 int start_x1 = 500, start_y1 = 140, end_x1 = 2440, end_y1 = 2000;
 
@@ -34,7 +34,7 @@ void lvl1_load_resources()
 
     //teleportation_portal
     load_portal();
-    generate_portal_position(start_x1,end_x1,start_y1,end_y1,&maze1);
+    generate_portal_position(1,&maze1);
     
 }
 
@@ -104,7 +104,10 @@ void check_collision1()
 
     //checking if enters exit portal
     if(iCheckCollision(&exit_portal1, &player.sprite)){
-        if(diamond_collected!=max_diamonds[current_lvl-1])return;
+        if(diamond_collected!=max_diamonds[current_lvl-1]){
+            error_showing = true;
+            return;
+        }
         level_completed();
     }
 

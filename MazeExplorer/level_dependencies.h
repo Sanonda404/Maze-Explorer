@@ -23,6 +23,8 @@ Image bg, exitframes[1], paused_img, pause_option, lvl_comp, lost, help;
 
 bool help_showed = true;
 
+char err[100] = "Collect diamonds to enter exit";
+
 void load_level_resources()
 {
     //background
@@ -48,12 +50,18 @@ void load_level_resources()
 
 }
 
+void show_error(char err_msg[]){
+    iShowText(50,50,err_msg,"MazeExplorer/assests/fonts/Roboto-Bold.ttf",30);
+    error_timer--;
+    if(error_timer<=0)error_showing = false;
+}
+
 void draw_levels()
 {
     draw_player();
 
     draw_monsters((player_x-player_relative_x), (player_y-player_relative_y), current_lvl);
-    
+
     draw_obstacles((player_x-player_relative_x), (player_y-player_relative_y));
 
     display_time();
@@ -78,6 +86,8 @@ void draw_levels()
     if(!is_alive){
         iShowImage(SCREEN_WIDTH/2-200,SCREEN_HEIGHT/2-200,"MazeExplorer/assests/levels/lost.png");
     }
+
+    if(error_showing)show_error(err);
 }
 
 void reload()

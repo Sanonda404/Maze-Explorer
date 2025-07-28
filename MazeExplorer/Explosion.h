@@ -79,14 +79,14 @@ const char* level6_obstacle_paths[LEVEL6_OBSTACLE_COUNT] = {
 // X and Y positions of rollers per level
 int explosion_x[Level_COUNT-4][Explosion_NO] = {
  
-    {-1450, -820},
+    {-1400, -820},
     {1420, -120}
     
 };
 
 int explosion_y[Level_COUNT-4][Explosion_NO] = {
     
-    {260, 2410},
+    {350, 2410},
     {400, 950}
     
 };
@@ -138,11 +138,16 @@ void drawExplosionObstacles(int cam_x, int cam_y, int level) {
 
     
 
+//animation
+int explosion_anim_counter = 0;
 
-// Function to animate all rollers 
 void animateExplosionObstacles() {
+    explosion_anim_counter++;
+    
+    // Only animate every 3rd frame
+    if (explosion_anim_counter % 3 != 0) return;
+
     for (int i = 0; i < Explosion_NO; i++) {
         iAnimateSprite(&explosion[i].sprite);
     }
-  
 }

@@ -22,7 +22,7 @@ void init_sound()
 void play_sound(string sound_name)
 {
     if(sound_name == "bgm"){
-        bg_music = iPlaySound("MazeExplorer/assests/music/bgm.wav", true, music_volume*90);
+        bg_music = iPlaySound("MazeExplorer/assests/music/bgm.wav", true, music_volume*100);
     }
     else if(sound_name == "lost"){
         iPlaySound("MazeExplorer/assests/music/lost.wav", false, sfx_volume*100);
@@ -47,6 +47,6 @@ void play_sound(string sound_name)
 
 void update_volume()
 {
-    iSetVolume(bg_music,music_volume*90);
+    iSetVolume(bg_music,music_volume*100);
 }
 #endif

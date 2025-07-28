@@ -48,90 +48,102 @@ void start_level_complete_screen(int score, int highscore, int lvl) {
     show_score = score;
     show_highscore = highscore;
     completed_level = lvl;
+     iSetColor(255, 100, 200); // Bright pink
     sprintf(typing_texts[1], "Score: %d", show_score);
+   
+   
+ 
     sprintf(typing_texts[2], "High Score: %d", show_highscore);
     for (int i = 0; i < 4; i++) button_visible[i] = 0;
     reveal_index = 0;
 }
-
+void load_level_complete_screen(){
+    
+    iLoadImage(&sign_bg, "MazeExplorer/assests/bg_purple.png");
+}
 // Drawing Logic
 void draw_level_complete_screen() {
-    iSetColor(20, 20, 30);
-    iFilledRectangle(0, 0, SCREEN_W, SCREEN_H);
+    iShowImage(0, 0, "MazeExplorer/assests/bg_purple.png");
 
     int center_x = SCREEN_W / 2;
 
     iSetColor(255, 255, 255);
     for (int i = 0; i < typing_index; i++) {
-        if(i==0)iShowText(center_x - 200, 600 - i * 60, typing_texts[i], font_main, 55);
-        else iShowText(center_x - 150, 600 - i * 60, typing_texts[i], font_main, 42);
+        if (i == 0)
+            iShowText(center_x - 200, 600 - i * 60, typing_texts[i], font_main, 55);
+        else
+            iShowText(center_x - 150, 600 - i * 60, typing_texts[i], font_main, 42);
     }
 
     if (!typing_done) {
         char current_line[100];
         strncpy(current_line, typing_texts[typing_index], typing_char_index);
         current_line[typing_char_index] = '\0';
-        if(typing_index==0) iShowText(center_x - 200, 600 - typing_index * 60, current_line, font_main, 55);
-        else iShowText(center_x - 150, 600 - typing_index * 60, current_line, font_main, 42);
-    }
 
-    if (typing_done) {
-        for (int i = 0; i < 4; i++) {
-            if (!button_visible[i]) continue;
-
-            float scale = button_hover_scale[i];
-            int btn_x = center_x - BTN_WIDTH / 2;
-            int btn_y = button_y_start - i * button_gap;
-
-            int w = BTN_WIDTH * scale;
-            int h = BTN_HEIGHT * scale;
-            int x = btn_x - (w - BTN_WIDTH) / 2;
-            int y = btn_y - (h - BTN_HEIGHT) / 2;
-
-            // Shadow
-            iSetColor(30, 30, 30);
-            iRectangle(x + 4, y - 4, w, h);
-            iFilledRectangle(x + 4, y - 4, w, h);
-
-            // Button Background
-            iSetColor(60 + i * 40, 140 + i * 20, 240 - i * 20);
-            iFilledRectangle(x, y, w, h);
-
-            // Border
-            iSetColor(0, 0, 0);
-            iRectangle(x, y, w, h);
-
-            // Button Text Outline
-            iSetColor(0, 0, 0);
-            iShowText(x + 62, y + 25, button_texts[i], font_button2, 28 * scale);
-            iShowText(x + 60, y + 27, button_texts[i], font_button2, 28 * scale);
-            iShowText(x + 60, y + 23, button_texts[i], font_button2, 28 * scale);
-            iShowText(x + 58, y + 25, button_texts[i], font_button2, 28 * scale);
-
-            // Foreground Text
-            iSetColor(255, 255, 255);
-            iShowText(x + 60, y + 25, button_texts[i], font_button2, 28 * scale);
-        }
-    }
-}
-
-// Hover Detection
-void level_complete_mouse_move(int mx, int my) {
-    if (!typing_done) return;
-    int cx = SCREEN_W / 2 - BTN_WIDTH / 2;
-
+        if (typing_index == 0)
+            iShowText(center_x - 200, 600 - typing_index * 60, current_line, font_main, 55);
+        else
+            iShowText(center_x - 150, 600 - typing_index * 60, current_line, font_main, 42);
+    } 
     for (int i = 0; i < 4; i++) {
-        if (!button_visible[i]) continue;
-        int bx = cx;
-        int by = button_y_start - i * button_gap;
-        if (mx >= bx && mx <= bx + BTN_WIDTH &&
-            my >= by && my <= by + BTN_HEIGHT) {
-            button_hover_scale[i] = 1.1;
-        } else {
-            button_hover_scale[i] = 1.0;
-        }
-    }
+    if (!button_visible[i]) continue;
+
+    float scale = button_hover_scale[i];
+    int btn_x = center_x - BTN_WIDTH / 2;
+    int btn_y = button_y_start - i * button_gap;
+
+    int w = BTN_WIDTH * scale;
+    int h = BTN_HEIGHT * scale;
+    int x = btn_x - (w - BTN_WIDTH) / 2;
+    int y = btn_y - (h - BTN_HEIGHT) / 2;
+
+    // Shadow
+    iSetColor(30, 30, 30);
+    iFilledRectangle(x + 4, y - 4, w, h);
+
+    // Button Background - Shades of Pink
+    int pink_r[4] = {255, 255, 255, 255};
+    int pink_g[4] = {100, 130, 160, 190};
+    int pink_b[4] = {180, 200, 220, 240};
+
+    iSetColor(pink_r[i], pink_g[i], pink_b[i]);
+    iFilledRectangle(x, y, w, h);
+
+    // Shine
+    iSetColor(255, 255, 255);
+    iFilledRectangle(x, y, w, 3);
+
+    // Border
+    iSetColor(0, 0, 0);
+    iRectangle(x, y, w, h);
+
+    // Centered Text
+    int text_w = strlen(button_texts[i]) * 10 * scale;
+    int text_h = 28 * scale;
+    int text_x = x + (w - text_w) / 2;
+    int text_y = y + (h - text_h) / 2;
+
+    // Outline
+    iSetColor(0, 0, 0);
+    iShowText(text_x + 2, text_y, button_texts[i], font_button2, 28 * scale);
+    iShowText(text_x - 2, text_y, button_texts[i], font_button2, 28 * scale);
+    iShowText(text_x, text_y + 2, button_texts[i], font_button2, 28 * scale);
+    iShowText(text_x, text_y - 2, button_texts[i], font_button2, 28 * scale);
+
+    // Foreground
+    iSetColor(255, 255, 255);
+    iShowText(text_x, text_y, button_texts[i], font_button2, 28 * scale);
 }
+
+    
+
+}
+
+ 
+    
+
+    
+
 
 // Click Detection
 int level_complete_mouse_click(int mx, int my) {
@@ -149,7 +161,23 @@ int level_complete_mouse_click(int mx, int my) {
     }
     return -1;
 }
+// Hover Detection
+void level_complete_mouse_move(int mx, int my) {
+    if (!typing_done) return;
+    int cx = SCREEN_W / 2 - BTN_WIDTH / 2;
 
+    for (int i = 0; i < 4; i++) {
+        if (!button_visible[i]) continue;
+        int bx = cx;
+        int by = button_y_start - i * button_gap;
+        if (mx >= bx && mx <= bx + BTN_WIDTH &&
+            my >= by && my <= by + BTN_HEIGHT) {
+            button_hover_scale[i] = 1.1;
+        } else {
+            button_hover_scale[i] = 1.0;
+        }
+    }
+}
 // Typing animation: Call every 30–50ms
 void update_typing_animation() {
     if (typing_done) return;

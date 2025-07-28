@@ -41,6 +41,7 @@ int compare_scores(const void *a, const void *b) {
 }
 
 int load_players() {
+    iLoadImage(&sign_bg, "MazeExplorer/assests/bg_purple.png");
     FILE *fptr = fopen("MazeExplorer/saves/info.txt", "r");
     if (!fptr) {
         printf("Failed to open info.txt\n");
@@ -69,6 +70,7 @@ int load_players() {
 }
 
 void generate_leaderboard(int level) {
+
     for (int i = 0; i < MAX_DISPLAY; i++) {
         leaderboard[i].score = 0;
         strcpy(leaderboard[i].name, "---");
@@ -90,7 +92,7 @@ void generate_leaderboard(int level) {
 }
 
 void draw_back_button() {
-    iSetTransparentColor(220, 80, 80, alpha2);
+    iSetTransparentColor(255, 141, 161, alpha2);
     iFilledRectangle(back_btn_x, back_btn_y, back_btn_w, back_btn_h);
     iSetTransparentColor(255, 255, 255, alpha2);
     iShowText(back_btn_x + 20, back_btn_y + 12, "Back", "MazeExplorer/assests/fonts/Poppins-Regular.ttf", 18);
@@ -103,6 +105,7 @@ void draw_leaderboard() {
     int box_y = (800 - box_height) / 2;
 
     char title[50];
+    iShowImage(0, 0, "MazeExplorer/assests/bg_purple.png");
     sprintf(title, "Leaderboard - Level %d", current_level2);
     iSetTransparentColor(255, 215, 0, alpha2);
     iShowText(box_x + box_width / 2 - 160, box_y + box_height + 50, title, "MazeExplorer/assests/fonts/DynaPuff-Medium.ttf", 50);
@@ -114,7 +117,7 @@ void draw_leaderboard() {
     iSetTransparency(1.0);
 
     iSetTransparentColor(180, 180, 180, alpha2);
-    iFilledRectangle(box_x, box_y, box_width, box_height);
+    //iFilledRectangle(box_x, box_y, box_width, box_height);
 
     for (int i = 0; i < MAX_DISPLAY; i++) {
         int y = box_y + box_height - 80 - i * 50;
