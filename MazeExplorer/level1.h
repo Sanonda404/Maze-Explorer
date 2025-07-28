@@ -33,8 +33,8 @@ void lvl1_load_resources()
     iSetSpritePosition(&exit_portal1, end_x1, end_y1);
 
     //teleportation_portal
-    load_portal();
-    generate_portal_position(1,&maze1);
+    //load_portal();
+    //generate_portal_position(1,&maze1);
     
 }
 
@@ -68,7 +68,7 @@ void draw_lvl1()
     iShowSprite(&maze1);
     iShowSprite(&mazeblur1);
 
-    draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
+   // draw_teleportation_portal((player_x-player_relative_x),player_y -player_relative_y);
     
 }
 
@@ -161,10 +161,13 @@ void check_collision1()
     {
         if (rocks[j].is_visible && iCheckCollision(&player.sprite, &rocks[j].sprite))
         {                // update file/data if needed
-            update_health(10);
+            if(!is_hurting){
+            is_hurting = true;
+            update_health(25);
+           // printf("B %d\n",health);
+        }  
             // Optional: play sound or show sparkle effect
             printf("Rock Attack\n");
-            play_sound("hurt");
         }
     }
 

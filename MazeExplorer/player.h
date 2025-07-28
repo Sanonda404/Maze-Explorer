@@ -9,7 +9,7 @@
 #include "MazeExplorer/Signup.h"
 #include "MazeExplorer/SoundManager.h"
 
-int speed = 15;
+int speed = 25;
 
 int const walk_frame_no = 7;
 int const idle_frame_no = 1;
@@ -198,7 +198,8 @@ void lost_game()
 
 void update_health(int amount)
 {
-    if(health>0 && amount>0)play_sound("hurt");
+    if(lvl_completed || !is_alive)return;
+    if(health>0 && amount>0 && !lvl_completed)play_sound("hurt");
     health -= amount;
     health = min(100,health);
     if(health<=0)lost_game();

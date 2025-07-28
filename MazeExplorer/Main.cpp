@@ -87,7 +87,12 @@ void iDraw()
 
     if (!trnstn && !menu_trnstn && page_no >= 2 && page_no <= 7)
     {
+        started = true;
         draw_levels();
+    }
+
+    else{
+        started = false;
     }
 
     check_collision1();
@@ -288,6 +293,7 @@ void iKeyboard(unsigned char key, int state)
     switch (key)
     {
     case ' ': // detecting attack
+        if(!started)return;
         player.state = ATTACK;
         attacking = true;
         shoot_bullet(dir_name);

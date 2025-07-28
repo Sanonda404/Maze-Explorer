@@ -156,10 +156,13 @@ void check_collision4()
     {
         if (rocks[j].is_visible && iCheckCollision(&player.sprite, &rocks[j].sprite))
         {                // update file/data if needed
-            update_health(10);
+            if(!is_hurting){
+            is_hurting = true;
+            update_health(25);
+           // printf("B %d\n",health);
+        }  
             // Optional: play sound or show sparkle effect
             printf("Rock Attack\n");
-            play_sound("hurt");
         }
     }
 }
