@@ -3,19 +3,20 @@
 //#include "iFont.h"
 #include "MazeExplorer/level_dependencies.h"
 #include "MazeExplorer/leaderboard.h"
+#include "MazeExplorer/credits.h"
 
-Image fbg, fb1, fb2, fb3, fb4;
+Image fbg, fb1, fb2, fb3, fb4,fb5;
 
-int x = 1400/2-150;
-int btn_size = 90;
+int x = 1400/2-130;
+int btn_size = 80;
 int offset = 30;
-int y = 400;
+int y = 420;
 int btn_width = 300;
 
 bool trnstn = false;
 int trnstn_timer = 15;
 int sliding_speed = 80;
-int x1=0,x2=0,x3=0,x4=0;
+int x1=0,x2=0,x3=0,x4=0,x5=0;
 
 float alpha = 0;
 
@@ -25,7 +26,8 @@ void fs_load_resources()
     iLoadImage(&fb1, "MazeExplorer/assests/levels/playbtn.png");
     iLoadImage(&fb2, "MazeExplorer/assests/levels/highbtn.png");
     iLoadImage(&fb3, "MazeExplorer/assests/levels/settingsbtn.png");
-    iLoadImage(&fb4, "MazeExplorer/assests/levels/exitbtn.png");
+    iLoadImage(&fb4, "MazeExplorer/assests/levels/creditsbtn.png");
+    iLoadImage(&fb5, "MazeExplorer/assests/levels/exitbtn.png");
 }
 
 void draw_firstPage()
@@ -45,7 +47,8 @@ void draw_firstPage()
     iShowImage(x+x1, y,"MazeExplorer/assests/levels/playbtn.png");//play button
     iShowImage(x+x2, y-(btn_size+offset)*1,"MazeExplorer/assests/levels/highbtn.png");//settings button
     iShowImage(x+x3, y-(btn_size+offset)*2,"MazeExplorer/assests/levels/settingsbtn.png");//highscores button
-    iShowImage(x+x4, y-(btn_size+offset)*3,"MazeExplorer/assests/levels/exitbtn.png");//exit button
+    iShowImage(x+x4, y-(btn_size+offset)*3,"MazeExplorer/assests/levels/creditsbtn.png");//credits button
+    iShowImage(x+x5, y-(btn_size+offset)*4,"MazeExplorer/assests/levels/exitbtn.png");//exit button
 
 
     if(trnstn){
@@ -56,6 +59,7 @@ void draw_firstPage()
         x2-=sliding_speed;
         x3+=sliding_speed;
         x4-=sliding_speed;
+        x5+=sliding_speed;
        // printf("%f\n",alpha);
     }
     //iShowText(700, 400, "Play","MazeExplorer/assests/fonts/DynaPuff-Medium.ttf", 48);
@@ -70,6 +74,7 @@ void play_transition()
         x2=0;
         x3=0;
         x4=0;
+        x5=0;
         if(page_no==12)transitioning=true;
     }
 }
@@ -100,8 +105,15 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
             pre_page = 0;
             
     }
-     //for exit button
+     //for credits button
     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*3 && my<=y-(btn_size+offset)*3+btn_size){
+            trnstn = true;
+            page_no=13;
+            show_credit=true;
+            reset_credit_animation();
+    }
+     //for exit button
+    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*4 && my<=y-(btn_size+offset)*4+btn_size){
             trnstn = true;
             exit(0);
     }

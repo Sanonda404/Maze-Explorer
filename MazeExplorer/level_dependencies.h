@@ -50,12 +50,15 @@ void load_level_resources()
 
 void draw_levels()
 {
+    draw_player();
+
     draw_monsters((player_x-player_relative_x), (player_y-player_relative_y), current_lvl);
+    
     draw_obstacles((player_x-player_relative_x), (player_y-player_relative_y));
 
     display_time();
 
-    draw_player();
+    
 
     iSetColor(255,255,255);
     char lvl_txt[20];
@@ -95,7 +98,7 @@ void reload()
     loadPlayer();
     loadDiamonds();
 
-    reset_monsters();
+    reset_monsters(current_lvl);
 }
 
 void next_level()

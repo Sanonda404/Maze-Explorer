@@ -10,6 +10,7 @@
 #include "MazeExplorer/level6.h"
 #include "MazeExplorer/Signup.h"
 #include "MazeExplorer/leaderboard.h"
+#include "MazeExplorer/credits.h"
 
 void load_resources()
 {
@@ -77,6 +78,11 @@ void iDraw()
     else if ((page_no == 12 || transitioning) && !trnstn && !menu_trnstn)
     {
         draw_leaderboard();
+    }
+
+    else if(page_no==13 && show_credit){ 
+        draw_credit();
+
     }
 
     if (!trnstn && !menu_trnstn && page_no >= 2 && page_no <= 7)
@@ -259,10 +265,7 @@ void iMouse(int button, int state, int mx, int my)
         }
     }
 
-    if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
-    {
-        // place your codes here
-    }
+    if(page_no==13)handle_credit_mouse(button,state, mx, my, page_no);
 }
 
 /*

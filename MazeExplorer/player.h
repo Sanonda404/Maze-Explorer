@@ -118,8 +118,16 @@ void loadPlayer()
     iSetSpritePosition(&player.sprite, player_x, player_y);
     iSetSpritePosition(&player_hurt.sprite, player_x, player_y);
 
-    iScaleSprite(&player.sprite, 0.4);
-    iScaleSprite(&player_hurt.sprite, 0.4);
+    if(current_lvl==6){
+        iScaleSprite(&player.sprite, 0.32);
+        iScaleSprite(&player_hurt.sprite, 0.32);
+    }
+
+    else{
+        iScaleSprite(&player.sprite, 0.4);
+        iScaleSprite(&player_hurt.sprite, 0.4);
+    }
+    
     player.state = IDLE;
     player_hurt.state = IDLE;
     player.direction_x = 1; // 1 for right, -1 for left, 0 for up and down

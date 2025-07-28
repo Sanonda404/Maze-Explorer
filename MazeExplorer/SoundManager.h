@@ -36,6 +36,13 @@ void play_sound(string sound_name)
     else if(sound_name == "hurt"){
         iPlaySound("MazeExplorer/assests/music/hurt.wav", false, sfx_volume*100);
     }
+    else if(sound_name == "Blast"){
+        iPlaySound("MazeExplorer/assests/music/blast.wav", false, sfx_volume*100);
+    }
+    else if(sound_name == "Diamond"){
+        //printf("Playing dia");
+        iPlaySound("MazeExplorer/assests/music/diamond.wav", false, sfx_volume*100);
+    }
 }
 
 void update_volume()

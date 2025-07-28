@@ -75,6 +75,8 @@ void draw_lvl1()
 void check_collision1()
 {
     if(current_lvl!=1)return;
+
+    check_collision_and_teleport(&maze1);
     //checking if collides with fire
     //if(iCheckCollision(&fire , &player.sprite)){
     //    printf("Fire\n");
@@ -130,14 +132,37 @@ void check_collision1()
 
     //checking if collects diamond
     for (int j = 0; j < max_diamonds[current_lvl - 1]; j++) {
-    if (diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)) {
-        diamonds[j].is_visible = 0; // hide the diamond
-        diamond_collected++;        // increment count
-        update_diamonds();          // update file/data if needed
-        update_health(-10);
-        // Optional: play sound or show sparkle effect
-        printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+        if (diamonds[j].is_visible && iCheckCollision(&player.sprite, &diamonds[j].sprite)) {
+            diamonds[j].is_visible = 0; // hide the diamond
+            diamond_collected++;        // increment count
+            update_diamonds();          // update file/data if needed
+            update_health(-10);
+            // Optional: play sound or show sparkle effect
+            printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+            play_sound("Diamond");
+        }
     }
-}
+    for(int i=0; i<MAX_BULLETS; i++){
+        for(int j=0; j<max_rocks[current_lvl-1]; j++){
+            if(released[i] && rocks[j].is_visible && iCheckCollision(&bullets[i], &rocks[j].sprite)){
+                slimes[j].isAlive = 0;
+                update_score("kill_monster", current_lvl);
+                destroy_rock(j);
+                printf("Rock blasted at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+                play_sound("Blast");
+                //cout<<"shooted bat"<<endl;
+            }
+        }
+    }
+    for (int j = 0; j < max_rocks[current_lvl - 1]; j++)
+    {
+        if (rocks[j].is_visible && iCheckCollision(&player.sprite, &rocks[j].sprite))
+        {                // update file/data if needed
+            update_health(10);
+            // Optional: play sound or show sparkle effect
+            printf("Rock Attack\n");
+            play_sound("hurt");
+        }
+    }
 
 }

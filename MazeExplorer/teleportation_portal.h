@@ -35,7 +35,8 @@ int portal_pos_y[6][10] = {
     {400,600,800,1000,1200,1400}
 };
 
-int player_teleportation_pos[6][10] = {};
+int player_teleportation_pos_x[6][10] = {{670,640,1030,640,925}};
+int player_teleportation_pos_y[6][10] = {{985,610,640,955,1300,1600}};
 
 void load_portal() {
     iLoadFramesFromSheet(teleportation_portal_frames, "MazeExplorer/assests/levels/teleportation portal.png", 1, 1);
@@ -83,18 +84,20 @@ void generate_portal_position(int x_start, int x_end, int y_start, int y_end, Sp
            teleportation_portal_x, teleportation_portal_y);
 }
 
-void teleport_player()
+void teleport_player(Sprite *maze)
 {
+    int pre_x=player_relative_x, pre_y=player_relative_y;
     for (int attempt = 0; attempt < 1000; ++attempt) {
         int x = x_s + rand() % (x_e - x_s - 120);
         int y = y_s + rand() % (y_e - y_s- 120);
 
-        iSetSpritePosition(&teleportation_portal_collision, x, y);
+        player_relative_x = x;
+        player_relative_y = y;
 
-        if (!iCheckCollision(&player.sprite, maze_sprite) && !portal_collision(&player.sprite)) {
+        if (!iCheckCollision(&player.sprite, maze) && !portal_collision(&player.sprite)) {
             player_relative_x = x;
             player_relative_y = y;
-            printf("Portal placed at: %d %d\n", x, y);
+            printf("Player placed at: %d %d\n %d", x, y, iCheckCollision(&player.sprite,maze));
             return;
         }
     }
@@ -109,10 +112,10 @@ void teleport_player()
            player_relative_x, player_relative_y);
 }
 
-void check_collision_and_teleport() {
+void check_collision_and_teleport(Sprite *maze) {
     if(iCheckCollision(&player.sprite, &portal)){
         printf("Teleporting!!!");
-        teleport_player();
+        teleport_player(maze);
     }
 }
 
@@ -124,6 +127,5 @@ void draw_teleportation_portal(int x_offset, int y_offset) {
     iSetSpritePosition(&teleportation_portal_collision, draw_x, draw_y);
     iShowSprite(&portal);
 
-    check_collision_and_teleport();
 }
 #endif

@@ -126,6 +126,29 @@ void check_collision6()
             update_health(-10);
             // Optional: play sound or show sparkle effect
             printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+        play_sound("Diamond");
+        }
+    }
+    for(int i=0; i<MAX_BULLETS; i++){
+        for(int j=0; j<max_rocks[current_lvl-1]; j++){
+            if(released[i] && rocks[j].is_visible && iCheckCollision(&bullets[i], &rocks[j].sprite)){
+                slimes[j].isAlive = 0;
+                update_score("kill_monster", current_lvl);
+                destroy_rock(j);
+                printf("Rock blasted at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+                play_sound("Blast");
+                //cout<<"shooted bat"<<endl;
+            }
+        }
+    }
+    for (int j = 0; j < max_rocks[current_lvl - 1]; j++)
+    {
+        if (rocks[j].is_visible && iCheckCollision(&player.sprite, &rocks[j].sprite))
+        {                // update file/data if needed
+            update_health(10);
+            // Optional: play sound or show sparkle effect
+            printf("Rock Attack\n");
+            play_sound("hurt");
         }
     }
 }

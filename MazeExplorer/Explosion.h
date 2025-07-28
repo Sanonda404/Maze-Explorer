@@ -79,14 +79,14 @@ const char* level6_obstacle_paths[LEVEL6_OBSTACLE_COUNT] = {
 // X and Y positions of rollers per level
 int explosion_x[Level_COUNT-4][Explosion_NO] = {
  
-    {-1400, -820},
+    {-1450, -820},
     {1420, -120}
     
 };
 
 int explosion_y[Level_COUNT-4][Explosion_NO] = {
     
-    {350, 2410},
+    {260, 2410},
     {400, 950}
     
 };
