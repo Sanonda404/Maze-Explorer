@@ -147,7 +147,7 @@ void check_collision2()
             update_diamonds();          // update file/data if needed
             update_health(-10);
             // Optional: play sound or show sparkle effect
-            printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+            //printf("Diamond collected at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
                 play_sound("Diamond");
         }
     }
@@ -157,7 +157,7 @@ void check_collision2()
                 slimes[j].isAlive = 0;
                 update_score("kill_monster", current_lvl);
                 destroy_rock(j);
-                printf("Rock blasted at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
+                //printf("Rock blasted at (%d, %d)\n", diamonds[j].sprite.x, diamonds[j].sprite.y);
                 play_sound("Blast");
                 //cout<<"shooted bat"<<endl;
             }
@@ -173,7 +173,7 @@ void check_collision2()
            // printf("B %d\n",health);
         }  
             // Optional: play sound or show sparkle effect
-            printf("Rock Attack\n");
+           // printf("Rock Attack\n");
         }
     }
 }

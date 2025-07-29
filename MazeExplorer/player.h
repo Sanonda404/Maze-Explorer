@@ -203,7 +203,7 @@ void lost_game()
 
 void update_health(int amount)
 {
-    if(lvl_completed || !is_alive)return;
+    if(lvl_completed || paused || !is_alive || !started)return;
     if(health>0 && amount>0 && !lvl_completed)play_sound("hurt");
     health -= amount;
     health = min(100,health);

@@ -114,12 +114,15 @@ void reload()
 
 void next_level()
 {
-    generate_random_diamond_positions(current_lvl);
-    loadrocks(current_lvl);
+    generate_random_diamond_positions(min(current_lvl,5));
+    loadrocks(min(current_lvl,5));
     current_lvl+=1;
+    current_lvl=min(current_lvl,6);
     page_no+=1;
+    page_no=min(page_no,7);
     reload();
     max_lvl = max(max_lvl,current_lvl);
+    //printf("%d %d %d\n",current_lvl,page_no,max_lvl);
 }
 
 void level_completed()
@@ -127,8 +130,9 @@ void level_completed()
     if(lvl_completed)return;
     lvl_completed = true;
     max_lvl = max(max_lvl,current_lvl+1);
+    max_lvl=min(max_lvl,6);
     calc_score(time_passed, health, current_lvl, player_name);
-    printf("won %s %d %d\n",player_name,score[current_lvl-1],highscore);
+    //printf("won %s %d %d\n",player_name,score[current_lvl-1],highscore);
     play_sound("won");
     start_level_complete_screen(score[current_lvl-1],highscore,current_lvl);
 }
@@ -144,8 +148,8 @@ void check_help_buttons(int mx, int my)
 
 bool check_paused_pressed(int mx, int my)
 {
-    printf("Mouse pos %d %d\n",mx,my);
-    printf("Player pos %d %d\n",player_relative_x, player_relative_y);
+    //printf("Mouse pos %d %d\n",mx,my);
+    //printf("Player pos %d %d\n",player_relative_x, player_relative_y);
     check_help_buttons(mx,my);
     if(mx>=SCREEN_WIDTH-100 && mx<=SCREEN_WIDTH-30 && my>=SCREEN_HEIGHT-100 && my<=SCREEN_HEIGHT-30){
         paused=!paused;
@@ -160,13 +164,13 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
     int idx = level_complete_mouse_click(mx,my);
     if(idx==-1)return;
     if(idx==0){
-        printf("next lvl");
+       // printf("next lvl");
         next_level();
     }
     //highscores
     else if(idx==2){
         pre_page = page_no;
-        printf("Highscores");
+        //printf("Highscores");
         page_no = 12;
         player_count = load_players();   
         transitioning = true;            
@@ -174,7 +178,7 @@ void check_lvl_completed_buttons(int mx, int my, int &page_no)
     }
     //menu
     else if(idx==1){
-        printf("Menu\n");
+       // printf("Menu\n");
         page_no = 1;
     }
     //exit

@@ -55,10 +55,10 @@ void menu_play_transition()
 
 void menu_check_button_pressed(int mx, int my, int &page_no)
 {
-    printf("mm %d %d\n",mx,my);
+    //printf("mm %d %d\n",mx,my);
     //for level 1
     if(menu_clac_dis(c_x[0],mx,c_y[0],my)<=radius){
-            printf("Level 1\n");
+            //printf("Level 1\n");
             menu_trnstn = true;
             index = 0;
             page_no = 2;
@@ -71,7 +71,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     //for level 2
     else if(menu_clac_dis(c_x[1],mx,c_y[1],my)<=radius){
         if(max_lvl<2)return;
-            printf("Level 2\n");
+            //printf("Level 2\n");
             menu_trnstn = true;
             index = 1;
             page_no = 3;
@@ -84,7 +84,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     //for level 3
     else if(menu_clac_dis(c_x[2],mx,c_y[2],my)<=radius){
         if(max_lvl<3)return;
-            printf("Level 3\n");
+            //printf("Level 3\n");
             menu_trnstn = true;
             index = 2;
             page_no = 4;
@@ -97,7 +97,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     //for level 4
     else if(menu_clac_dis(c_x[3],mx,c_y[3],my)<=radius){
         if(max_lvl<4)return;
-            printf("Level 4\n");
+           // printf("Level 4\n");
             menu_trnstn = true;
             index = 3;
             page_no = 5;
@@ -110,7 +110,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     //for level 5
     else if(menu_clac_dis(c_x[4],mx,c_y[4],my)<=radius){
         if(max_lvl<5)return;
-            printf("Level 5\n");
+           // printf("Level 5\n");
             menu_trnstn = true;
             index = 4;
             page_no = 6;
@@ -123,7 +123,7 @@ void menu_check_button_pressed(int mx, int my, int &page_no)
     //for level 6
     else if(menu_clac_dis(c_x[5],mx,c_y[5],my)<=radius){
         if(max_lvl<6)return;
-            printf("Level 6\n");
+            //printf("Level 6\n");
             menu_trnstn = true;
             index = 5;
             page_no = 7;

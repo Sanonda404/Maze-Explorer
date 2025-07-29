@@ -30,7 +30,7 @@ int completed_level = 1;
 
 // Button Setup
 const char *button_texts[4] = {"Next", "Menu", "Highscores", "Exit"};
-int button_visible[4] = {0, 0, 0, 0};
+int button_visible[4] = {0, 0, 0, 0};  // 0 = hidden, 1 = visible
 float button_hover_scale[4] = {1, 1, 1, 1};
 int button_y_start = 350;
 int button_gap = 90;
@@ -40,6 +40,7 @@ const char *font_main = "MazeExplorer/assests/fonts/DynaPuff-Medium.ttf";
 const char *font_score = "MazeExplorer/assests/fonts/Poppins-Regular.ttf";
 const char *font_button2 = "MazeExplorer/assests/fonts/Roboto-Bold.ttf";
 
+
 // Reset Function
 void start_level_complete_screen(int score, int highscore, int lvl) {
     typing_index = 0;
@@ -48,19 +49,27 @@ void start_level_complete_screen(int score, int highscore, int lvl) {
     show_score = score;
     show_highscore = highscore;
     completed_level = lvl;
-     iSetColor(255, 100, 200); // Bright pink
+
+    iSetColor(255, 100, 200);
     sprintf(typing_texts[1], "Score: %d", show_score);
-   
-   
- 
     sprintf(typing_texts[2], "High Score: %d", show_highscore);
+
+    // Reset button states
     for (int i = 0; i < 4; i++) button_visible[i] = 0;
     reveal_index = 0;
+
+    // Change button[0] text if final level
+    if (completed_level == 6) {
+        button_texts[0] = "Play Again";
+    } else {
+        button_texts[0] = "Next";
+    }
 }
-void load_level_complete_screen(){
-    
+
+void load_level_complete_screen() {
     iLoadImage(&sign_bg, "MazeExplorer/assests/bg_purple.png");
 }
+
 // Drawing Logic
 void draw_level_complete_screen() {
     iShowImage(0, 0, "MazeExplorer/assests/bg_purple.png");
@@ -84,66 +93,58 @@ void draw_level_complete_screen() {
             iShowText(center_x - 200, 600 - typing_index * 60, current_line, font_main, 55);
         else
             iShowText(center_x - 150, 600 - typing_index * 60, current_line, font_main, 42);
-    } 
+    }
+
     for (int i = 0; i < 4; i++) {
-    if (!button_visible[i]) continue;
+        if (button_visible[i] != 1) continue;
 
-    float scale = button_hover_scale[i];
-    int btn_x = center_x - BTN_WIDTH / 2;
-    int btn_y = button_y_start - i * button_gap;
+        float scale = button_hover_scale[i];
+        int btn_x = center_x - BTN_WIDTH / 2;
+        int btn_y = button_y_start - i * button_gap;
 
-    int w = BTN_WIDTH * scale;
-    int h = BTN_HEIGHT * scale;
-    int x = btn_x - (w - BTN_WIDTH) / 2;
-    int y = btn_y - (h - BTN_HEIGHT) / 2;
+        int w = BTN_WIDTH * scale;
+        int h = BTN_HEIGHT * scale;
+        int x = btn_x - (w - BTN_WIDTH) / 2;
+        int y = btn_y - (h - BTN_HEIGHT) / 2;
 
-    // Shadow
-    iSetColor(30, 30, 30);
-    iFilledRectangle(x + 4, y - 4, w, h);
+        // Shadow
+        iSetColor(30, 30, 30);
+        iFilledRectangle(x + 4, y - 4, w, h);
 
-    // Button Background - Shades of Pink
-    int pink_r[4] = {255, 255, 255, 255};
-    int pink_g[4] = {100, 130, 160, 190};
-    int pink_b[4] = {180, 200, 220, 240};
+        // Button Background
+        int pink_r[4] = {255, 255, 255, 255};
+        int pink_g[4] = {100, 130, 160, 190};
+        int pink_b[4] = {180, 200, 220, 240};
 
-    iSetColor(pink_r[i], pink_g[i], pink_b[i]);
-    iFilledRectangle(x, y, w, h);
+        iSetColor(pink_r[i], pink_g[i], pink_b[i]);
+        iFilledRectangle(x, y, w, h);
 
-    // Shine
-    iSetColor(255, 255, 255);
-    iFilledRectangle(x, y, w, 3);
+        // Shine
+        iSetColor(255, 255, 255);
+        iFilledRectangle(x, y, w, 3);
 
-    // Border
-    iSetColor(0, 0, 0);
-    iRectangle(x, y, w, h);
+        // Border
+        iSetColor(0, 0, 0);
+        iRectangle(x, y, w, h);
 
-    // Centered Text
-    int text_w = strlen(button_texts[i]) * 10 * scale;
-    int text_h = 28 * scale;
-    int text_x = x + (w - text_w) / 2;
-    int text_y = y + (h - text_h) / 2;
+        // Centered Text
+        int text_w = strlen(button_texts[i]) * 10 * scale;
+        int text_h = 28 * scale;
+        int text_x = x + (w - text_w) / 2;
+        int text_y = y + (h - text_h) / 2;
 
-    // Outline
-    iSetColor(0, 0, 0);
-    iShowText(text_x + 2, text_y, button_texts[i], font_button2, 28 * scale);
-    iShowText(text_x - 2, text_y, button_texts[i], font_button2, 28 * scale);
-    iShowText(text_x, text_y + 2, button_texts[i], font_button2, 28 * scale);
-    iShowText(text_x, text_y - 2, button_texts[i], font_button2, 28 * scale);
+        // Outline
+        iSetColor(0, 0, 0);
+        iShowText(text_x + 2, text_y, button_texts[i], font_button2, 28 * scale);
+        iShowText(text_x - 2, text_y, button_texts[i], font_button2, 28 * scale);
+        iShowText(text_x, text_y + 2, button_texts[i], font_button2, 28 * scale);
+        iShowText(text_x, text_y - 2, button_texts[i], font_button2, 28 * scale);
 
-    // Foreground
-    iSetColor(255, 255, 255);
-    iShowText(text_x, text_y, button_texts[i], font_button2, 28 * scale);
+        // Foreground
+        iSetColor(255, 255, 255);
+        iShowText(text_x, text_y, button_texts[i], font_button2, 28 * scale);
+    }
 }
-
-    
-
-}
-
- 
-    
-
-    
-
 
 // Click Detection
 int level_complete_mouse_click(int mx, int my) {
@@ -151,7 +152,7 @@ int level_complete_mouse_click(int mx, int my) {
     int cx = SCREEN_W / 2 - BTN_WIDTH / 2;
 
     for (int i = 0; i < 4; i++) {
-        if (!button_visible[i]) continue;
+        if (button_visible[i] != 1) continue;
         int bx = cx;
         int by = button_y_start - i * button_gap;
         if (mx >= bx && mx <= bx + BTN_WIDTH &&
@@ -161,13 +162,14 @@ int level_complete_mouse_click(int mx, int my) {
     }
     return -1;
 }
+
 // Hover Detection
 void level_complete_mouse_move(int mx, int my) {
     if (!typing_done) return;
     int cx = SCREEN_W / 2 - BTN_WIDTH / 2;
 
     for (int i = 0; i < 4; i++) {
-        if (!button_visible[i]) continue;
+        if (button_visible[i] != 1) continue;
         int bx = cx;
         int by = button_y_start - i * button_gap;
         if (mx >= bx && mx <= bx + BTN_WIDTH &&
@@ -178,6 +180,7 @@ void level_complete_mouse_move(int mx, int my) {
         }
     }
 }
+
 // Typing animation: Call every 30–50ms
 void update_typing_animation() {
     if (typing_done) return;
@@ -189,7 +192,6 @@ void update_typing_animation() {
         typing_char_index = 0;
         if (typing_index >= 3) {
             typing_done = true;
-            printf("jj");
         }
     }
 }

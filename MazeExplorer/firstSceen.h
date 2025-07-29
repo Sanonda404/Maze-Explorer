@@ -82,7 +82,9 @@ void play_transition()
 void fs_check_button_pressed(int mx, int my, int &page_no)
 {
     //for play button
-    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y && my<=y+300){
+    //printf("pos %d %d\n",mx,my);
+    //return;
+    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=460 && my<=540){
             if(player_name[0]=='\0'){
                 page_no = 11;
                 pre_page = 1;
@@ -91,7 +93,7 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
             trnstn = true;
     }
     //for leaderboard button
-    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*1 && my<=y-(btn_size+offset)*1+btn_size){
+    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=350 && my<=430){
             trnstn = true;
             page_no = 12;
             player_count = load_players();               
@@ -99,21 +101,22 @@ void fs_check_button_pressed(int mx, int my, int &page_no)
             pre_page = 0;
     }
     //for Settings button
-     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*2 && my<=y-(btn_size+offset)*2+btn_size){
+     if(page_no==0 && mx>=x && mx<=x+btn_width && my>=240 && my<=320){
+        printf("Settings\n");
             trnstn = true;
             page_no=11;
             pre_page = 0;
             
     }
      //for credits button
-    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*3 && my<=y-(btn_size+offset)*3+btn_size){
+    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=130 && my<220){
             trnstn = true;
             page_no=13;
             show_credit=true;
             reset_credit_animation();
     }
      //for exit button
-    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=y-(btn_size+offset)*4 && my<=y-(btn_size+offset)*4+btn_size){
+    if(page_no==0 && mx>=x && mx<=x+btn_width && my>=0 && my<=100){
             trnstn = true;
             exit(0);
     }

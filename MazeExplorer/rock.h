@@ -104,7 +104,7 @@ void generate_random_rocks_positions(int level) {
         rocks_x[level][i] = pos_x;
         rocks_y[level][i] = pos_y;
 
-        printf("rocks %d at: x=%d y=%d\n", i, pos_x, pos_y);
+        //printf("rocks %d at: x=%d y=%d\n", i, pos_x, pos_y);
     }
 }
 

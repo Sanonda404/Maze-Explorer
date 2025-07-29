@@ -203,13 +203,11 @@ void iMouse(int button, int state, int mx, int my)
             // Left arrow
             if (mx >= char_x - 40 && mx <= char_x - 10 && my >= char_y + 90 && my <= char_y + 120) {
                 selected_character = (selected_character - 1 + TOTAL_CHARACTERS) % TOTAL_CHARACTERS;
-                printf("%d",selected_character);
             }
 
             // Right arrow
             if (mx >= char_x + char_w + 10 && mx <= char_x + char_w + 40 && my >= char_y + 90 && my <= char_y + 120) {
                 selected_character = (selected_character + 1) % TOTAL_CHARACTERS;
-                printf("%d",selected_character);
             }
 
             // Select Button
