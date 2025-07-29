@@ -133,7 +133,7 @@ void draw_credit() {
         iShowText(SUP_X_POS, y + 70, "Supervisor", font_button, 36);
         iSetColor(255, 255, 255);
         iShowText(SUP_X_POS, y + 30, "Sadat Hossian", font_label, 28);
-        iShowText(SUP_X_POS, y, "CSE", font_label, 28);
+        iShowText(SUP_X_POS, y, "CSE,BUET", font_label, 28);
 
         if (credit_timer >= ANIM_DURATION + WAIT_BETWEEN) {
             credit_step = 3;  // animation done
@@ -145,7 +145,7 @@ void draw_credit() {
         iShowText(SUP_X_POS, SUP_Y_FINAL + 70, "Supervisor", font_button, 36);
         iSetColor(255, 255, 255);
         iShowText(SUP_X_POS, SUP_Y_FINAL + 30, "Sadat Hossian", font_label, 28);
-        iShowText(SUP_X_POS, SUP_Y_FINAL, "CSE", font_label, 28);
+        iShowText(SUP_X_POS, SUP_Y_FINAL, "CSE,BUET", font_label, 28);
     }
 
     // Draw Back Button rectangle (purple)
