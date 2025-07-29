@@ -98,8 +98,8 @@ void generate_random_rocks_positions(int level) {
         int pos_x = rand() % dx+x_strts[level];
         int pos_y = rand() % dy+y_strts[level];
 
-        while(pos_x>=600 && pos_x<=800)pos_x = rand()%dx+x_strts[level];
-        while(pos_y>=400 && pos_y<=600)pos_y = rand()%dy+y_strts[level];
+        if(pos_x>=600 && pos_x<=800)pos_x = 900;
+        if(pos_y>=400 && pos_y<=600)pos_y = 300;
 
         rocks_x[level][i] = pos_x;
         rocks_y[level][i] = pos_y;
