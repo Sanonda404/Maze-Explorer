@@ -7,8 +7,8 @@
 
 #define SCREEN_W 1400
 #define SCREEN_H 800
-#define BTN_WIDTH 240
-#define BTN_HEIGHT 70
+#define BTN_WIDTH 220
+#define BTN_HEIGHT 50
 
 // Typing Animation
 char typing_texts[3][100] = {
@@ -67,12 +67,12 @@ void start_level_complete_screen(int score, int highscore, int lvl) {
 }
 
 void load_level_complete_screen() {
-    iLoadImage(&sign_bg, "MazeExplorer/assests/bg_purple.png");
+    iLoadImage(&sign_bg, "MazeExplorer/assests/levels/level_complete_bg.jpg");
 }
 
 // Drawing Logic
 void draw_level_complete_screen() {
-    iShowImage(0, 0, "MazeExplorer/assests/bg_purple.png");
+    iShowImage(0, 0, "MazeExplorer/assests/levels/level_complete_bg.jpg");
 
     int center_x = SCREEN_W / 2;
 
@@ -111,21 +111,17 @@ void draw_level_complete_screen() {
         iSetColor(30, 30, 30);
         iFilledRectangle(x + 4, y - 4, w, h);
 
-        // Button Background
-        int pink_r[4] = {255, 255, 255, 255};
-        int pink_g[4] = {100, 130, 160, 190};
-        int pink_b[4] = {180, 200, 220, 240};
+        // Shadow
+        iSetColor(30, 30, 30);
+        iFilledRectangle(x + 4, y - 4, w, h);
 
+        int pink_r[4] = {255, 255, 255, 255};
+        int pink_g[4] = {204, 183, 160, 130};
+        int pink_b[4] = {0,   20,  40,  60};
+        
         iSetColor(pink_r[i], pink_g[i], pink_b[i]);
         iFilledRectangle(x, y, w, h);
 
-        // Shine
-        iSetColor(255, 255, 255);
-        iFilledRectangle(x, y, w, 3);
-
-        // Border
-        iSetColor(0, 0, 0);
-        iRectangle(x, y, w, h);
 
         // Centered Text
         int text_w = strlen(button_texts[i]) * 10 * scale;
@@ -145,6 +141,11 @@ void draw_level_complete_screen() {
         iShowText(text_x, text_y, button_texts[i], font_button2, 28 * scale);
     }
 }
+
+
+
+
+    
 
 // Click Detection
 int level_complete_mouse_click(int mx, int my) {

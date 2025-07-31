@@ -90,6 +90,7 @@ void iDraw()
         draw_levels();
     }
 
+
     check_collision1();
     check_collision2();
     check_collision3();
@@ -203,11 +204,13 @@ void iMouse(int button, int state, int mx, int my)
             // Left arrow
             if (mx >= char_x - 40 && mx <= char_x - 10 && my >= char_y + 90 && my <= char_y + 120) {
                 selected_character = (selected_character - 1 + TOTAL_CHARACTERS) % TOTAL_CHARACTERS;
+                //printf("%d",selected_character);
             }
 
             // Right arrow
             if (mx >= char_x + char_w + 10 && mx <= char_x + char_w + 40 && my >= char_y + 90 && my <= char_y + 120) {
                 selected_character = (selected_character + 1) % TOTAL_CHARACTERS;
+                //printf("%d",selected_character);
             }
 
             // Select Button
@@ -217,11 +220,11 @@ void iMouse(int button, int state, int mx, int my)
 
             // Done Button
             if (mx >= button_x && mx <= button_x + button_w + 20 && my >= button_y - 400 && my <= button_y - 400 + button_h + 20) {
-                printf("Done\n");
+                //printf("Done\n");
                 append_data();
                 max_lvl = max_lvl2;
                 page_no = pre_page;
-                printf("%d\n",new_player.selected_character);
+                //printf("%d\n",new_player.selected_character);
             }
         }
 
@@ -286,6 +289,7 @@ void iKeyboard(unsigned char key, int state)
     switch (key)
     {
     case ' ': // detecting attack
+        if(lvl_completed || paused || !is_alive || !started)return;
         player.state = ATTACK;
         attacking = true;
         shoot_bullet(dir_name);
