@@ -17,6 +17,23 @@ void load_settings()
     //iScaleImage(&ok_button, 0.1);
 
 }
+Mix_Music *bgMusic = NULL;
+
+void initAudio() {
+    Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+    bgMusic = Mix_LoadMUS("background.mp3"); // Your music file
+    Mix_PlayMusic(bgMusic, -1); // Loop music
+}
+
+void updateGameVolume() {
+    Mix_VolumeMusic((int)(volume * MIX_MAX_VOLUME)); // Connect to your volume slider
+}
+
+void stopAudio() {
+    Mix_FreeMusic(bgMusic);
+    Mix_CloseAudio();
+}
+
 
 void drawVolumeSlider()
 {
